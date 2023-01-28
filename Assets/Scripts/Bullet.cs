@@ -22,14 +22,14 @@ public class Bullet : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Mouse0))
         {
-            FireBullet(10);
+            FireBullet(30);
         }
     }
 
     public void FireBullet(float velocity)
     {
-        GameObject newBullet = Instantiate(bullet, gun.position, transform.rotation);
+        GameObject newBullet = Instantiate(bullet, transform.position, bullet.transform.rotation);
 
-        newBullet.GetComponent<Rigidbody>().velocity = velocity * transform.up;
+        newBullet.GetComponent<Rigidbody>().velocity = velocity * -transform.forward;
     }
 }
