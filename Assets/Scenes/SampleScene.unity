@@ -1330,6 +1330,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 1456530085669047980, guid: efdae01012f07d448a2b829a997b05ae, type: 3}
   gun: {fileID: 5143824940248269629, guid: 42d0c8a8244f2bc46b70de1bf902fcac, type: 3}
+--- !u!114 &1795602747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795602738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a36a161f346228248a052f66eeca44ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireRate: 120
+  magCount: 30
+  reloadTime: 3
+  muzzleVelocity: 30
+  totalRounds: 300
 --- !u!1001 &1840158950
 PrefabInstance:
   m_ObjectHideFlags: 0
