@@ -128,10 +128,10 @@ public class Firearm : MonoBehaviour
     private void FireBullet()
     {
         Vector3 bulletPos = gameObject.GetComponent<Renderer>().bounds.center;
-        bulletPos.z -= 1.5f;
-        GameObject newBullet = Instantiate(bullet, bulletPos, bullet.transform.rotation);
+        bulletPos = bulletPos + gameObject.transform.forward;
+        GameObject newBullet = Instantiate(bullet, bulletPos, transform.rotation * Quaternion.Euler(90, 0, 0));
 
-        newBullet.GetComponent<Rigidbody>().velocity = muzzleVelocity * -transform.forward;
+        newBullet.GetComponent<Rigidbody>().velocity = muzzleVelocity * transform.forward;
 
         magRounds--;
         print(magRounds);
@@ -158,5 +158,10 @@ public class Firearm : MonoBehaviour
         }
         
         print(remainingRounds);
+    }
+
+    private void calculateDrag()
+    {
+
     }
 }

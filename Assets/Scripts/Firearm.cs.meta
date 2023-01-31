@@ -3,7 +3,9 @@ guid: a36a161f346228248a052f66eeca44ca
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - bullet: {fileID: 1456530085669047980, guid: efdae01012f07d448a2b829a997b05ae, type: 3}
+  - secondaryProjectile: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
