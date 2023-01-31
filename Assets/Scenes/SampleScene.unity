@@ -1417,12 +1417,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRate: 120
-  bullet: {fileID: 1456530085669047980, guid: efdae01012f07d448a2b829a997b05ae, type: 3}
+  bullet: {fileID: 553144152}
   secondaryProjectile: {fileID: 0}
   magCount: 30
   reloadTime: 5
   tacticalReloadTime: 2
-  muzzleVelocity: 905
+  muzzleVelocity: 30
   totalRounds: 300
 --- !u!1001 &1840158950
 PrefabInstance:
@@ -1548,6 +1548,18 @@ PrefabInstance:
     - target: {fileID: 7256581797290567937, guid: efdae01012f07d448a2b829a997b05ae, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7302442071871188587, guid: efdae01012f07d448a2b829a997b05ae, type: 3}
+      propertyPath: A
+      value: 0.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 7302442071871188587, guid: efdae01012f07d448a2b829a997b05ae, type: 3}
+      propertyPath: Db
+      value: 0.0057
+      objectReference: {fileID: 0}
+    - target: {fileID: 7302442071871188587, guid: efdae01012f07d448a2b829a997b05ae, type: 3}
+      propertyPath: Vb
+      value: 0.0185
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efdae01012f07d448a2b829a997b05ae, type: 3}

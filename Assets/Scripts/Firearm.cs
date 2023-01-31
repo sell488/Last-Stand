@@ -160,8 +160,8 @@ public class Firearm : MonoBehaviour
         print(remainingRounds);
     }
 
-    private void calculateDrag()
-    {
 
-    }
+
+
+
 }
