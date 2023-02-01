@@ -147,20 +147,6 @@ public class Firearm : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Fire logic
-        if(Input.GetKey(KeyCode.Mouse0) && magRounds > 0)
-        {
-            if (canFire)
-            {
-                //Firerate logic.
-                if (Time.time >= timeTillNextShot)
-                {
-                    FireBullet();
-                    timeTillNextShot = Time.time + fireRateSecs;
-                }
-            }
-        }
-
         //Reload logic
         if(Input.GetKeyDown(KeyCode.R) && remainingRounds > 0)
         {
@@ -177,14 +163,49 @@ public class Firearm : MonoBehaviour
         
     }
 
+    private void FixedUpdate()
+    {
+        //Fire logic
+        if(primaryAmmo == true)
+        {
+            if (Input.GetKey(KeyCode.Mouse0) && magRounds > 0)
+            {
+                if (canFire)
+                {
+                    //Firerate logic.
+                    if (Time.time >= timeTillNextShot)
+                    {
+                        FireBullet(bullet);
+                        timeTillNextShot = Time.time + fireRateSecs;
+                    }
+                }
+            }
+        } else if(primaryAmmo == false)
+        {
+            if (Input.GetKey(KeyCode.Mouse0) && magRoundsSec > 0)
+            {
+                if (canFire)
+                {
+                    //Firerate logic.
+                    if (Time.time >= timeTillNextShot)
+                    {
+                        FireBullet(secondaryProjectile);
+                        timeTillNextShot = Time.time + fireRateSecs;
+                    }
+                }
+            }
+        }
+        
+    }
+
     /// <summary>
     /// Fires a single bullet everytime FireBullet is called
     /// </summary>
-    private void FireBullet()
+    private void FireBullet(GameObject proj, float lifeTime = 5f)
     {
         Vector3 bulletPos = gameObject.GetComponent<Renderer>().bounds.center;
         bulletPos = bulletPos + gameObject.transform.forward;
-        GameObject newBullet = Instantiate(bullet, bulletPos, transform.rotation * Quaternion.Euler(90, 0, 0));
+        GameObject newBullet = Instantiate(proj, bulletPos, transform.rotation * Quaternion.Euler(90, 0, 0));
 
         Bullet bulletScript = newBullet.GetComponent<Bullet>();
 
@@ -197,28 +218,37 @@ public class Firearm : MonoBehaviour
         magRounds--;
         print(magRounds);
 
-        Object.Destroy(newBullet, 5.0f);
+        Object.Destroy(newBullet, lifeTime);
     }
     /// <summary>
     /// Reloads the gun. Should be called using a coroutine or Invoke
     /// </summary>
     private void Reload()
     {
-        remainingRounds = remainingRounds - (magCount - magRounds);
+        if (primaryAmmo == true)
+        {
+            remainingRounds = remainingRounds - (magCount - magRounds);
 
-        ///If there are still rounds left in the mag, one will be left in the chamber
-        ///This gives the player +1 round in their mag if they reload before
-        ///completly emptying their gun
-        if(magRounds > 0)
+            ///If there are still rounds left in the mag, one will be left in the chamber
+            ///This gives the player +1 round in their mag if they reload before
+            ///completly emptying their gun
+            if (magRounds > 0)
+            {
+                magRounds = magCount + 1;
+                remainingRounds--;
+            }
+            else
+            {
+                magRounds = magCount;
+            }
+
+            print(remainingRounds);
+        } else if(primaryAmmo== false)
         {
-            magRounds = magCount + 1;
-            remainingRounds--;
-        } else
-        {
-            magRounds = magCount;
+            remainingRoundsSec = remainingRoundsSec - (magCountSec - magRoundsSec);
+
+            magRoundsSec = magCountSec;
         }
-        
-        print(remainingRounds);
     }
 
 

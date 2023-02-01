@@ -1594,7 +1594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a36a161f346228248a052f66eeca44ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 120
+  fireRate: 800
   bullet: {fileID: 553144152}
   secondaryProjectile: {fileID: 0}
   magCount: 30
