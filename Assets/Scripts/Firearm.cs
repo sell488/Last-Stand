@@ -9,9 +9,6 @@ public class Firearm : MonoBehaviour
     /// </summary>
     public float fireRate;
 
-    /// <summary>
-    /// Bullet prefab to use
-    /// </summary>
     public GameObject bullet;
 
     /// <summary>
@@ -24,16 +21,25 @@ public class Firearm : MonoBehaviour
     /// Total amount of rounds that may be fired before a reload is required
     /// </summary>
     public int magCount;
+    /// <summary>
+    /// Total amount of rounds that may be fired before a reload is required 
+    /// for <strong>secondary ammo</strong>
+    /// </summary>
+    public int magCountSec;
 
     /// <summary>
     /// Amount of time in seconds a reload should last when there is
-    /// no bullet in the chamber (the player reloaded once magRounds hit 0)
+    /// no bullet in the chamber (the player reloaded once magRoundsPrimary hit 0)
     /// </summary>
     /// <remarks>
     /// This is to represent the additional time needed to pull the charging handle 
     /// to chamber a round
     /// </remarks>
     public float reloadTime;
+    /// <summary>
+    /// Reload time for <strong>secondary ammo</strong>
+    /// </summary>
+    public float reloadTimeSec;
 
     /// <summary>
     /// Amount of time in seconds a reload should last when there is still a bullet
@@ -48,11 +54,21 @@ public class Firearm : MonoBehaviour
     /// The muzzle velocity of rounds fired from the weapon
     /// </summary>
     public float muzzleVelocity;
+    /// <summary>
+    /// The muzzle velocity of rounds fired from the weapon
+    /// for <strong>secondary ammo</strong>
+    /// </summary>
+    public float muzzleVelocitySec;
 
     /// <summary>
     /// The total amount of individual rounds that can be carried by the player
     /// </summary>
     public int totalRounds;
+    /// <summary>
+    /// The total amount of individual rounds that can be carried by the player for
+    /// <strong>secondary ammo</strong>
+    /// </summary>
+    public int totalRoundsSec;
 
     /// <summary>
     /// Internal variable for fire rate in seconds
@@ -68,16 +84,51 @@ public class Firearm : MonoBehaviour
     /// Internal tracker for rounds in mag left
     /// </summary>
     private int magRounds;
+    /// <summary>
+    /// Internal tracker for <strong>secondary ammo</strong> rounds
+    /// in mag left
+    /// </summary>
+    private int magRoundsSec;
 
     /// <summary>
     /// Internal tracker for total remaining rounds
     /// </summary>
     private int remainingRounds;
+    /// <summary>
+    /// Internal tracker for total remaining <strong>secondary ammo</strong>
+    /// rounds
+    /// </summary>
+    private int remainingRoundsSec;
 
     /// <summary>
     /// Utility bool for preventing player from shooting while reloading
     /// </summary>
     private bool canFire;
+
+    /// <summary>
+    /// Internal bool tracker of which ammo type is being used. <strong>True</strong>: primary 
+    /// ammo being used
+    /// <strong>False</strong>: secondary ammo being used.
+    /// </summary>
+    /// <remarks>
+    /// Defaults to True.
+    /// </remarks>
+    private bool primaryAmmo;
+
+
+
+    /// <summary>
+    /// See <see cref="Bullet"/> for explanation of
+    /// Vb, Db, and A
+    /// </summary>
+    /// <remarks>
+    /// Used to assign the values neccesary for drag calculations
+    /// to individual bullets fired by the gun
+    /// </remarks>
+    public float Vb;
+    public float Db;
+    public float A;
+
 
     // Start is called before the first frame update
     void Start()
@@ -88,17 +139,20 @@ public class Firearm : MonoBehaviour
         fireRateSecs = 60f / fireRate;
         timeTillNextShot = Time.time + fireRateSecs;
 
+        primaryAmmo = true;
+
         print(remainingRounds);
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Fire logic
         if(Input.GetKey(KeyCode.Mouse0) && magRounds > 0)
         {
             if (canFire)
             {
-
+                //Firerate logic.
                 if (Time.time >= timeTillNextShot)
                 {
                     FireBullet();
@@ -107,6 +161,7 @@ public class Firearm : MonoBehaviour
             }
         }
 
+        //Reload logic
         if(Input.GetKeyDown(KeyCode.R) && remainingRounds > 0)
         {
             if(magRounds > 0)
@@ -130,6 +185,12 @@ public class Firearm : MonoBehaviour
         Vector3 bulletPos = gameObject.GetComponent<Renderer>().bounds.center;
         bulletPos = bulletPos + gameObject.transform.forward;
         GameObject newBullet = Instantiate(bullet, bulletPos, transform.rotation * Quaternion.Euler(90, 0, 0));
+
+        Bullet bulletScript = newBullet.GetComponent<Bullet>();
+
+        bulletScript.Vb = this.Vb;
+        bulletScript.Db = this.Db;
+        bulletScript.A = this.A;
 
         newBullet.GetComponent<Rigidbody>().velocity = muzzleVelocity * transform.forward;
 

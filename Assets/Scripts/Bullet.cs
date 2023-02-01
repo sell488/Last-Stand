@@ -60,7 +60,11 @@ public class Bullet : MonoBehaviour
     private void FixedUpdate()
     {
         Vector3 direction = -GetComponent<Rigidbody>().velocity.normalized;
+        float drag = calculateDrag();
+
         GetComponent<Rigidbody>().AddForce(direction * calculateDrag());
+        transform.rotation = Quaternion.LookRotation(GetComponent<Rigidbody>().velocity) * Quaternion.Euler(0, 90, 90);
+
     }
 
     /// <summary>
@@ -88,5 +92,4 @@ public class Bullet : MonoBehaviour
 
         return drag;
     }
-
 }
