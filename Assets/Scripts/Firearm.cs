@@ -115,6 +115,21 @@ public class Firearm : MonoBehaviour
     /// </remarks>
     private bool primaryAmmo;
 
+    /// <summary>
+    /// Represents if a weapon is an automatic weapon
+    /// </summary>
+    public bool isAutomatic;
+
+    /// <summary>
+    /// keeps track of the current fire mode
+    /// <strong>True</strong>: automatic mode
+    /// <strong>False</strong>: semi mode
+    /// </summary>
+    /// <remarks>
+    /// Defaults to false
+    /// </remarks>
+    private bool firemode;
+
 
 
     /// <summary>
@@ -141,6 +156,8 @@ public class Firearm : MonoBehaviour
 
         primaryAmmo = true;
 
+        firemode = false;
+
         print(remainingRounds);
     }
 
@@ -160,6 +177,12 @@ public class Firearm : MonoBehaviour
             
 
         }
+
+        if(Input.GetKeyDown(KeyCode.V))
+        {
+            firemode = !firemode;
+            print(firemode);
+        }
         
     }
 
@@ -168,7 +191,7 @@ public class Firearm : MonoBehaviour
         //Fire logic
         if(primaryAmmo == true)
         {
-            if (Input.GetKey(KeyCode.Mouse0) && magRounds > 0)
+            if (Input.GetKey(KeyCode.Mouse0) && magRounds > 0 && firemode)
             {
                 if (canFire)
                 {
@@ -178,6 +201,13 @@ public class Firearm : MonoBehaviour
                         FireBullet(bullet);
                         timeTillNextShot = Time.time + fireRateSecs;
                     }
+                }
+            } else if (Input.GetKeyDown(KeyCode.Mouse0) && magRounds > 0 && !firemode)
+            {
+                if (Time.time >= timeTillNextShot)
+                {
+                    FireBullet(bullet);
+                    timeTillNextShot = Time.time + fireRateSecs;
                 }
             }
         } else if(primaryAmmo == false)
