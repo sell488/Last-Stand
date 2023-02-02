@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+// https://logicsimplified.com/newgames/how-to-build-a-first-person-shooter-fps-game-in-unity/
 public class MouseLook : MonoBehaviour
 {
 
