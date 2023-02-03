@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8759169202706556006}
   - component: {fileID: 2731250928601407150}
   - component: {fileID: 4122852062086311906}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,6 +144,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawner: {fileID: 0}
   agent: {fileID: 4122852062086311906}
+  target: {fileID: 2635373299093271823, guid: 327416f994b039a4282787e9c0b6d63e, type: 3}
+  health: 100
 --- !u!195 &4122852062086311906
 NavMeshAgent:
   m_ObjectHideFlags: 0

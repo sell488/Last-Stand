@@ -49,11 +49,20 @@ public class Bullet : MonoBehaviour
     /// </remarks>
     private float pb;
 
+    private Rigidbody rb;
+
+    /// <summary>
+    /// Modifier for damage
+    /// </summary>
+    public float fudgeFactor;
+
     // Start is called before the first frame update
     void Start()
     {
         //Density of the bullet
         pb = GetComponent<Rigidbody>().mass / Vb;
+
+        rb = gameObject.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -70,6 +79,18 @@ public class Bullet : MonoBehaviour
         GetComponent<Rigidbody>().AddForce(direction * calculateDrag());
         transform.rotation = Quaternion.LookRotation(GetComponent<Rigidbody>().velocity) * Quaternion.Euler(0, 90, 90);
 
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        print(collision);
+        if(collision.gameObject.GetComponent<Enemies>())
+        {
+            collision.gameObject.GetComponent<Enemies>().health = collision.gameObject.GetComponent<Enemies>().health - 
+                fudgeFactor * (rb.mass * rb.velocity.magnitude);
+        }
+
+        //Object.Destroy(gameObject);
     }
 
     /// <summary>
@@ -97,4 +118,6 @@ public class Bullet : MonoBehaviour
 
         return drag;
     }
+
+    
 }
