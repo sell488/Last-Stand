@@ -242,11 +242,19 @@ public class Firearm : MonoBehaviour
         bulletScript.Vb = this.Vb;
         bulletScript.Db = this.Db;
         bulletScript.A = this.A;
+        if(primaryAmmo)
+        {
+            newBullet.GetComponent<Rigidbody>().velocity = muzzleVelocity * transform.forward;
 
-        newBullet.GetComponent<Rigidbody>().velocity = muzzleVelocity * transform.forward;
+            magRounds--;
+            print(magRounds);
+        } else if(!primaryAmmo)
+        {
+            newBullet.GetComponent<Rigidbody>().velocity = muzzleVelocitySec * transform.forward;
 
-        magRounds--;
-        print(magRounds);
+            magRoundsSec--;
+        }
+        
 
         Object.Destroy(newBullet, lifeTime);
     }

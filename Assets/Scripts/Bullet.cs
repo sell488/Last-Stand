@@ -5,6 +5,11 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     /// <summary>
+    /// Should the bullet explode on impact?
+    /// </summary>
+    public bool isExplosive;
+
+    /// <summary>
     /// Volume of a bullet.
     /// </summary>
     /// <remarks>
