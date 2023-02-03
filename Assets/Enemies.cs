@@ -39,6 +39,6 @@ public class Enemies : MonoBehaviour
         //    transform.position = new Vector3(transform.position.x, spawner_position.y, transform.position.z);
         //}
 
-        agent.SetDestination(new Vector3(30f, -3.2f, 16.5f));
+        agent.destination = new Vector3(30.0f, -3.2f, 16.5f);
     }
 }
