@@ -5,7 +5,7 @@ using UnityEngine;
 public class MouseLook : MonoBehaviour
 {
 
-    public float lookSensitivity = 2f, lookSmoothDamp = .5f;
+    public float lookSensitivity = 2f, lookSmoothDamp = .05f;
     [HideInInspector]
     public float yRot, xRot;
     [HideInInspector]
