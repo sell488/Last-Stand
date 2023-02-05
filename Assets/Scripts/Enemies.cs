@@ -14,6 +14,8 @@ public class Enemies : MonoBehaviour
     public GameObject target;
 
     public float health;
+
+    public float damage;
      
 
     // Start is called before the first frame update
@@ -32,9 +34,17 @@ public class Enemies : MonoBehaviour
     {
         if (health <= 0 && collision.gameObject.GetComponent<Bullet>())
         {
+            /*TODO
+            Figure out multiple calls to Scorekeeper 
+            */
+            gameObject.SetActive(false);
+
             ScoreKeeper.ScorePoints(1);
 
             Object.Destroy(gameObject);
+        } else if(collision.gameObject.GetComponent<PlayerHealth>())
+        {
+            collision.gameObject.GetComponent<PlayerHealth>().takeDamage(damage);
         }
         //Invoke("checkHealth", 0.2f);
     }

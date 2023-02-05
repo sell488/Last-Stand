@@ -83,22 +83,22 @@ public class Firearm : MonoBehaviour
     /// <summary>
     /// Internal tracker for rounds in mag left
     /// </summary>
-    private int magRounds;
+    public int magRounds;
     /// <summary>
     /// Internal tracker for <strong>secondary ammo</strong> rounds
     /// in mag left
     /// </summary>
-    private int magRoundsSec;
+    public int magRoundsSec;
 
     /// <summary>
     /// Internal tracker for total remaining rounds
     /// </summary>
-    private int remainingRounds;
+    public int remainingRounds;
     /// <summary>
     /// Internal tracker for total remaining <strong>secondary ammo</strong>
     /// rounds
     /// </summary>
-    private int remainingRoundsSec;
+    public int remainingRoundsSec;
 
     /// <summary>
     /// Utility bool for preventing player from shooting while reloading
@@ -157,8 +157,6 @@ public class Firearm : MonoBehaviour
         primaryAmmo = true;
 
         firemode = false;
-
-        print(remainingRounds);
     }
 
     // Update is called once per frame
@@ -181,7 +179,6 @@ public class Firearm : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.V))
         {
             firemode = !firemode;
-            print(firemode);
         }
         
     }
@@ -247,7 +244,6 @@ public class Firearm : MonoBehaviour
             newBullet.GetComponent<Rigidbody>().velocity = muzzleVelocity * transform.forward;
 
             magRounds--;
-            print(magRounds);
         } else if(!primaryAmmo)
         {
             newBullet.GetComponent<Rigidbody>().velocity = muzzleVelocitySec * transform.forward;
