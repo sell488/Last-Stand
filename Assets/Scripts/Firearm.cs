@@ -9,6 +9,11 @@ public class Firearm : MonoBehaviour
     /// </summary>
     public float fireRate;
 
+    public float gravity;
+
+    [SerializeField]
+    private Transform shootPoint;
+
     public GameObject bullet;
 
     /// <summary>
@@ -195,19 +200,23 @@ public class Firearm : MonoBehaviour
                     //Firerate logic.
                     if (Time.time >= timeTillNextShot)
                     {
-                        FireBullet(bullet);
+                        //FireBullet(bullet);
+                        Shoot();
                         timeTillNextShot = Time.time + fireRateSecs;
                     }
                 }
             } else if (Input.GetKeyDown(KeyCode.Mouse0) && magRounds > 0 && !firemode)
             {
-                if (Time.time >= timeTillNextShot)
+                Shoot();
+                
+                /*if (Time.time >= timeTillNextShot)
                 {
-                    FireBullet(bullet);
+                    //FireBullet(bullet);
+                    Shoot();
                     timeTillNextShot = Time.time + fireRateSecs;
-                }
+                }*/
             }
-        } else if(primaryAmmo == false)
+        } /*else if(primaryAmmo == false)
         {
             if (Input.GetKey(KeyCode.Mouse0) && magRoundsSec > 0)
             {
@@ -221,14 +230,14 @@ public class Firearm : MonoBehaviour
                     }
                 }
             }
-        }
+        }*/
         
     }
 
     /// <summary>
     /// Fires a single bullet everytime FireBullet is called
     /// </summary>
-    private void FireBullet(GameObject proj, float lifeTime = 5f)
+    /*private void FireBullet(GameObject proj, float lifeTime = 5f)
     {
         Vector3 bulletPos = gameObject.GetComponent<Renderer>().bounds.center;
         bulletPos = bulletPos + gameObject.transform.forward;
@@ -253,7 +262,7 @@ public class Firearm : MonoBehaviour
         
 
         Object.Destroy(newBullet, lifeTime);
-    }
+    }*/
     /// <summary>
     /// Reloads the gun. Should be called using a coroutine or Invoke
     /// </summary>
@@ -285,7 +294,18 @@ public class Firearm : MonoBehaviour
         }
     }
 
+    public void Shoot()
+    {
+        GameObject bull = Instantiate(bullet, shootPoint.position, shootPoint.rotation * Quaternion.Euler(90, 0, 0));
+        Bullet bullScript = bull.GetComponent<Bullet>();
 
+        if(bullScript)
+        {
+            bullScript.Initialize(shootPoint, muzzleVelocity, gravity);
+        }
+
+        Destroy(bull, 5f);
+    }
 
 
 

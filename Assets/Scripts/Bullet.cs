@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+
+    private float gravity;
+    private float velocity;
+    private Vector3 startPos;
+    private Vector3 startFor;
+
+    private bool isInit = false;
+    private float startTime = -1;
+
     /// <summary>
     /// Should the bullet explode on impact?
     /// </summary>
@@ -60,21 +69,69 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         //Density of the bullet
-        pb = GetComponent<Rigidbody>().mass / Vb;
+        /*pb = GetComponent<Rigidbody>().mass / Vb;
 
-        rb = gameObject.GetComponent<Rigidbody>();
+        rb = gameObject.GetComponent<Rigidbody>();*/
+    }
+
+    public void Initialize(Transform startPos, float velocity, float gravity)
+    {
+        this.startPos = startPos.position;
+        this.startFor = startPos.forward.normalized;
+        this.velocity = velocity;
+        this.gravity = gravity;
+        isInit = true;
+        
+    }
+
+    private Vector3 calculateMotion(float time)
+    {
+        Vector3 point = startPos + (startFor * velocity * time);
+        Vector3 gravityVec = Vector3.down * gravity * time * time;
+        Vector3 nextPointRaw = point + gravityVec;
+        return point + gravityVec;
+    }
+
+    private bool checkCollisionStep(Vector3 startPoint, Vector3 endPoint, out RaycastHit hit)
+    {
+        return Physics.Raycast(startPoint, endPoint - startPoint, out hit, (endPoint - startPoint).magnitude);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(!isInit || startTime < 0)
+        {
+            return;
+        }
+
+        float currentTime = Time.time - startTime;
+        Vector3 currentPoint = calculateMotion(currentTime);
+        print(currentPoint);
+        transform.position = currentPoint;
+        transform.rotation = Quaternion.LookRotation(currentPoint) * Quaternion.Euler(0, 90, 90);
     }
 
     private void FixedUpdate()
     {
+        if (!isInit) { return; }
+        if (startTime < 0)
+        {
+            startTime = Time.time;
+        }
+        RaycastHit hit;
+        float currentTime = Time.time - startTime;
+        float nextTime = currentTime + Time.fixedDeltaTime;
 
-        if(rb.velocity.magnitude != 0)
+        Vector3 currentPoint = calculateMotion(currentTime);
+        Vector3 nextPoint = calculateMotion(nextTime);
+
+        if(checkCollisionStep(currentPoint, nextPoint, out hit))
+        {
+            Destroy(gameObject);
+        }
+
+        /*if (rb.velocity.magnitude != 0)
         {
             Vector3 direction = -GetComponent<Rigidbody>().velocity.normalized;
             float drag = calculateDrag();
@@ -84,13 +141,13 @@ public class Bullet : MonoBehaviour
             {
                 transform.rotation = Quaternion.LookRotation(GetComponent<Rigidbody>().velocity) * Quaternion.Euler(0, 90, 90);
             }
-        }
+        }*/
         
         
 
     }
 
-    private void OnCollisionEnter(Collision collision)
+    /*private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.GetComponent<Enemies>())
         {
@@ -102,26 +159,23 @@ public class Bullet : MonoBehaviour
         }
 
         //Object.Destroy(gameObject);
-    }
+    }*/
 
-    private float calculateDamage()
+    /*private float calculateDamage()
     {
         return fudgeFactor * (rb.mass * rb.velocity.magnitude);
-    }
+    }*/
 
 
     /// <summary>
     /// Calculates the drag acting on the bullet 
     /// </summary>
     /// <returns>a float representing the force acting against the bullet</returns>
-    private float calculateDrag()
+    private float calculateDrag(Vector3 currentVec)
     {
-        //Rigidbody of the object
-        Rigidbody rb = GetComponent<Rigidbody>();
 
-       
         //Velocity of the bullet
-        float v = rb.velocity.magnitude;
+        float v = currentVec.magnitude;
 
 
         ///<summary>
