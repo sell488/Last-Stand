@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
     public float fallMultiplier = 2.5f;
     public float lowJumpMultiplier = 2f;
 
+    public bool IsGrounded;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = currentSpeed * movementDirection + new Vector3 (0, rb.velocity.y, 0);       
 
-        if(Input.GetKey(KeyCode.Space) && transform.position.y <= init_y)
+        if(Input.GetKey(KeyCode.Space) && (IsGrounded || transform.position.y <= init_y))
         {
             rb.velocity = Vector3.up * jump;
         }
@@ -68,6 +70,20 @@ public class PlayerMovement : MonoBehaviour
         if (rb.velocity.y > 0 && !Input.GetButton("Jump")) 
         {
             rb.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+        }
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.transform.tag == "Level")
+        {
+            IsGrounded = true;
+            Debug.Log("Grounded");
+        }
+        else
+        {
+            IsGrounded = false;
+            Debug.Log("Not Grounded!");
         }
     }
 
