@@ -67,6 +67,8 @@ public class Bullet : MonoBehaviour
     /// </summary>
     public float fudgeFactor;
 
+    private Quaternion initialRotation;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -84,6 +86,7 @@ public class Bullet : MonoBehaviour
         this.gravity = gravity;
         this.mass = mass;
         isInit = true;
+        initialRotation = transform.rotation;
         
     }
 
@@ -114,7 +117,11 @@ public class Bullet : MonoBehaviour
         float currentTime = Time.time - startTime;
         Vector3 currentPoint = calculateMotion(currentTime);
         transform.position = currentPoint;
-        transform.rotation = Quaternion.LookRotation(currentPoint) * Quaternion.Euler(0, 90, 90);
+        //transform.rotation = Quaternion.LookRotation(currentPoint) * Quaternion.Euler(0, 90, 90);
+
+        //transform.up = Vector3.Lerp(transform.up, currentPoint, Time.deltaTime);
+
+        transform.rotation = Quaternion.LookRotation(currentPoint) * Quaternion.Euler(90, 90, 0);
     }
 
     private void FixedUpdate()
@@ -137,12 +144,14 @@ public class Bullet : MonoBehaviour
             Vector3 prevPoint = calculateMotion(prevTime);
             if(checkCollisionStep(prevPoint, nextPoint, out hit))
             {
-                string marker = "here we are";
+                
                 OnHit(hit, currentPoint);
             }
         }
 
         //transform.position = currentPoint;
+
+        
     }
 
     private void OnHit(RaycastHit hit, Vector3 currentPoint)

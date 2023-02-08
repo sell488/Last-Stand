@@ -151,10 +151,20 @@ public class Firearm : MonoBehaviour
     //[SerializeField]
     public float bullMass;
 
-    private Recoil recoil;
-
+    /// <summary>
+    /// Recoil Event Manager
+    /// </summary>
     public delegate void RecoilEvent();
     public static event RecoilEvent OnShoot;
+
+    /// <summary>
+    /// Sight variables
+    /// </summary>
+    public Transform WeaponDefaultPosition;
+    public Transform WeaponADSPosition;
+    private Vector3 weaponPosition;
+    [SerializeField]
+    private float sightAdjustmentSpeed;
 
 
 
@@ -171,7 +181,7 @@ public class Firearm : MonoBehaviour
 
         firemode = false;
 
-        recoil = transform.Find("CameraRotation/CameraRecoil").GetComponent<Recoil>();
+        weaponPosition = WeaponDefaultPosition.position;
     }
 
     // Update is called once per frame
@@ -191,6 +201,7 @@ public class Firearm : MonoBehaviour
 
         }
 
+        //Firemode logic
         if(Input.GetKeyDown(KeyCode.V))
         {
             firemode = !firemode;
@@ -222,7 +233,20 @@ public class Firearm : MonoBehaviour
             }
         }
 
+        //ADS logic
+        if(Input.GetKey(KeyCode.Mouse1))
+        {
+            weaponPosition = Vector3.Lerp(weaponPosition, WeaponADSPosition.position, sightAdjustmentSpeed * Time.deltaTime);
+            gameObject.transform.position = weaponPosition;
+        } else
+        {
+            weaponPosition = Vector3.Lerp(weaponPosition, WeaponDefaultPosition.position, sightAdjustmentSpeed * Time.deltaTime);
+            gameObject.transform.position = weaponPosition;
+        }
+
     }
+
+
 
     private void FixedUpdate()
     {
@@ -291,7 +315,7 @@ public class Firearm : MonoBehaviour
 
     public void Shoot()
     {
-        GameObject bull = Instantiate(bullet, shootPoint.position, shootPoint.rotation);
+        GameObject bull = Instantiate(bullet, shootPoint.position, shootPoint.rotation * Quaternion.Euler(90, 0, 90));
         Bullet bullScript = bull.GetComponent<Bullet>();
 
         
@@ -309,7 +333,6 @@ public class Firearm : MonoBehaviour
             OnShoot();
         }
         
-        //recoil.RecoilFire();
         Destroy(bull, 5f);
     }
 
