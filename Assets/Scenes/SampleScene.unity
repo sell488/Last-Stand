@@ -2274,11 +2274,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2635373299093271808, guid: 327416f994b039a4282787e9c0b6d63e, type: 3}
       propertyPath: m_Mass
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2635373299093271809, guid: 327416f994b039a4282787e9c0b6d63e, type: 3}
       propertyPath: jump
-      value: 20
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635373299093271809, guid: 327416f994b039a4282787e9c0b6d63e, type: 3}
+      propertyPath: speed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2635373299093271810, guid: 327416f994b039a4282787e9c0b6d63e, type: 3}
       propertyPath: lookSmoothDamp
@@ -2298,7 +2302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2635373299093271814, guid: 327416f994b039a4282787e9c0b6d63e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.54
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2635373299093271814, guid: 327416f994b039a4282787e9c0b6d63e, type: 3}
       propertyPath: m_LocalPosition.z

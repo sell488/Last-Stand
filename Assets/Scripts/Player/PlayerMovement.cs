@@ -15,9 +15,12 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 5.0f;
     public float sprintSpeed = 10.0f;
 
-    public float jump = 3;
+    public float jump = 5;
 
     private Rigidbody rb;
+
+    public float fallMultiplier = 2.5f;
+    public float lowJumpMultiplier = 2f;
 
     // Start is called before the first frame update
     void Start()
@@ -55,7 +58,16 @@ public class PlayerMovement : MonoBehaviour
 
         if(Input.GetKey(KeyCode.Space) && transform.position.y <= init_y)
         {
-            rb.AddForce(new Vector3(0, jump, 0), ForceMode.Impulse);
+            rb.velocity = Vector3.up * jump;
+        }
+
+        if (rb.velocity.y < 0) //https://youtu.be/7KiK0Aqtmzc (better jump physics)
+        {
+            rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+        }
+        if (rb.velocity.y > 0 && !Input.GetButton("Jump")) 
+        {
+            rb.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
     }
 
