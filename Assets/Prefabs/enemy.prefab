@@ -146,6 +146,7 @@ MonoBehaviour:
   agent: {fileID: 4122852062086311906}
   target: {fileID: 2635373299093271823, guid: 327416f994b039a4282787e9c0b6d63e, type: 3}
   health: 100
+  damage: 1
 --- !u!195 &4122852062086311906
 NavMeshAgent:
   m_ObjectHideFlags: 0

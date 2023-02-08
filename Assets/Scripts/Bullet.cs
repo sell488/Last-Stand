@@ -73,25 +73,42 @@ public class Bullet : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 direction = -GetComponent<Rigidbody>().velocity.normalized;
-        float drag = calculateDrag();
 
-        GetComponent<Rigidbody>().AddForce(direction * calculateDrag());
-        transform.rotation = Quaternion.LookRotation(GetComponent<Rigidbody>().velocity) * Quaternion.Euler(0, 90, 90);
+        if(rb.velocity.magnitude != 0)
+        {
+            Vector3 direction = -GetComponent<Rigidbody>().velocity.normalized;
+            float drag = calculateDrag();
+
+            GetComponent<Rigidbody>().AddForce(direction * calculateDrag());
+            if (GetComponent<Rigidbody>().velocity != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(GetComponent<Rigidbody>().velocity) * Quaternion.Euler(0, 90, 90);
+            }
+        }
+        
+        
 
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        print(collision);
         if(collision.gameObject.GetComponent<Enemies>())
         {
-            collision.gameObject.GetComponent<Enemies>().health = collision.gameObject.GetComponent<Enemies>().health - 
-                fudgeFactor * (rb.mass * rb.velocity.magnitude);
+            collision.gameObject.GetComponent<Enemies>().health = collision.gameObject.GetComponent<Enemies>().health -
+                calculateDamage();
+        } else if(collision.gameObject.GetComponent<PlayerHealth>())
+        {
+            collision.gameObject.GetComponent<PlayerHealth>().takeDamage(calculateDamage());
         }
 
         //Object.Destroy(gameObject);
     }
+
+    private float calculateDamage()
+    {
+        return fudgeFactor * (rb.mass * rb.velocity.magnitude);
+    }
+
 
     /// <summary>
     /// Calculates the drag acting on the bullet 
