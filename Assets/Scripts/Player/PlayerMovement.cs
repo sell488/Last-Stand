@@ -89,12 +89,11 @@ public class PlayerMovement : MonoBehaviour
             if (shop.activeSelf)
             {
                 shop.SetActive(false);
-                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
             }
             else
             {
                 shop.SetActive(true);
-                Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
             }
         }

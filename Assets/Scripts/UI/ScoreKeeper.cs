@@ -25,6 +25,7 @@ public class ScoreKeeper : MonoBehaviour
     /// Text component for displaying the score
     /// </summary>
     private TMP_Text scoreDisplay;
+    private TMP_Text[] Displays;
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +41,7 @@ public class ScoreKeeper : MonoBehaviour
     /// </summary>
     /// <param name="points">Number of points to add to the score; can be positive or negative</param>
     public static void ScorePoints(int points)
-    {
+    { 
         Singleton.ScorePointsInternal(points);
     }
 
@@ -48,6 +49,7 @@ public class ScoreKeeper : MonoBehaviour
     {
         killCount += delta;
         scoreDisplay.text = "Kills: " + killCount.ToString();
+        
     }
 
     public static void setScoreDisplay(string text)
