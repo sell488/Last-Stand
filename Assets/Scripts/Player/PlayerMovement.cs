@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 5.0f;
     public float sprintSpeed = 10.0f;
 
-    public float jump;
+    public float jump = 3;
 
     private Rigidbody rb;
 
@@ -51,11 +51,11 @@ public class PlayerMovement : MonoBehaviour
         movementDirection.y = 0;
         movementDirection.Normalize();
 
-        rb.velocity = currentSpeed * movementDirection;       
+        rb.velocity = currentSpeed * movementDirection + new Vector3 (0, rb.velocity.y, 0);       
 
         if(Input.GetKey(KeyCode.Space) && transform.position.y <= init_y)
         {
-            rb.AddForce(new Vector3(0, jump, 0));
+            rb.AddForce(new Vector3(0, jump, 0), ForceMode.Impulse);
         }
     }
 
