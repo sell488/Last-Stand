@@ -12,24 +12,16 @@ public class PlayerMovement : MonoBehaviour
     private float verticalMovement;
     private float init_y; 
 
-    // A field editable from inside Unity with a default value of 5
     public float speed = 5.0f;
     public float sprintSpeed = 10.0f;
-
-    // How much will the player slide on the ground
-    // The lower the value, the greater distance the user will slide
-    public float drag;
 
     public float jump;
 
     private Rigidbody rb;
 
-    private Vector3 yLock;
-
     // Start is called before the first frame update
     void Start()
     {
-        yLock = new Vector3(1, 0, 1);
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         init_y = transform.position.y;
@@ -47,26 +39,19 @@ public class PlayerMovement : MonoBehaviour
         {
             currentSpeed = speed;
         }
-        Vector3 total_v = new Vector3(0, 0, 0);
-        if(Input.GetKey(KeyCode.W))
-        {
-            total_v += (transform.forward);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            total_v += -transform.right;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            total_v += -transform.forward;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            total_v += transform.right;
-        }
-        total_v.y = 0; // = Vector3.Scale(total_v, yLock);
-        total_v.Normalize();
-        rb.velocity = currentSpeed * total_v;
+        // This will detect forward and backward movement
+        horizontalMovement = Input.GetAxisRaw("Horizontal");
+
+        // This will detect sideways movement
+        verticalMovement = Input.GetAxisRaw("Vertical");
+
+        // Calculate the direction to move the player
+        Vector3 movementDirection = transform.forward * verticalMovement + transform.right * horizontalMovement;
+        
+        movementDirection.y = 0;
+        movementDirection.Normalize();
+
+        rb.velocity = currentSpeed * movementDirection;       
 
         if(Input.GetKey(KeyCode.Space) && transform.position.y <= init_y)
         {
