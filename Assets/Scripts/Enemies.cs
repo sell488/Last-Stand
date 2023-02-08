@@ -60,4 +60,11 @@ public class Enemies : MonoBehaviour
 
         
     }
+
+    public void takeDamage(float damage)
+    {
+        health -= damage;
+        checkHealth();
+        print("damaged");
+    }
 }

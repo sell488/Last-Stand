@@ -148,6 +148,14 @@ public class Firearm : MonoBehaviour
     public float Vb;
     public float Db;
     public float A;
+    //[SerializeField]
+    public float bullMass;
+
+    private Recoil recoil;
+
+    public delegate void RecoilEvent();
+    public static event RecoilEvent OnShoot;
+
 
 
     // Start is called before the first frame update
@@ -162,6 +170,8 @@ public class Firearm : MonoBehaviour
         primaryAmmo = true;
 
         firemode = false;
+
+        recoil = transform.Find("CameraRotation/CameraRecoil").GetComponent<Recoil>();
     }
 
     // Update is called once per frame
@@ -185,13 +195,9 @@ public class Firearm : MonoBehaviour
         {
             firemode = !firemode;
         }
-        
-    }
 
-    private void FixedUpdate()
-    {
         //Fire logic
-        if(primaryAmmo == true)
+        if (primaryAmmo == true)
         {
             if (Input.GetKey(KeyCode.Mouse0) && magRounds > 0 && firemode)
             {
@@ -205,32 +211,21 @@ public class Firearm : MonoBehaviour
                         timeTillNextShot = Time.time + fireRateSecs;
                     }
                 }
-            } else if (Input.GetKeyDown(KeyCode.Mouse0) && magRounds > 0 && !firemode)
+            }
+            else if (Input.GetKeyDown(KeyCode.Mouse0) && magRounds > 0 && !firemode)
             {
-                Shoot();
-                
-                /*if (Time.time >= timeTillNextShot)
+                if (Time.time >= timeTillNextShot)
                 {
-                    //FireBullet(bullet);
                     Shoot();
                     timeTillNextShot = Time.time + fireRateSecs;
-                }*/
-            }
-        } /*else if(primaryAmmo == false)
-        {
-            if (Input.GetKey(KeyCode.Mouse0) && magRoundsSec > 0)
-            {
-                if (canFire)
-                {
-                    //Firerate logic.
-                    if (Time.time >= timeTillNextShot)
-                    {
-                        FireBullet(secondaryProjectile);
-                        timeTillNextShot = Time.time + fireRateSecs;
-                    }
                 }
             }
-        }*/
+        }
+
+    }
+
+    private void FixedUpdate()
+    {
         
     }
 
@@ -296,14 +291,25 @@ public class Firearm : MonoBehaviour
 
     public void Shoot()
     {
-        GameObject bull = Instantiate(bullet, shootPoint.position, shootPoint.rotation * Quaternion.Euler(90, 0, 0));
+        GameObject bull = Instantiate(bullet, shootPoint.position, shootPoint.rotation);
         Bullet bullScript = bull.GetComponent<Bullet>();
+
+        
 
         if(bullScript)
         {
-            bullScript.Initialize(shootPoint, muzzleVelocity, gravity);
+            bullScript.Initialize(shootPoint, muzzleVelocity, gravity, bullMass);
         }
-
+        if (primaryAmmo)
+        {
+            magRounds--;
+        }
+        if(OnShoot != null)
+        {
+            OnShoot();
+        }
+        
+        //recoil.RecoilFire();
         Destroy(bull, 5f);
     }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -13,6 +14,7 @@ public class Bullet : MonoBehaviour
     private bool isInit = false;
     private float startTime = -1;
 
+    private float mass;
     /// <summary>
     /// Should the bullet explode on impact?
     /// </summary>
@@ -74,12 +76,13 @@ public class Bullet : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();*/
     }
 
-    public void Initialize(Transform startPos, float velocity, float gravity)
+    public void Initialize(Transform startPos, float velocity, float gravity, float mass)
     {
         this.startPos = startPos.position;
         this.startFor = startPos.forward.normalized;
         this.velocity = velocity;
         this.gravity = gravity;
+        this.mass = mass;
         isInit = true;
         
     }
@@ -94,6 +97,9 @@ public class Bullet : MonoBehaviour
 
     private bool checkCollisionStep(Vector3 startPoint, Vector3 endPoint, out RaycastHit hit)
     {
+        
+        bool test = Physics.Raycast(startPoint, endPoint - startPoint, out hit, (endPoint - startPoint).magnitude);
+        RaycastHit testhit = hit;
         return Physics.Raycast(startPoint, endPoint - startPoint, out hit, (endPoint - startPoint).magnitude);
     }
 
@@ -107,7 +113,6 @@ public class Bullet : MonoBehaviour
 
         float currentTime = Time.time - startTime;
         Vector3 currentPoint = calculateMotion(currentTime);
-        print(currentPoint);
         transform.position = currentPoint;
         transform.rotation = Quaternion.LookRotation(currentPoint) * Quaternion.Euler(0, 90, 90);
     }
@@ -122,49 +127,46 @@ public class Bullet : MonoBehaviour
         RaycastHit hit;
         float currentTime = Time.time - startTime;
         float nextTime = currentTime + Time.fixedDeltaTime;
+        float prevTime = currentTime - Time.fixedDeltaTime;
 
         Vector3 currentPoint = calculateMotion(currentTime);
         Vector3 nextPoint = calculateMotion(nextTime);
 
-        if(checkCollisionStep(currentPoint, nextPoint, out hit))
+        if (prevTime > 0)
         {
-            Destroy(gameObject);
+            Vector3 prevPoint = calculateMotion(prevTime);
+            if(checkCollisionStep(prevPoint, nextPoint, out hit))
+            {
+                string marker = "here we are";
+                OnHit(hit, currentPoint);
+            }
         }
 
-        /*if (rb.velocity.magnitude != 0)
-        {
-            Vector3 direction = -GetComponent<Rigidbody>().velocity.normalized;
-            float drag = calculateDrag();
-
-            GetComponent<Rigidbody>().AddForce(direction * calculateDrag());
-            if (GetComponent<Rigidbody>().velocity != Vector3.zero)
-            {
-                transform.rotation = Quaternion.LookRotation(GetComponent<Rigidbody>().velocity) * Quaternion.Euler(0, 90, 90);
-            }
-        }*/
-        
-        
-
+        //transform.position = currentPoint;
     }
 
-    /*private void OnCollisionEnter(Collision collision)
+    private void OnHit(RaycastHit hit, Vector3 currentPoint)
     {
-        if(collision.gameObject.GetComponent<Enemies>())
+        GameObject collision = hit.collider.gameObject;
+        
+
+        print("hit");
+
+        if (collision.GetComponent<Enemies>())
         {
-            collision.gameObject.GetComponent<Enemies>().health = collision.gameObject.GetComponent<Enemies>().health -
-                calculateDamage();
-        } else if(collision.gameObject.GetComponent<PlayerHealth>())
-        {
-            collision.gameObject.GetComponent<PlayerHealth>().takeDamage(calculateDamage());
+            print("hit enemy");
+            collision.GetComponent<Enemies>().takeDamage(currentPoint.magnitude);
+            ScoreKeeper.ScorePoints(1);
+
+            Destroy(gameObject);
         }
+        Destroy(gameObject);
+    }
 
-        //Object.Destroy(gameObject);
-    }*/
-
-    /*private float calculateDamage()
+    private float calculateDamage(float vel)
     {
-        return fudgeFactor * (rb.mass * rb.velocity.magnitude);
-    }*/
+        return fudgeFactor * vel * mass;
+    }
 
 
     /// <summary>
