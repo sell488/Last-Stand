@@ -10,7 +10,8 @@ public class PlayerMovement : MonoBehaviour
 
     private float horizontalMovement;
     private float verticalMovement;
-    private float init_y; 
+    private float init_y;
+    public GameObject shop;
 
     // A field editable from inside Unity with a default value of 5
     public float speed = 5.0f;
@@ -81,6 +82,21 @@ public class PlayerMovement : MonoBehaviour
         if(Input.GetKey(KeyCode.Space))
         {
             rb.AddForce(new Vector3(0, jump, 0));
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (shop.activeSelf)
+            {
+                shop.SetActive(false);
+                Cursor.visible = false;
+            }
+            else
+            {
+                shop.SetActive(true);
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
         }
     }
 
