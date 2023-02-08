@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2272,9 +2272,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2635373299093271808, guid: 327416f994b039a4282787e9c0b6d63e, type: 3}
+      propertyPath: m_Mass
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2635373299093271809, guid: 327416f994b039a4282787e9c0b6d63e, type: 3}
       propertyPath: jump
-      value: 100
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635373299093271810, guid: 327416f994b039a4282787e9c0b6d63e, type: 3}
+      propertyPath: lookSmoothDamp
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635373299093271810, guid: 327416f994b039a4282787e9c0b6d63e, type: 3}
+      propertyPath: lookSensitivity
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2635373299093271814, guid: 327416f994b039a4282787e9c0b6d63e, type: 3}
       propertyPath: m_RootOrder
