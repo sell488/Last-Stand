@@ -750,7 +750,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2479933389147931507, guid: 48f1c6e91913249b7ae077b9c9bd3bc0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.196601
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2479933389147931507, guid: 48f1c6e91913249b7ae077b9c9bd3bc0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3237,7 +3237,7 @@ MonoBehaviour:
   fireRate: 800
   gravity: 9.81
   shootPoint: {fileID: 726718670}
-  bullet: {fileID: 6962269122190100090, guid: 061eba2cb874806429e3c617f93931e5, type: 3}
+  bullet: {fileID: 6962269122190100090, guid: 8669d77b86f2bda4284d3c01f1794858, type: 3}
   secondaryProjectile: {fileID: 0}
   magCount: 30
   magCountSec: 1
@@ -3253,10 +3253,6 @@ MonoBehaviour:
   remainingRounds: 0
   remainingRoundsSec: 0
   isAutomatic: 1
-  Vb: 0.0185
-  Db: 0.0057
-  A: 0.001
-  bullMass: 0.0035
   WeaponDefaultPosition: {fileID: 1294539906}
   WeaponADSPosition: {fileID: 239514449}
   sightAdjustmentSpeed: 15

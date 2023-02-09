@@ -27,7 +27,7 @@ public class Enemies : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        agent.destination = target.transform.position;
+        //agent.destination = target.transform.position;
     }
 
     private void OnCollisionEnter(Collision collision)

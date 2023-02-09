@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
     private bool isInit = false;
     private float startTime = -1;
 
-    private float mass;
+    public float mass;
     /// <summary>
     /// Should the bullet explode on impact?
     /// </summary>
@@ -55,14 +55,6 @@ public class Bullet : MonoBehaviour
     /// </remarks>
     private float pa = 1.225f;
 
-    /// <summary>
-    /// Density of the bullet
-    /// </summary>
-    /// <remarks>
-    /// Used to calculate air drag
-    /// </remarks>
-    private float pb;
-
     public float Cd;
 
     /// <summary>
@@ -75,19 +67,14 @@ public class Bullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Density of the bullet
-        /*pb = GetComponent<Rigidbody>().mass / Vb;
-
-        rb = gameObject.GetComponent<Rigidbody>();*/
     }
 
-    public void Initialize(Transform startPos, float velocity, float gravity, float mass)
+    public void Initialize(Transform startPos, float velocity, float gravity)
     {
         this.startPos = startPos.position;
         this.startFor = startPos.forward.normalized;
         this.velocity = velocity;
         this.gravity = gravity;
-        this.mass = mass;
         isInit = true;
         initialRotation = transform.rotation;
         
@@ -106,7 +93,7 @@ public class Bullet : MonoBehaviour
         
         bool test = Physics.Raycast(startPoint, endPoint - startPoint, out hit, (endPoint - startPoint).magnitude);
         RaycastHit testhit = hit;
-        return Physics.Raycast(startPoint, endPoint - startPoint, out hit, (endPoint - startPoint).magnitude);
+        return Physics.Raycast(startPoint, endPoint - startPoint, out hit, (endPoint - startPoint).magnitude, ~LayerMask.GetMask("Projectile"));
     }
 
     // Update is called once per frame
@@ -125,11 +112,6 @@ public class Bullet : MonoBehaviour
         Vector3 distance = nextPoint - currentPoint;
         currentPoint = currentPoint - calculateDrag(distance);
         transform.position = currentPoint;
-        //transform.rotation = Quaternion.LookRotation(currentPoint) * Quaternion.Euler(0, 90, 90);
-
-        //transform.up = Vector3.Lerp(transform.up, currentPoint, Time.deltaTime);
-
-        transform.rotation = Quaternion.LookRotation(currentPoint);
     }
 
     private void FixedUpdate()
@@ -156,7 +138,12 @@ public class Bullet : MonoBehaviour
             Vector3 prevPoint = calculateMotion(prevTime);
             if(checkCollisionStep(prevPoint, nextPoint, out hit))
             {
-                
+                OnHit(hit, currentPoint);
+            }
+        } else
+        {
+            if(checkCollisionStep(currentPoint, nextPoint, out hit))
+            {
                 OnHit(hit, currentPoint);
             }
         }
@@ -171,16 +158,20 @@ public class Bullet : MonoBehaviour
         
 
         print("hit");
-
-        if (collision.GetComponent<Enemies>())
+        if(collision.GetComponent<Bullet>() == null)
         {
-            print("hit enemy");
-            collision.GetComponent<Enemies>().takeDamage(currentPoint.magnitude);
-            ScoreKeeper.ScorePoints(1);
+            if (collision.GetComponent<Enemies>())
+            {
+                print("hit enemy");
+                collision.GetComponent<Enemies>().takeDamage(currentPoint.magnitude);
+                ScoreKeeper.ScorePoints(1);
 
+                Destroy(gameObject);
+            }
             Destroy(gameObject);
         }
-        Destroy(gameObject);
+        
+        
     }
 
     private float calculateDamage(float vel)

@@ -23,6 +23,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bullet Variant 1 No RB
       objectReference: {fileID: 0}
+    - target: {fileID: 1469821383695879314, guid: 0133bce70ccec384082765ec342844b2, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7271050693964704575, guid: 0133bce70ccec384082765ec342844b2, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -70,6 +74,10 @@ PrefabInstance:
     - target: {fileID: 7278948362482723925, guid: 0133bce70ccec384082765ec342844b2, type: 3}
       propertyPath: Cd
       value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7278948362482723925, guid: 0133bce70ccec384082765ec342844b2, type: 3}
+      propertyPath: mass
+      value: 0.0035
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1699517894, guid: 0133bce70ccec384082765ec342844b2, type: 3}

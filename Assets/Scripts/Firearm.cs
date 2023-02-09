@@ -135,22 +135,6 @@ public class Firearm : MonoBehaviour
     /// </remarks>
     private bool firemode;
 
-
-
-    /// <summary>
-    /// See <see cref="Bullet"/> for explanation of
-    /// Vb, Db, and A
-    /// </summary>
-    /// <remarks>
-    /// Used to assign the values neccesary for drag calculations
-    /// to individual bullets fired by the gun
-    /// </remarks>
-    public float Vb;
-    public float Db;
-    public float A;
-    //[SerializeField]
-    public float bullMass;
-
     /// <summary>
     /// Recoil Event Manager
     /// </summary>
@@ -254,35 +238,6 @@ public class Firearm : MonoBehaviour
     }
 
     /// <summary>
-    /// Fires a single bullet everytime FireBullet is called
-    /// </summary>
-    /*private void FireBullet(GameObject proj, float lifeTime = 5f)
-    {
-        Vector3 bulletPos = gameObject.GetComponent<Renderer>().bounds.center;
-        bulletPos = bulletPos + gameObject.transform.forward;
-        GameObject newBullet = Instantiate(proj, bulletPos, transform.rotation * Quaternion.Euler(90, 0, 0));
-
-        Bullet bulletScript = newBullet.GetComponent<Bullet>();
-
-        bulletScript.Vb = this.Vb;
-        bulletScript.Db = this.Db;
-        bulletScript.A = this.A;
-        if(primaryAmmo)
-        {
-            newBullet.GetComponent<Rigidbody>().velocity = muzzleVelocity * transform.forward;
-
-            magRounds--;
-        } else if(!primaryAmmo)
-        {
-            newBullet.GetComponent<Rigidbody>().velocity = muzzleVelocitySec * transform.forward;
-
-            magRoundsSec--;
-        }
-        
-
-        Object.Destroy(newBullet, lifeTime);
-    }*/
-    /// <summary>
     /// Reloads the gun. Should be called using a coroutine or Invoke
     /// </summary>
     private void Reload()
@@ -322,7 +277,7 @@ public class Firearm : MonoBehaviour
 
         if(bullScript)
         {
-            bullScript.Initialize(shootPoint, muzzleVelocity, gravity, bullMass);
+            bullScript.Initialize(shootPoint, muzzleVelocity, gravity);
         }
         if (primaryAmmo)
         {
@@ -333,9 +288,7 @@ public class Firearm : MonoBehaviour
             OnShoot();
         }
         
-        //Destroy(bull, 15f);
+        Destroy(bull, 5f);
     }
-
-
 
 }
