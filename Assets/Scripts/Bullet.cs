@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using TMPro;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -19,6 +20,8 @@ public class Bullet : MonoBehaviour
     /// Should the bullet explode on impact?
     /// </summary>
     public bool isExplosive;
+
+    public TMP_Text Velocity;
 
     /// <summary>
     /// Volume of a bullet.
@@ -60,7 +63,7 @@ public class Bullet : MonoBehaviour
     /// </remarks>
     private float pb;
 
-    private Rigidbody rb;
+    public float Cd;
 
     /// <summary>
     /// Modifier for damage
@@ -93,7 +96,7 @@ public class Bullet : MonoBehaviour
     private Vector3 calculateMotion(float time)
     {
         Vector3 point = startPos + (startFor * velocity * time);
-        Vector3 gravityVec = Vector3.down * gravity * time * time;
+        Vector3 gravityVec = 0.5f * Vector3.down * gravity * time * time;
         Vector3 nextPointRaw = point + gravityVec;
         return point + gravityVec;
     }
@@ -115,13 +118,18 @@ public class Bullet : MonoBehaviour
         }
 
         float currentTime = Time.time - startTime;
+        float nextTime = currentTime + Time.fixedDeltaTime;
         Vector3 currentPoint = calculateMotion(currentTime);
+        Vector3 nextPoint = calculateMotion(nextTime);
+
+        Vector3 distance = nextPoint - currentPoint;
+        currentPoint = currentPoint - calculateDrag(distance);
         transform.position = currentPoint;
         //transform.rotation = Quaternion.LookRotation(currentPoint) * Quaternion.Euler(0, 90, 90);
 
         //transform.up = Vector3.Lerp(transform.up, currentPoint, Time.deltaTime);
 
-        transform.rotation = Quaternion.LookRotation(currentPoint) * Quaternion.Euler(90, 90, 0);
+        transform.rotation = Quaternion.LookRotation(currentPoint);
     }
 
     private void FixedUpdate()
@@ -139,6 +147,10 @@ public class Bullet : MonoBehaviour
         Vector3 currentPoint = calculateMotion(currentTime);
         Vector3 nextPoint = calculateMotion(nextTime);
 
+        Vector3 distance = nextPoint - currentPoint;
+
+        currentPoint = currentPoint - calculateDrag(distance);
+
         if (prevTime > 0)
         {
             Vector3 prevPoint = calculateMotion(prevTime);
@@ -149,9 +161,8 @@ public class Bullet : MonoBehaviour
             }
         }
 
-        //transform.position = currentPoint;
-
         
+
     }
 
     private void OnHit(RaycastHit hit, Vector3 currentPoint)
@@ -182,23 +193,28 @@ public class Bullet : MonoBehaviour
     /// Calculates the drag acting on the bullet 
     /// </summary>
     /// <returns>a float representing the force acting against the bullet</returns>
-    private float calculateDrag(Vector3 currentVec)
+    private Vector3 calculateDrag(Vector3 currentVec)
     {
 
-        //Velocity of the bullet
-        float v = currentVec.magnitude;
+        //Velocity of the bullet decomposed
+        float pointX = currentVec.x;
+        float pointY = currentVec.y;
+        float pointZ = currentVec.z;
 
+        //Unit vectors of velocity
+        float unitX = pointX / currentVec.magnitude;
+        float unitY = pointY / currentVec.magnitude;
+        float unitZ = pointZ / currentVec.magnitude;
 
-        ///<summary>
-        /// Calculates the drag coefficient, Cd using the formula
-        /// Cd = 8/(pb * v^2 * pi * d^2)
-        /// </summary>
-        float dragCof = 8/(pb*v*v*Mathf.PI*Db*Db);
+        //Calculation of drag force for each component
+        float dragX = 0.5f * pa * pointX * pointX * Cd * A * unitX;
+        float dragY = 0.5f * pa * pointY * pointY * Cd * A * unitY;
+        float dragZ = 0.5f * pa * pointZ * pointZ * Cd * A * unitZ;
 
-        //Calculates drag
-        float drag = 0.5f*pa*v*v*dragCof*A;
+        //dragY will always be negative because it is constantly being accelerated down
+        Vector3 dragVec = new Vector3(dragX, -dragY, dragZ);
 
-        return drag;
+        return dragVec;
     }
 
     

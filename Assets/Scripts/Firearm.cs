@@ -333,7 +333,7 @@ public class Firearm : MonoBehaviour
             OnShoot();
         }
         
-        Destroy(bull, 5f);
+        //Destroy(bull, 15f);
     }
 
 
