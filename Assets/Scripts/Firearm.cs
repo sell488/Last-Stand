@@ -222,7 +222,7 @@ public class Firearm : MonoBehaviour
         {
             weaponPosition = Vector3.Lerp(weaponPosition, WeaponADSPosition.position, sightAdjustmentSpeed * Time.deltaTime);
             gameObject.transform.position = weaponPosition;
-        } else
+        } else if (Input.GetKeyUp(KeyCode.Mouse1))
         {
             weaponPosition = Vector3.Lerp(weaponPosition, WeaponDefaultPosition.position, sightAdjustmentSpeed * Time.deltaTime);
             gameObject.transform.position = weaponPosition;
