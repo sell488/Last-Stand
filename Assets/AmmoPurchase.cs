@@ -10,7 +10,7 @@ public class AmmoPurchase : MonoBehaviour
     private TMP_Text scoreDisplay;
 
 
-    public void transaction()
+    public void ammoTransaction()
     {
         sk = FindObjectOfType<ScoreKeeper>();
         firearm = FindObjectOfType<Firearm>();
@@ -22,4 +22,5 @@ public class AmmoPurchase : MonoBehaviour
             scoreDisplay.text = "Kills: " + sk.killCount;
         }
     }
+
 }
