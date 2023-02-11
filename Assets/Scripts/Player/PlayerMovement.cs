@@ -73,17 +73,21 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void OnTriggerStay(Collider other)
+    void OnCollisionEnter(Collision other)
     {
-        if (other.transform.tag == "Level")
+        if (other.gameObject.tag == "Level")
         {
             IsGrounded = true;
             Debug.Log("Grounded");
         }
-        else
+    }
+
+    void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.tag == "Level")
         {
             IsGrounded = false;
-            Debug.Log("Not Grounded!");
+            Debug.Log("Not Grounded");
         }
     }
 
