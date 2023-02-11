@@ -50,7 +50,7 @@ public class ScoreKeeper : MonoBehaviour
         scoreDisplay.text = "Kills: " + killCount.ToString();
     }
 
-    public static void setScoreDisplay(string text)
+    public void setScoreDisplay(string text)
     {
         Singleton.scoreDisplay.text = text;
     }

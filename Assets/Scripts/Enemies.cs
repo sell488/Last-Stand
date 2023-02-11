@@ -27,7 +27,7 @@ public class Enemies : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        agent.destination = target.transform.position;
+        //agent.destination = target.transform.position;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -59,5 +59,12 @@ public class Enemies : MonoBehaviour
         }
 
         
+    }
+
+    public void takeDamage(float damage)
+    {
+        health -= damage;
+        checkHealth();
+        print("damaged");
     }
 }

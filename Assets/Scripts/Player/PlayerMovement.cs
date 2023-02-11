@@ -24,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsGrounded;
 
+    public GameObject shop;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -71,19 +73,37 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (shop.activeSelf)
+            {
+                shop.SetActive(false);
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+            else
+            {
+                shop.SetActive(true);
+                Cursor.lockState = CursorLockMode.None;
+            }
+        }
     }
 
-    void OnTriggerStay(Collider other)
+    void OnCollisionEnter(Collision other)
     {
-        if (other.transform.tag == "Level")
+        if (other.gameObject.tag == "Level")
         {
             IsGrounded = true;
             Debug.Log("Grounded");
         }
-        else
+    }
+
+    void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.tag == "Level")
         {
             IsGrounded = false;
-            Debug.Log("Not Grounded!");
+            Debug.Log("Not Grounded");
         }
     }
 

@@ -32,5 +32,14 @@ public class PlayerHealth : MonoBehaviour
     public void takeDamage(float damage)
     {
         remainingHealth -= damage;
+
+        if(remainingHealth > 100)
+        {
+            remainingHealth = 100;
+        }
+        if(remainingHealth < 0)
+        {
+            remainingHealth = 0;
+        }
     }
 }
