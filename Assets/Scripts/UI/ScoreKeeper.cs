@@ -52,7 +52,7 @@ public class ScoreKeeper : MonoBehaviour
         
     }
 
-    public static void setScoreDisplay(string text)
+    public void setScoreDisplay(string text)
     {
         Singleton.scoreDisplay.text = text;
     }

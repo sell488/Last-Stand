@@ -15,10 +15,10 @@ public class AmmoPurchase : MonoBehaviour
         sk = FindObjectOfType<ScoreKeeper>();
         firearm = FindObjectOfType<Firearm>();
         scoreDisplay = sk.GetComponent<TMP_Text>();
-        if (sk.killCount >= 5)
+        if (sk.killCount >= 5 && firearm.remainingRounds <= firearm.totalRounds)
         {
             sk.killCount -= 5;
-            firearm.remainingRounds += 30;
+            firearm.remainingRounds = Mathf.Min(firearm.totalRounds, firearm.remainingRounds + 30);
             scoreDisplay.text = "Kills: " + sk.killCount;
         }
     }
