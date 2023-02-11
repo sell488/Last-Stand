@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1278,9 +1278,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802659600cf194915ac3ea975a8f8e28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  drag: 10
-  jump: 100
+  speed: 5
+  sprintSpeed: 10
+  jump: 5
+  fallMultiplier: 2.5
+  lowJumpMultiplier: 2
+  IsGrounded: 0
 --- !u!114 &909465290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3333,6 +3336,7 @@ MonoBehaviour:
   isAutomatic: 1
   WeaponDefaultPosition: {fileID: 1294539906}
   WeaponADSPosition: {fileID: 239514449}
+  weaponPosition: {x: 0, y: 0, z: 0}
   sightAdjustmentSpeed: 10
 --- !u!4 &1795602748 stripped
 Transform:
