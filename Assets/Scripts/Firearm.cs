@@ -146,9 +146,9 @@ public class Firearm : MonoBehaviour
     /// </summary>
     public Transform WeaponDefaultPosition;
     public Transform WeaponADSPosition;
-    private Vector3 weaponPosition;
+    public Vector3 weaponPosition;
     [SerializeField]
-    private float sightAdjustmentSpeed;
+    public float sightAdjustmentSpeed;
 
 
 
@@ -218,15 +218,7 @@ public class Firearm : MonoBehaviour
         }
 
         //ADS logic
-        if(Input.GetKey(KeyCode.Mouse1))
-        {
-            weaponPosition = Vector3.Lerp(weaponPosition, WeaponADSPosition.position, sightAdjustmentSpeed * Time.deltaTime);
-            gameObject.transform.position = weaponPosition;
-        } else if (Input.GetKeyUp(KeyCode.Mouse1))
-        {
-            weaponPosition = Vector3.Lerp(weaponPosition, WeaponDefaultPosition.position, sightAdjustmentSpeed * Time.deltaTime);
-            gameObject.transform.position = weaponPosition;
-        }
+        
 
     }
 
