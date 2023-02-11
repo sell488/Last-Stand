@@ -22,7 +22,7 @@ public class spawner : MonoBehaviour
         if(Time.time - prev_time > 3.0f)
         {
             prev_time = Time.time;
-            for(int i = 0; i < (int)(rnd.NextDouble() * 5 + 10); i++)
+            for(int i = 0; i < (int)(rnd.NextDouble() * 5 + 2); i++)
             {
                 Instantiate(enemy, transform.position + new Vector3((float)(rnd.NextDouble() - .5f) * 2.0f, transform.position.y, (float)(rnd.NextDouble() - .5f) * 2), Quaternion.identity);
             }
