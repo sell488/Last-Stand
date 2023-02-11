@@ -12,75 +12,78 @@ public class PlayerMovement : MonoBehaviour
     private float verticalMovement;
     private float init_y; 
 
-    // A field editable from inside Unity with a default value of 5
     public float speed = 5.0f;
+    public float sprintSpeed = 10.0f;
 
-    // How much will the player slide on the ground
-    // The lower the value, the greater distance the user will slide
-    public float drag;
-
-    public float jump;
+    public float jump = 5;
 
     private Rigidbody rb;
 
-    private Vector3 yLock;
+    public float fallMultiplier = 2.5f;
+    public float lowJumpMultiplier = 2f;
+
+    public bool IsGrounded;
 
     // Start is called before the first frame update
     void Start()
     {
-        yLock = new Vector3(1, 0, 1);
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         init_y = transform.position.y;
     }
 
-    // Update is called once per frame
-    /*void Update()
+    private void Update()
     {
+        
+        float currentSpeed;
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            currentSpeed = sprintSpeed;
+        }
+        else
+        {
+            currentSpeed = speed;
+        }
         // This will detect forward and backward movement
         horizontalMovement = Input.GetAxisRaw("Horizontal");
 
         // This will detect sideways movement
         verticalMovement = Input.GetAxisRaw("Vertical");
 
-        
-
         // Calculate the direction to move the player
         Vector3 movementDirection = transform.forward * verticalMovement + transform.right * horizontalMovement;
         
-        // Move the player
-        rb.AddForce(movementDirection * speed, ForceMode.Force);
-        // Apply drag
-        rb.drag = drag;
-    }*/
+        movementDirection.y = 0;
+        movementDirection.Normalize();
 
-    private void Update()
+        rb.velocity = currentSpeed * movementDirection + new Vector3 (0, rb.velocity.y, 0);       
+
+        if(Input.GetKey(KeyCode.Space) && (IsGrounded || transform.position.y <= init_y))
+        {
+            rb.velocity = Vector3.up * jump;
+        }
+
+        if (rb.velocity.y < 0) //https://youtu.be/7KiK0Aqtmzc (better jump physics)
+        {
+            rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+        }
+        if (rb.velocity.y > 0 && !Input.GetButton("Jump")) 
+        {
+            rb.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+        }
+    }
+
+    void OnTriggerStay(Collider other)
     {
-  
-        Vector3 total_v = new Vector3(0, 0, 0);
-        if(Input.GetKey(KeyCode.W))
+        if (other.transform.tag == "Level")
         {
-            total_v += (transform.forward);
+            IsGrounded = true;
+            Debug.Log("Grounded");
         }
-        if (Input.GetKey(KeyCode.A))
+        else
         {
-            total_v += -transform.right;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            total_v += -transform.forward;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            total_v += transform.right;
-        }
-        total_v = Vector3.Scale(total_v, yLock);
-        total_v.Normalize();
-        rb.velocity = speed * total_v;
-
-        if(Input.GetKey(KeyCode.Space))
-        {
-            rb.AddForce(new Vector3(0, jump, 0));
+            IsGrounded = false;
+            Debug.Log("Not Grounded!");
         }
     }
 
