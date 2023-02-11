@@ -24,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsGrounded;
 
+    public GameObject shop;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -70,6 +72,20 @@ public class PlayerMovement : MonoBehaviour
         if (rb.velocity.y > 0 && !Input.GetButton("Jump")) 
         {
             rb.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (shop.activeSelf)
+            {
+                shop.SetActive(false);
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+            else
+            {
+                shop.SetActive(true);
+                Cursor.lockState = CursorLockMode.None;
+            }
         }
     }
 
