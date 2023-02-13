@@ -6,12 +6,12 @@ using Random = System.Random;
 public class Enemies : MonoBehaviour
 {
     public GameObject spawner;
-    public UnityEngine.AI.NavMeshAgent agent;
+    private UnityEngine.AI.NavMeshAgent agent;
 
     /// <summary>
     /// What enemies should move towards
     /// </summary>
-    public GameObject target;
+    private GameObject target;
 
     public float health;
 
@@ -21,13 +21,14 @@ public class Enemies : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        target = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
-        //agent.destination = target.transform.position;
+        agent.destination = target.transform.position;
     }
 
     private void OnCollisionEnter(Collision collision)
