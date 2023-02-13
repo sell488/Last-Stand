@@ -262,7 +262,7 @@ public class Firearm : MonoBehaviour
 
     public void Shoot()
     {
-        GameObject bull = Instantiate(bullet, shootPoint.position, shootPoint.rotation * Quaternion.Euler(90, 0, 90));
+        GameObject bull = Instantiate(bullet, shootPoint.position, shootPoint.rotation);
         Bullet bullScript = bull.GetComponent<Bullet>();
 
         
