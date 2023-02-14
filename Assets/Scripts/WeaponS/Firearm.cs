@@ -165,7 +165,7 @@ public class Firearm : MonoBehaviour
 
         firemode = false;
 
-        weaponPosition = WeaponDefaultPosition.position;
+        weaponPosition = WeaponDefaultPosition.localPosition;
     }
 
     // Update is called once per frame
