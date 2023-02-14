@@ -4,38 +4,69 @@ using UnityEngine;
 
 public class Shotgun : Firearm
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public int gauge;
+    public float spread;
+
+
+
+    public override void Shoot(GameObject proj)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    /*public void Shoot()
-    {
-        GameObject bull = Instantiate(bullet, shootPoint.position, shootPoint.rotation);
-        Bullet bullScript = bull.GetComponent<Bullet>();
-
-
-
-        if (bullScript)
+        float totalSpread = spread/gauge;
+        for (int i = 0; i < gauge; i++)
         {
-            bullScript.Initialize(shootPoint, muzzleVelocity, gravity);
+            Quaternion orgPos = shootPoint.rotation;
+            Vector3 randomRotation = shootPoint.rotation.eulerAngles;
+            randomRotation.x += Random.Range(-spread, spread);
+            randomRotation.y += Random.Range(-spread, spread);
+            Quaternion rotation = Quaternion.Euler(randomRotation);
+            shootPoint.rotation = rotation;
+
+            GameObject bull = Instantiate(bullet, shootPoint.position, shootPoint.rotation);
+            Bullet bullScript = bull.GetComponent<Bullet>();
+
+            if (bullScript)
+            {
+                bullScript.Initialize(shootPoint, muzzleVelocity, gravity);
+            }
+
+            shootPoint.rotation = orgPos;
+            
+            
+
+            Destroy(bull, 5f);
         }
+
         if (primaryAmmo)
         {
             magRounds--;
         }
-        if (OnShoot != null)
-        {
-            OnShoot();
-        }
 
-        Destroy(bull, 5f);
-    }*/
+        triggerOnShoot();
+
+    }
+
+    public override void Reload()
+    {
+        StartCoroutine("reloadCoroutine");
+        
+    }
+
+    private IEnumerator reloadCoroutine()
+    {
+        
+        while (magRounds < magCount && totalRounds > 0)
+        {
+            magRounds++;
+            int rounds = magRounds;
+            totalRounds--;
+            yield return new WaitForSeconds(0.5f);
+            if(rounds != magRounds)
+            {
+                StopCoroutine("reloadCoroutine");
+            }
+        }
+    }
+
+
 }

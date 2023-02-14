@@ -157,12 +157,12 @@ public class Bullet : MonoBehaviour
         GameObject collision = hit.collider.gameObject;
         
 
-        print("hit");
+
         if(collision.GetComponent<Bullet>() == null)
         {
             if (collision.GetComponent<Enemies>())
             {
-                print("hit enemy");
+
                 collision.GetComponent<Enemies>().takeDamage(currentPoint.magnitude);
                 ScoreKeeper.ScorePoints(1);
 

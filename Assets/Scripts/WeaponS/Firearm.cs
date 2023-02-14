@@ -78,12 +78,12 @@ public class Firearm : MonoBehaviour
     /// <summary>
     /// Internal variable for fire rate in seconds
     /// </summary>
-    private float fireRateSecs;
+    protected float fireRateSecs;
 
     /// <summary>
     /// Time until a round can be shot again
     /// </summary>
-    private float timeTillNextShot;
+    protected float timeTillNextShot;
 
     /// <summary>
     /// Internal tracker for rounds in mag left
@@ -108,7 +108,7 @@ public class Firearm : MonoBehaviour
     /// <summary>
     /// Utility bool for preventing player from shooting while reloading
     /// </summary>
-    private bool canFire;
+    protected bool canFire;
 
     /// <summary>
     /// Internal bool tracker of which ammo type is being used. <strong>True</strong>: primary 
@@ -118,7 +118,7 @@ public class Firearm : MonoBehaviour
     /// <remarks>
     /// Defaults to True.
     /// </remarks>
-    private bool primaryAmmo;
+    protected bool primaryAmmo;
 
     /// <summary>
     /// Represents if a weapon is an automatic weapon
@@ -133,7 +133,7 @@ public class Firearm : MonoBehaviour
     /// <remarks>
     /// Defaults to false
     /// </remarks>
-    private bool firemode;
+    protected bool firemode;
 
     /// <summary>
     /// Recoil Event Manager
@@ -174,8 +174,11 @@ public class Firearm : MonoBehaviour
         //Reload logic
         if(Input.GetKeyDown(KeyCode.R) && remainingRounds > 0)
         {
+            
+            canFire = false;
             if(magRounds > 0)
             {
+                print("reloading");
                 Invoke("Reload", tacticalReloadTime);
             } else
             {
@@ -202,7 +205,7 @@ public class Firearm : MonoBehaviour
                     if (Time.time >= timeTillNextShot)
                     {
                         //FireBullet(bullet);
-                        Shoot();
+                        Shoot(bullet);
                         timeTillNextShot = Time.time + fireRateSecs;
                     }
                 }
@@ -211,9 +214,16 @@ public class Firearm : MonoBehaviour
             {
                 if (Time.time >= timeTillNextShot)
                 {
-                    Shoot();
+                    Shoot(bullet);
                     timeTillNextShot = Time.time + fireRateSecs;
                 }
+            }
+        } else if(primaryAmmo == false)
+        {
+            if(canFire && Time.time >= timeTillNextShot)
+            {
+                Shoot(secondaryProjectile);
+                timeTillNextShot = Time.time + fireRateSecs;
             }
         }
 
@@ -232,7 +242,7 @@ public class Firearm : MonoBehaviour
     /// <summary>
     /// Reloads the gun. Should be called using a coroutine or Invoke
     /// </summary>
-    private void Reload()
+    public virtual void Reload()
     {
         if (primaryAmmo == true)
         {
@@ -251,18 +261,21 @@ public class Firearm : MonoBehaviour
                 magRounds = magCount;
             }
 
+            canFire = true;
+
             print(remainingRounds);
         } else if(primaryAmmo== false)
         {
             remainingRoundsSec = remainingRoundsSec - (magCountSec - magRoundsSec);
 
             magRoundsSec = magCountSec;
+            canFire = true;
         }
     }
 
-    public void Shoot()
+    public virtual void Shoot(GameObject proj)
     {
-        GameObject bull = Instantiate(bullet, shootPoint.position, shootPoint.rotation);
+        GameObject bull = Instantiate(proj, shootPoint.position, shootPoint.rotation);
         Bullet bullScript = bull.GetComponent<Bullet>();
 
         
@@ -283,4 +296,11 @@ public class Firearm : MonoBehaviour
         Destroy(bull, 5f);
     }
 
+    public void triggerOnShoot()
+    {
+        if(OnShoot != null)
+        {
+            OnShoot();
+        }
+    }
 }
