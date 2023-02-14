@@ -10,10 +10,20 @@ public class WeaponSway : MonoBehaviour
     private Vector3 initalPos;
     private Firearm firearm;
 
+    private Vector3 velocity = Vector3.zero;
+
+    public Animator ADS;
+
     void Start()
     {
         initalPos = transform.localPosition;
         firearm = GetComponentInChildren<Firearm>();
+        ADS.SetBool("ADS", false);
+    }
+
+    private void Awake()
+    {
+        //ADS = GetComponent<Animator>();
     }
     void Update()
     {
@@ -25,7 +35,9 @@ public class WeaponSway : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Mouse1))
         {
-            onAim();
+            
+            onUnaim();
+            //ADS.Play("ADS");
         }
         else if (Input.GetKeyUp(KeyCode.Mouse1))
         {
@@ -37,8 +49,8 @@ public class WeaponSway : MonoBehaviour
 
     private void onAim()
     {
-        firearm.weaponPosition = Vector3.Lerp(firearm.weaponPosition, firearm.WeaponADSPosition.position, firearm.sightAdjustmentSpeed * Time.deltaTime);
-        transform.position = firearm.weaponPosition;
+        transform.position = Vector3.SmoothDamp(firearm.weaponPosition, firearm.WeaponADSPosition.position, ref velocity, firearm.sightAdjustmentSpeed * Time.deltaTime);
+        //transform.position = firearm.weaponPosition;
     }
 
     private void onUnaim()

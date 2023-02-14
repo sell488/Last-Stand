@@ -12,7 +12,7 @@ public class Firearm : MonoBehaviour
     public float gravity;
 
     [SerializeField]
-    private Transform shootPoint;
+    public Transform shootPoint;
 
     public GameObject bullet;
 
