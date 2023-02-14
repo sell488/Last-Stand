@@ -37,10 +37,8 @@ public class WeaponSway : MonoBehaviour
 
     private void onAim()
     {
-        Vector3 weaponPos;
-
-        weaponPos = Vector3.Lerp(firearm.weaponPosition, firearm.WeaponADSPosition.localPosition, firearm.sightAdjustmentSpeed * Time.deltaTime);
-        transform.position = weaponPos;
+        firearm.weaponPosition = Vector3.Lerp(firearm.weaponPosition, firearm.WeaponADSPosition.position, firearm.sightAdjustmentSpeed * Time.deltaTime);
+        transform.position = firearm.weaponPosition;
     }
 
     private void onUnaim()
