@@ -178,7 +178,6 @@ public class Firearm : MonoBehaviour
             canFire = false;
             if(magRounds > 0)
             {
-                print("reloading");
                 Invoke("Reload", tacticalReloadTime);
             } else
             {
@@ -278,7 +277,11 @@ public class Firearm : MonoBehaviour
         GameObject bull = Instantiate(proj, shootPoint.position, shootPoint.rotation);
         Bullet bullScript = bull.GetComponent<Bullet>();
 
-        
+        if(proj.GetComponent<Rigidbody>())
+        {
+            bullScript = bull.GetComponent<RBBullet>();
+            proj.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, muzzleVelocitySec, 0));
+        } 
 
         if(bullScript)
         {

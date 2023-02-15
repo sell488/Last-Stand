@@ -59,11 +59,13 @@ public class Shotgun : Firearm
         {
             magRounds++;
             int rounds = magRounds;
-            totalRounds--;
+            remainingRounds--;
             yield return new WaitForSeconds(0.5f);
             if(rounds != magRounds)
             {
                 StopCoroutine("reloadCoroutine");
+                magRounds--;
+                
             }
         }
     }

@@ -586,7 +586,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce105eb96054274cbdaa5a7d07444be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recoilX: -4
+  recoilX: -16
   recoilY: 2
   recoilZ: 0.35
   snappiness: 6

@@ -47,6 +47,7 @@ public class Enemies : MonoBehaviour
         {
             collision.gameObject.GetComponent<PlayerHealth>().takeDamage(damage);
         }
+
         //Invoke("checkHealth", 0.2f);
     }
 
