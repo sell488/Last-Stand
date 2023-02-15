@@ -47,7 +47,7 @@ public class ScoreKeeper : MonoBehaviour
     private void ScorePointsInternal(int delta)
     {
         killCount += delta;
-        scoreDisplay.text = "Kills: " + killCount.ToString();
+        scoreDisplay.text = "Score: " + killCount.ToString();
     }
 
     public void setScoreDisplay(string text)
