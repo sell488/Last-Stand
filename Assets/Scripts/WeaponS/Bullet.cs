@@ -163,8 +163,7 @@ public class Bullet : MonoBehaviour
             if (collision.GetComponent<Enemies>())
             {
 
-                collision.GetComponent<Enemies>().takeDamage(currentPoint.magnitude);
-                ScoreKeeper.ScorePoints(1);
+                collision.GetComponent<Enemies>().takeDamage(calculateDamage(currentPoint.magnitude));
 
                 Destroy(gameObject);
             }
@@ -176,7 +175,8 @@ public class Bullet : MonoBehaviour
 
     private float calculateDamage(float vel)
     {
-        return fudgeFactor * vel * mass;
+        print(fudgeFactor * 100 * vel * mass);
+        return fudgeFactor * 100 * vel * mass;
     }
 
 

@@ -18,7 +18,6 @@ public class WeaponSwitcher : MonoBehaviour
         currentGun.gameObject.SetActive(true);
 
         ammoCounter = FindObjectOfType<AmmoCount>();
-
         for (int i = 1; i < guns.Length; i++)
         {
             guns[i].gameObject.SetActive(false);
@@ -29,11 +28,11 @@ public class WeaponSwitcher : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.Keypad1))
+        if(Input.GetKey(KeyCode.Alpha1))
         {
             switchWeapon(0);
         }
-        if(Input.GetKey(KeyCode.Keypad2))
+        if(Input.GetKey(KeyCode.Alpha2))
         {
             switchWeapon(1);
         }
@@ -46,7 +45,7 @@ public class WeaponSwitcher : MonoBehaviour
             currentGun.gameObject.SetActive(false);
             currentGun = guns[index];
             currentGun.gameObject.SetActive(true);
-            ammoCounter.firearm = currentGun.GetComponent<Firearm>();
+            ammoCounter.firearm = currentGun.GetComponentInChildren<Firearm>();
        // }
     }
 }
