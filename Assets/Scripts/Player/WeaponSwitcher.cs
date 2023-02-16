@@ -18,6 +18,7 @@ public class WeaponSwitcher : MonoBehaviour
         currentGun.gameObject.SetActive(true);
 
         ammoCounter = FindObjectOfType<AmmoCount>();
+
         for (int i = 1; i < guns.Length; i++)
         {
             guns[i].gameObject.SetActive(false);

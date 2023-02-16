@@ -175,8 +175,7 @@ public class Bullet : MonoBehaviour
 
     private float calculateDamage(float vel)
     {
-        print(fudgeFactor * 100 * vel * mass);
-        return fudgeFactor * 100 * vel * mass;
+        return 100 * fudgeFactor * vel * mass;
     }
 
 

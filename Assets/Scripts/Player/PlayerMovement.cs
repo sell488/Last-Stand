@@ -36,8 +36,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-
-        Application.Quit();
         
         float currentSpeed;
         if (Input.GetKey(KeyCode.LeftShift))

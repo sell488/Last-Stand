@@ -1,4 +1,3 @@
-using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,49 +16,24 @@ public class Enemies : MonoBehaviour
     public float health;
 
     public float damage;
-
-    Animator anim;
-
-    private bool isWalking;
-
+     
 
     // Start is called before the first frame update
     void Start()
     {
-
-
-        anim = gameObject.GetComponent<Animator>();
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        agent.updateRotation = false;
         target = GameObject.FindGameObjectWithTag("Player");
-        isWalking = true;
-        anim.SetBool("Open_Anim", true);
-        anim.SetBool("Walk_Anim", true);
     }
 
     // Update is called once per frame
     void Update()
     {
         agent.destination = target.transform.position;
-        /*if(agent.destination.magnitude < 5 && isWalking)
-        {
-            anim.SetBool("Walk_Anim", false);
-            isWalking = false;
-        }*/
-        anim.SetFloat("Walk_Anim", agent.speed);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (health <= 0 && collision.gameObject.GetComponent<Bullet>())
-        {
-            /*TODO
-            Figure out multiple calls to Scorekeeper 
-            */
-            gameObject.SetActive(false);
-
-            Object.Destroy(gameObject);
-        } else if(collision.gameObject.GetComponent<PlayerHealth>())
+        if(collision.gameObject.GetComponent<PlayerHealth>())
         {
             collision.gameObject.GetComponent<PlayerHealth>().takeDamage(damage);
         }
@@ -71,6 +45,7 @@ public class Enemies : MonoBehaviour
     {
         if(health <= 0) { 
             ScoreKeeper.ScorePoints(1);
+            print("destroyed");
             gameObject.SetActive(false);
             Object.Destroy(gameObject);
         }
