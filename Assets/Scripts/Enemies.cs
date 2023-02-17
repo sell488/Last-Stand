@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = System.Random;
 
@@ -13,17 +14,46 @@ public class Enemies : MonoBehaviour
     /// </summary>
     private GameObject target;
 
+    /// <summary>
+    /// Enemy health
+    /// </summary>
     public float health;
 
+    /// <summary>
+    /// Amount of damage an enemy does to the player
+    /// </summary>
     public float damage;
 
+    /// <summary>
+    /// The distance from the target an enemy will switch to a faster decceleration
+    /// </summary>
     public float breakingDistance;
+    /// <summary>
+    /// The rate at which the agent will slow down when within the breaking distance
+    /// </summary>
     public float breakingSpeed;
+    /// <summary>
+    /// The original acceleration
+    /// </summary>
     private float accelerationSpeed;
 
-    private bool isKilled;
+    /// <summary>
+    /// tracks if the enemy should be dead
+    /// </summary>
+    public bool isKilled;
 
+    /// <summary>
+    /// animation controller
+    /// </summary>
     public Animator anim;
+
+    /// <summary>
+    /// Particle effect that is played when the enemy takes damage
+    /// </summary>
+    public ParticleSystem hitEffect;
+
+    private Color baseColor;
+    public Color deathColor;
      
 
     // Start is called before the first frame update
@@ -68,9 +98,8 @@ public class Enemies : MonoBehaviour
             isKilled = true;
 
             ScoreKeeper.ScorePoints(1);
-            anim.SetBool("Take Damage", false);
-            anim.SetBool("Blend Tree", false);
             anim.Play("Death");
+            gameObject.GetComponent<MeshCollider>().enabled = false;
             agent.speed = 0;
             Invoke("destroy", 5);
             print("destroyed");
@@ -87,9 +116,11 @@ public class Enemies : MonoBehaviour
 
     public void takeDamage(float damage)
     {
+        hitEffect.Play(true);
         anim.Play("Take Damage");
         health -= damage;
         checkHealth();
         print("damaged");
     }
+
 }

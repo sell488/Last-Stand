@@ -16,6 +16,9 @@ public class Firearm : MonoBehaviour
 
     public GameObject bullet;
 
+    public ParticleSystem fireEffect;
+    public Animator anim;
+
     /// <summary>
     /// Prefab for a secondary projectile for weapons such as underbarrel grenade
     /// launchers or shotguns
@@ -178,9 +181,11 @@ public class Firearm : MonoBehaviour
             canFire = false;
             if(magRounds > 0)
             {
+                anim.Play("Tactical Reload");
                 Invoke("Reload", tacticalReloadTime);
             } else
             {
+                anim.Play("Reload");
                 Invoke("Reload", reloadTime);
             }
             
@@ -295,7 +300,7 @@ public class Firearm : MonoBehaviour
         {
             OnShoot();
         }
-        
+        fireEffect.Play(true);
         Destroy(bull, 5f);
     }
 

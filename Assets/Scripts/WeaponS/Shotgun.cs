@@ -31,9 +31,9 @@ public class Shotgun : Firearm
             }
 
             shootPoint.rotation = orgPos;
-            
-            
 
+
+            
             Destroy(bull, 5f);
         }
 
@@ -41,7 +41,8 @@ public class Shotgun : Firearm
         {
             magRounds--;
         }
-
+        fireEffect.Play(true);
+        anim.Play("Fire");
         triggerOnShoot();
 
     }
@@ -57,6 +58,7 @@ public class Shotgun : Firearm
         
         while (magRounds < magCount && totalRounds > 0)
         {
+            anim.Play("Reload");
             magRounds++;
             int rounds = magRounds;
             remainingRounds--;

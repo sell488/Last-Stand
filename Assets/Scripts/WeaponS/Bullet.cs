@@ -160,14 +160,20 @@ public class Bullet : MonoBehaviour
 
         if(collision.GetComponent<Bullet>() == null)
         {
-            if (collision.GetComponent<Enemies>())
+            if (collision.GetComponent<Enemies>() && !collision.GetComponent<Enemies>().isKilled)
             {
 
                 collision.GetComponent<Enemies>().takeDamage(calculateDamage(currentPoint.magnitude));
 
+                if (!collision.GetComponent<Enemies>().isKilled)
+                {
+                    Destroy(gameObject);
+                }
+            } else
+            {
                 Destroy(gameObject);
             }
-            Destroy(gameObject);
+            
         }
         
         
