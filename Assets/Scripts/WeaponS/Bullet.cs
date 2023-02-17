@@ -162,7 +162,6 @@ public class Bullet : MonoBehaviour
         {
             if (collision.GetComponent<Enemies>() && !collision.GetComponent<Enemies>().isKilled)
             {
-
                 collision.GetComponent<Enemies>().takeDamage(calculateDamage(currentPoint.magnitude));
 
                 if (!collision.GetComponent<Enemies>().isKilled)
