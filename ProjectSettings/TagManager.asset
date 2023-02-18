@@ -4,9 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
+<<<<<<< Updated upstream
   - Level
   - spawner
   - Weapon
+=======
+  - spawner
+>>>>>>> Stashed changes
   layers:
   - Default
   - TransparentFX
