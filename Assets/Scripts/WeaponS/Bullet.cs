@@ -157,18 +157,22 @@ public class Bullet : MonoBehaviour
         GameObject collision = hit.collider.gameObject;
         
 
-        print("hit");
+
         if(collision.GetComponent<Bullet>() == null)
         {
-            if (collision.GetComponent<Enemies>())
+            if (collision.GetComponent<Enemies>() && !collision.GetComponent<Enemies>().isKilled)
             {
-                print("hit enemy");
-                collision.GetComponent<Enemies>().takeDamage(currentPoint.magnitude);
-                ScoreKeeper.ScorePoints(1);
+                collision.GetComponent<Enemies>().takeDamage(calculateDamage(currentPoint.magnitude));
 
+                if (!collision.GetComponent<Enemies>().isKilled)
+                {
+                    Destroy(gameObject);
+                }
+            } else
+            {
                 Destroy(gameObject);
             }
-            Destroy(gameObject);
+            
         }
         
         
@@ -176,7 +180,8 @@ public class Bullet : MonoBehaviour
 
     private float calculateDamage(float vel)
     {
-        return fudgeFactor * vel * mass;
+        print(100 * fudgeFactor * vel * mass);
+        return 100 * fudgeFactor * vel * mass;
     }
 
 

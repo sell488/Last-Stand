@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -16,11 +17,15 @@ public class PlayerHealth : MonoBehaviour
 
     public TMP_Text text;
 
+    private UIPlayerHealth healthSlider;
+
     // Start is called before the first frame update
     void Start()
     {
         text.text = "Heatlh " + health.ToString();
         remainingHealth = health;
+        healthSlider = FindObjectOfType<UIPlayerHealth>();
+        healthSlider.setHealth(remainingHealth);
     }
 
     // Update is called once per frame
@@ -41,5 +46,8 @@ public class PlayerHealth : MonoBehaviour
         {
             remainingHealth = 0;
         }
+
+        healthSlider.setHealth(remainingHealth);
+
     }
 }

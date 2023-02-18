@@ -9,7 +9,7 @@ public class AmmoCount : MonoBehaviour
 
     public TMP_Text text;
 
-    private Firearm firearm;
+    public Firearm firearm;
 
     // Start is called before the first frame update
     void Start()
