@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8759169202706556006}
   - component: {fileID: 2731250928601407150}
   - component: {fileID: 4122852062086311906}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 623681159276435675}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.3236809, y: 0, z: -1.1942749}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -143,8 +143,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawner: {fileID: 0}
-  agent: {fileID: 4122852062086311906}
-  target: {fileID: 2635373299093271823, guid: 327416f994b039a4282787e9c0b6d63e, type: 3}
   health: 100
   damage: 1
 --- !u!195 &4122852062086311906
