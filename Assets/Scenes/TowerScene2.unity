@@ -3089,6 +3089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 0}
+  firearm: {fileID: 0}
 --- !u!1001 &1260825075
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4284,7 +4285,7 @@ PrefabInstance:
     - target: {fileID: 7477155538560265309, guid: dccb5c2a97c974df5bfb1f920d598950, type: 3}
       propertyPath: enemy
       value: 
-      objectReference: {fileID: 623681159276435675, guid: 48f1c6e91913249b7ae077b9c9bd3bc0, type: 3}
+      objectReference: {fileID: 6855990463550498856, guid: cfce1ba4a4ca2b94ea0a146674551825, type: 3}
     - target: {fileID: 7477155538560265309, guid: dccb5c2a97c974df5bfb1f920d598950, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -4316,6 +4317,8 @@ MonoBehaviour:
   gravity: 9.81
   shootPoint: {fileID: 726718670}
   bullet: {fileID: 6962269122190100090, guid: 8669d77b86f2bda4284d3c01f1794858, type: 3}
+  fireEffect: {fileID: 0}
+  anim: {fileID: 0}
   secondaryProjectile: {fileID: 0}
   magCount: 30
   magCountSec: 1
