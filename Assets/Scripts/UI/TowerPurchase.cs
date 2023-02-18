@@ -19,7 +19,7 @@ public class TowerPurchase : MonoBehaviour
             print("tower purchased");
             sk.killCount -= 1;
             scoreDisplay.text = "Kills: " + sk.killCount;
-            Instantiate(towerPrefab, new Vector3(-4, 6, 6), Quaternion.identity);
+            Instantiate(towerPrefab, new Vector3(226, 6, 105), Quaternion.identity);
         }
     }
 
