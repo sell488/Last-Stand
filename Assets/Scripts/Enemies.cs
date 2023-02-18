@@ -47,6 +47,11 @@ public class Enemies : MonoBehaviour
         {
             collision.gameObject.GetComponent<PlayerHealth>().takeDamage(damage);
         }
+        else if (collision.gameObject.tag == "Tower")
+        {
+            print("enemy hit tower");
+            Destroy(gameObject);
+        }
         //Invoke("checkHealth", 0.2f);
     }
 
