@@ -55,6 +55,11 @@ public class Enemies : MonoBehaviour
     private Color baseColor;
     public Color deathColor;
      
+    /// How frequent should an enemy damage a player
+    /// </summary>
+    public float damage_CD;
+    public float last_damaged;
+
 
     // Start is called before the first frame update
     void Start()
@@ -65,6 +70,8 @@ public class Enemies : MonoBehaviour
         print(anim);
         accelerationSpeed = agent.acceleration;
         isKilled = false;
+        damage_CD = .8f;
+        last_damaged = 0;
     }
 
     // Update is called once per frame
@@ -80,6 +87,17 @@ public class Enemies : MonoBehaviour
         agent.SetDestination(target.transform.position);
         //print(agent.velocity.magnitude);
         anim.SetFloat("Blend", agent.velocity.magnitude);
+        agent.destination = target.transform.position;
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 2);
+        foreach(Collider c in colliders)
+        {
+            if(c.gameObject.tag == "Player" && (Time.time - last_damaged > damage_CD))
+            {
+                last_damaged = Time.time;
+                target.GetComponent<PlayerHealth>().takeDamage(damage);
+            }
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
