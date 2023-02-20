@@ -24,7 +24,9 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsGrounded;
 
-    public GameObject shop;
+    public GameObject HomeShop;
+
+    public GameObject WeaponShop;
 
     // Start is called before the first frame update
     void Start()
@@ -76,14 +78,16 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            if (shop.activeSelf)
+            if (WeaponShop.activeSelf)
             {
-                shop.SetActive(false);
+                HomeShop.SetActive(false);
+                WeaponShop.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;
             }
             else
             {
-                shop.SetActive(true);
+                HomeShop.SetActive(true);
+                WeaponShop.SetActive(true);
                 Cursor.lockState = CursorLockMode.None;
             }
         }
