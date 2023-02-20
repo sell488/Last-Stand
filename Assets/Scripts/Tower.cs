@@ -42,7 +42,7 @@ public class Tower : MonoBehaviour
             shootPoint.transform.LookAt(colliders[0].gameObject.transform);
             GameObject newBullet = Instantiate(bullet, shootPoint.transform.position, shootPoint.transform.rotation);
             newBullet.GetComponent<Rigidbody>().AddForce(shootPoint.transform.forward * 100, ForceMode.VelocityChange);
-            Destroy(newBullet);
+            Destroy(newBullet, 3f);
         }
         Invoke("damager", attackCooldown);
     }

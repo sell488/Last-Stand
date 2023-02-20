@@ -174,7 +174,7 @@ public class Bullet : MonoBehaviour
             {
                 GameObject particles = Instantiate(particleDustHit, hit.point + (hit.normal * 0.05f), Quaternion.LookRotation(hit.normal), transform.root.parent);
                 ParticleSystem particleSystem = particles.GetComponent<ParticleSystem>();
-                Destroy(particles, 5f);
+                Destroy(particles, 2f);
             }
             
             else

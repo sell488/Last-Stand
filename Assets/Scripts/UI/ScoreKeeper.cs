@@ -70,4 +70,9 @@ public class ScoreKeeper : MonoBehaviour
         wavesSurvivedUI.text = "Waves Survived: " + (wavesSurvived - 1).ToString();
     }
 
+    public static int getScore()
+    {
+        return Singleton.killCount;
+    }
+
 }

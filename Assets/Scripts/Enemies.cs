@@ -116,7 +116,7 @@ public class Enemies : MonoBehaviour
                 target.GetComponent<PlayerHealth>().takeDamage(damage);
                 anim.Play("Attack");
             }
-            else if (c.GetComponent<Base>() && (Time.time - last_damaged > damage_CD) && c.GetComponent<Base>().health != 0)
+            else if (c.GetComponent<Base>() && (Time.time - last_damaged > damage_CD) && !isKilled && c.GetComponent<Base>().health != 0)
             {
                 last_damaged = Time.time;
                 anim.Play("Attack");
