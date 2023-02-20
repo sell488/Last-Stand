@@ -15,6 +15,17 @@ public class spawner : MonoBehaviour
     /// The max number of enemies that can spawn at a spawner
     /// </summary>
     public int maxEnemy;
+
+    /// <summary>
+    /// How often in seconds should a spawner spawn enemies when enabled;
+    /// </summary>
+    public float spawnFrequency = 3f;
+
+    [Range(1.51f, 20f)]
+    public float difficultyCurveMin;
+    [Range(1f, 20f)]
+    public float difficultyCurveMax;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +36,7 @@ public class spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Time.time - prev_time > 3.0f)
+        if(Time.time - prev_time > spawnFrequency)
         {
             prev_time = Time.time;
             if(spawningEnabled)
@@ -36,6 +47,12 @@ public class spawner : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void onNewWaveInit()
+    {
+        minEnemy = (int)(minEnemy * difficultyCurveMin);
+        maxEnemy = (int)(maxEnemy * difficultyCurveMax);
     }
 
 }

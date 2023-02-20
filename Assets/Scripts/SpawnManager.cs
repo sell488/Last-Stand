@@ -34,6 +34,7 @@ public class SpawnManager : MonoBehaviour
     {
         if(timeUntilNextWave <= 0)
         {
+            ScoreKeeper.waveSurvived();
             StartCoroutine(spawnWave());
             timeUntilNextWave = initTimeUntilNextWave;
         } else
@@ -54,6 +55,7 @@ public class SpawnManager : MonoBehaviour
         for (int i = 0; i < spawner.Length; i++)
         {
             spawner[i].spawningEnabled = false;
+            spawner[i].onNewWaveInit();
         }
         
     }

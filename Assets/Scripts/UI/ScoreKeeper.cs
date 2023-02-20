@@ -26,6 +26,10 @@ public class ScoreKeeper : MonoBehaviour
     /// </summary>
     private TMP_Text scoreDisplay;
 
+    public TMP_Text wavesSurvivedUI;
+
+    private int wavesSurvived = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,11 +59,15 @@ public class ScoreKeeper : MonoBehaviour
         Singleton.scoreDisplay.text = text;
     }
 
-    // Update is called once per frame
-    void Update()
+    public static void waveSurvived()
     {
-
+        Singleton.waveSurvivedInternal();
     }
 
+    public void waveSurvivedInternal()
+    {
+        wavesSurvived++;
+        wavesSurvivedUI.text = "Waves Survived: " + (wavesSurvived - 1).ToString();
+    }
 
 }

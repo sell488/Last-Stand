@@ -71,11 +71,9 @@ public class Enemies : MonoBehaviour
     {
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         target = GameObject.FindGameObjectWithTag("Player");
-        //anim.GetComponent<Animator>();
-        print(anim);
         accelerationSpeed = agent.acceleration;
         isKilled = false;
-        damage_CD = .8f;
+        //damage_CD = .8f;
         last_damaged = 0;
         player = FindObjectOfType<PlayerHealth>().gameObject;
         playerBase = FindObjectOfType<Base>().gameObject;
@@ -109,20 +107,24 @@ public class Enemies : MonoBehaviour
 
         Collider[] colliders = new Collider[3];
         Physics.OverlapSphereNonAlloc(transform.position, attackRadius, colliders, ~LayerMask.GetMask("Enemy"));
-        foreach(Collider c in colliders)
+        foreach (Collider c in colliders)
         {
-            if((c.gameObject.tag == "Player") && (Time.time - last_damaged > damage_CD) && !isKilled)
+            print(colliders);
+            if ((c.gameObject.tag == "Player") && (Time.time - last_damaged > damage_CD) && !isKilled)
             {
                 last_damaged = Time.time;
                 target.GetComponent<PlayerHealth>().takeDamage(damage);
                 anim.Play("Attack");
-            } else if(c.GetComponent<Base>() && (Time.time - last_damaged > damage_CD) && c.GetComponent<Base>().health != 0)
+            }
+            else if (c.GetComponent<Base>() && (Time.time - last_damaged > damage_CD) && c.GetComponent<Base>().health != 0)
             {
                 last_damaged = Time.time;
                 anim.Play("Attack");
                 c.GetComponent<Base>().changeHealth(-damage);
             }
         }
+
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -145,6 +147,7 @@ public class Enemies : MonoBehaviour
             isKilled = true;
 
             ScoreKeeper.ScorePoints(1);
+            anim.StopPlayback();
             anim.Play("Death");
             gameObject.GetComponent<MeshCollider>().enabled = false;
             agent.speed = 0;
@@ -164,6 +167,7 @@ public class Enemies : MonoBehaviour
     public void takeDamage(float damage)
     {
         hitEffect.Play(true);
+        anim.StopPlayback();
         anim.Play("Take Damage");
         health -= damage;
         checkHealth();
