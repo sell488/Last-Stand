@@ -43,10 +43,11 @@ public class WeaponSwitcher : MonoBehaviour
     {
         //if (!currentGun == guns[index])
         //{
-            currentGun.gameObject.SetActive(false);
-            currentGun = guns[index];
-            currentGun.gameObject.SetActive(true);
-            ammoCounter.firearm = currentGun.GetComponentInChildren<Firearm>();
+        //currentGun.GetComponent<Firearm>().isActive = false;
+        currentGun.gameObject.SetActive(false); 
+        currentGun = guns[index];
+        currentGun.gameObject.SetActive(true);
+        ammoCounter.firearm = currentGun.GetComponentInChildren<Firearm>();
        // }
     }
 }

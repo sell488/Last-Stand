@@ -10,6 +10,10 @@ public class WeaponSway : MonoBehaviour
     private Vector3 initalPos;
     private Firearm firearm;
 
+    public float aimingSensitivity = 3f;
+
+    private float normalSensitivity = 3f;
+
     private Vector3 velocity = Vector3.zero;
 
     public Animator ADS;
@@ -18,6 +22,10 @@ public class WeaponSway : MonoBehaviour
 
     private bool isAiming;
 
+    private MouseLook mouseLook;
+
+
+
     void Start()
     {
         initalPos = transform.localPosition;
@@ -25,6 +33,8 @@ public class WeaponSway : MonoBehaviour
         //ADS.SetBool("ADS", false);
         weaponPos = transform.localPosition;
         isAiming = false;
+        mouseLook = GetComponentInParent<MouseLook>();
+        normalSensitivity = mouseLook.lookSensitivity;
     }
 
     private void Awake()
@@ -42,11 +52,15 @@ public class WeaponSway : MonoBehaviour
         if (Input.GetKey(KeyCode.Mouse1))
         {
             isAiming = true;
+
+            mouseLook.lookSensitivity = aimingSensitivity;
             onAim();
             //ADS.Play("ADS");
         }
         else if (Input.GetKeyUp(KeyCode.Mouse1))
         {
+            mouseLook.lookSensitivity = normalSensitivity;
+            isAiming = false;
             onUnaim();
         }
 

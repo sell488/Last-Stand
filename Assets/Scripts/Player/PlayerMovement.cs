@@ -80,11 +80,13 @@ public class PlayerMovement : MonoBehaviour
             {
                 shop.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;
+                Time.timeScale = 1;
             }
             else
             {
                 shop.SetActive(true);
                 Cursor.lockState = CursorLockMode.None;
+                Time.timeScale = 0;
             }
         }
     }

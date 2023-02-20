@@ -16,7 +16,7 @@ public class Base : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        StartCoroutine(checkHealth());
+        //StartCoroutine(checkHealth());
         
     }
 
@@ -37,6 +37,14 @@ public class Base : MonoBehaviour
     /// <param name="change"></param>
     public void changeHealth(float change)
     {
-        health += change;
+        if(0 <= health && health <= 100)
+        {
+            health += change;
+        } else if(health <= 0)
+        {
+            Destroy(gameObject);
+        }
+
+        
     }
 }

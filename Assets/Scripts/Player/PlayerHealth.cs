@@ -22,6 +22,11 @@ public class PlayerHealth : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+    }
+
+    void Awake()
+    {
         text.text = "Heatlh " + health.ToString();
         remainingHealth = health;
         healthSlider = FindObjectOfType<UIPlayerHealth>();

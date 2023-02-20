@@ -107,16 +107,19 @@ public class Enemies : MonoBehaviour
             }
         }
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, attackRadius);
+        Collider[] colliders = new Collider[3];
+        Physics.OverlapSphereNonAlloc(transform.position, attackRadius, colliders, ~LayerMask.GetMask("Enemy"));
         foreach(Collider c in colliders)
         {
             if((c.gameObject.tag == "Player") && (Time.time - last_damaged > damage_CD) && !isKilled)
             {
                 last_damaged = Time.time;
                 target.GetComponent<PlayerHealth>().takeDamage(damage);
-            } else if(c.GetComponent<Base>() && (Time.time - last_damaged > damage_CD))
+                anim.Play("Attack");
+            } else if(c.GetComponent<Base>() && (Time.time - last_damaged > damage_CD) && c.GetComponent<Base>().health != 0)
             {
                 last_damaged = Time.time;
+                anim.Play("Attack");
                 c.GetComponent<Base>().changeHealth(-damage);
             }
         }

@@ -64,6 +64,8 @@ public class Bullet : MonoBehaviour
 
     private Quaternion initialRotation;
 
+    public GameObject particleDustHit;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -168,7 +170,14 @@ public class Bullet : MonoBehaviour
                 {
                     Destroy(gameObject);
                 }
-            } else
+            } else if(collision.GetComponent<TerrainCollider>())
+            {
+                GameObject particles = Instantiate(particleDustHit, hit.point + (hit.normal * 0.05f), Quaternion.LookRotation(hit.normal), transform.root.parent);
+                ParticleSystem particleSystem = particles.GetComponent<ParticleSystem>();
+                Destroy(particles, 5f);
+            }
+            
+            else
             {
                 Destroy(gameObject);
             }

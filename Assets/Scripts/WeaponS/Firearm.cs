@@ -153,6 +153,8 @@ public class Firearm : MonoBehaviour
     [SerializeField]
     public float sightAdjustmentSpeed;
 
+    public bool isActive;
+
 
 
     // Start is called before the first frame update
