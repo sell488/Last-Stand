@@ -336,6 +336,10 @@ MonoBehaviour:
   anim: {fileID: 6855990463560014420}
   hitEffect: {fileID: 3538810956564979882}
   deathColor: {r: 1, g: 0.07438048, b: 0, a: 0}
+  damage_CD: 0
+  last_damaged: 0
+  bulletPrefab: {fileID: 553144157, guid: 8fad2117b94623c4aa707f1006ec7ad0, type: 3}
+  shootSpeed: 200
 --- !u!33 &8538481247527456932
 MeshFilter:
   m_ObjectHideFlags: 0
