@@ -87,6 +87,7 @@ MonoBehaviour:
   diffusionProfileSettingsList:
   - {fileID: 11400000, guid: 4d635a0d7744f2c42b7a641f959c47e1, type: 2}
   - {fileID: 11400000, guid: d9f9fdf3492f1f54292026b68e069b85, type: 2}
+  - {fileID: 11400000, guid: d9f9fdf3492f1f54292026b68e069b85, type: 2}
   rendererListCulling: 0
   DLSSProjectId: 000000
   useDLSSCustomProjectId: 0

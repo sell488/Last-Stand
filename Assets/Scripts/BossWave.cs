@@ -11,6 +11,8 @@ public class BossWave : MonoBehaviour
 
     private bool hasSpawned = false;
 
+    public Transform spawnPoint;
+
     private void OnTriggerEnter(Collider other)
     {
         
@@ -19,7 +21,7 @@ public class BossWave : MonoBehaviour
             hasSpawned = true;
             for (int i = 0; i <= waveSize; i++)
             {
-                Instantiate(enemy, transform.position + new Vector3((float)(Random.value - .5f) * 2.0f, transform.position.y, (float)(Random.value - .5f) * 2), Quaternion.identity);
+                Instantiate(enemy, spawnPoint.position + new Vector3((float)(Random.value - .5f) * 2.0f, spawnPoint.position.y, (float)(Random.value - .5f) * 2), Quaternion.identity);
             }
 
             GetComponentInParent<spawner>().shieldDown = true;

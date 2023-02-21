@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class spawner : MonoBehaviour
 {
@@ -33,11 +34,20 @@ public class spawner : MonoBehaviour
 
     public float health = 100;
 
+    private float initHealth;
+
+    [SerializeField]
+    private VisualEffect smokeStack;
+
+    [SerializeField]
+    private VisualEffect damageEffect;
+
     // Start is called before the first frame update
     void Start()
     {
         prev_time = Time.time;
         spawningEnabled = false;
+        initHealth = health;
     }
 
     // Update is called once per frame
@@ -71,6 +81,12 @@ public class spawner : MonoBehaviour
         {
             ScoreKeeper.ScorePoints(5);
             Destroy(gameObject, 2f);
+        }
+
+        if(health/initHealth < 0.5f)
+        {
+            smokeStack.gameObject.SetActive(false);
+            damageEffect.gameObject.SetActive(true);
         }
     }
 
