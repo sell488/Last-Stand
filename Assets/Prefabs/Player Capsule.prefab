@@ -69,7 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 14619e85e6df84f43a199a965cc4e960, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -307,6 +307,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   amount: 0.2
   smoothing: 2
+  aimingSensitivity: 3
   ADS: {fileID: 0}
 --- !u!114 &4536276192303884163
 MonoBehaviour:
@@ -345,6 +346,7 @@ MonoBehaviour:
   WeaponADSPosition: {fileID: 6941102219519129328}
   weaponPosition: {x: 0, y: 0, z: 0}
   sightAdjustmentSpeed: 10
+  isActive: 0
   gauge: 12
   spread: 5
 --- !u!1 &4694350307035621225
@@ -1152,7 +1154,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 14619e85e6df84f43a199a965cc4e960, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1396,7 +1398,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4694350308703171061}
   - component: {fileID: 4694350308703171019}
-  - component: {fileID: 4694350308703171018}
   m_Layer: 0
   m_Name: Scope Camera
   m_TagString: Untagged
@@ -1463,14 +1464,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &4694350308703171018
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4694350308703171060}
-  m_Enabled: 1
 --- !u!1 &4694350308951494571
 GameObject:
   m_ObjectHideFlags: 0
@@ -1641,6 +1634,7 @@ MonoBehaviour:
   WeaponADSPosition: {fileID: 4694350307925368955}
   weaponPosition: {x: 0, y: 0, z: 0}
   sightAdjustmentSpeed: 10
+  isActive: 0
 --- !u!114 &4694350309018391964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1655,6 +1649,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   amount: 0.2
   smoothing: 2
+  aimingSensitivity: 1
   ADS: {fileID: 4694350307722613860}
 --- !u!1 &5408123345848571332
 GameObject:
@@ -1870,7 +1865,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5408123345936630548}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.16, y: 0.27, z: 2.2727273}
+  m_LocalPosition: {x: 0.16, y: 0.21, z: 0.71}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1971,7 +1966,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 14619e85e6df84f43a199a965cc4e960, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

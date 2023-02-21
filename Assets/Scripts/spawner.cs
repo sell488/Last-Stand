@@ -21,10 +21,17 @@ public class spawner : MonoBehaviour
     /// </summary>
     public float spawnFrequency = 3f;
 
-    [Range(1.51f, 20f)]
+    [SerializeField]
+    private Transform spawnPoint;
+
+    [Range(1f, 20f)]
     public float difficultyCurveMin;
     [Range(1f, 20f)]
     public float difficultyCurveMax;
+
+    public bool shieldDown = false;
+
+    public float health = 100;
 
     // Start is called before the first frame update
     void Start()
@@ -43,7 +50,7 @@ public class spawner : MonoBehaviour
             {
                 for (int i = 0; i < (int)(Random.Range(minEnemy, maxEnemy)); i++)
                 {
-                    Instantiate(enemy, transform.position + new Vector3((float)(Random.value - .5f) * 2.0f, transform.position.y, (float)(Random.value - .5f) * 2), Quaternion.identity);
+                    Instantiate(enemy, spawnPoint.position + new Vector3((float)(Random.value - .5f) * 2.0f, transform.position.y, (float)(Random.value - .5f) * 2), Quaternion.identity);
                 }
             }
         }
@@ -53,6 +60,18 @@ public class spawner : MonoBehaviour
     {
         minEnemy = (int)(minEnemy * difficultyCurveMin);
         maxEnemy = (int)(maxEnemy * difficultyCurveMax);
+    }
+
+    public void takeDamage(float damage)
+    {
+        if(health > 0 && health >= damage)
+        {
+            health -= damage;
+        } else if(damage >= health)
+        {
+            ScoreKeeper.ScorePoints(5);
+            Destroy(gameObject, 2f);
+        }
     }
 
 }

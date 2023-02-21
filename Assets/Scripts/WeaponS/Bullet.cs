@@ -175,6 +175,10 @@ public class Bullet : MonoBehaviour
                 GameObject particles = Instantiate(particleDustHit, hit.point + (hit.normal * 0.05f), Quaternion.LookRotation(hit.normal), transform.root.parent);
                 ParticleSystem particleSystem = particles.GetComponent<ParticleSystem>();
                 Destroy(particles, 2f);
+            } else if(collision.GetComponent<spawner>() && collision.GetComponent<spawner>().shieldDown)
+            {
+                collision.GetComponent<spawner>().takeDamage(calculateDamage(currentPoint.magnitude));
+                Destroy(gameObject);
             }
             
             else

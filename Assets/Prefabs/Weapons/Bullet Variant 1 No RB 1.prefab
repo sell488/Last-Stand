@@ -171,6 +171,10 @@ PrefabInstance:
       propertyPath: particleDustHit
       value: 
       objectReference: {fileID: 7163246751705770275, guid: 40adede699c95514ab21cbe44a724d45, type: 3}
+    - target: {fileID: 7411521764805021038, guid: 0133bce70ccec384082765ec342844b2, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 14619e85e6df84f43a199a965cc4e960, type: 2}
     m_RemovedComponents:
     - {fileID: 1699517894, guid: 0133bce70ccec384082765ec342844b2, type: 3}
     - {fileID: 7076062208388285967, guid: 0133bce70ccec384082765ec342844b2, type: 3}

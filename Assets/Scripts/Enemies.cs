@@ -109,22 +109,22 @@ public class Enemies : MonoBehaviour
         Physics.OverlapSphereNonAlloc(transform.position, attackRadius, colliders, ~LayerMask.GetMask("Enemy"));
         foreach (Collider c in colliders)
         {
-            print(colliders);
-            if ((c.gameObject.tag == "Player") && (Time.time - last_damaged > damage_CD) && !isKilled)
+            if(c)
             {
-                last_damaged = Time.time;
-                target.GetComponent<PlayerHealth>().takeDamage(damage);
-                anim.Play("Attack");
-            }
-            else if (c.GetComponent<Base>() && (Time.time - last_damaged > damage_CD) && !isKilled && c.GetComponent<Base>().health != 0)
-            {
-                last_damaged = Time.time;
-                anim.Play("Attack");
-                c.GetComponent<Base>().changeHealth(-damage);
+                if ((c.gameObject.tag == "Player") && (Time.time - last_damaged > damage_CD) && !isKilled)
+                {
+                    last_damaged = Time.time;
+                    c.GetComponent<PlayerHealth>().takeDamage(damage);
+                    anim.Play("Attack");
+                }
+                else if (c.GetComponent<Base>() && (Time.time - last_damaged > damage_CD) && !isKilled && c.GetComponent<Base>().health != 0)
+                {
+                    last_damaged = Time.time;
+                    anim.Play("Attack");
+                    c.GetComponent<Base>().changeHealth(-damage);
+                }
             }
         }
-
-
     }
 
     private void OnCollisionEnter(Collision collision)
