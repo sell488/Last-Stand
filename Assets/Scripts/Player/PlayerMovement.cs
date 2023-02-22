@@ -24,7 +24,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsGrounded;
 
-    public GameObject shop;
+    public GameObject homeShop;
+    public GameObject weaponShop;
 
     [Header("Head bob parameters")]
     //Head bobbing vars
@@ -123,15 +124,17 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            if (shop.activeSelf)
+            if (weaponShop.activeSelf)
             {
-                shop.SetActive(false);
+                homeShop.SetActive(false);
+                weaponShop.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;
                 Time.timeScale = 1;
             }
             else
             {
-                shop.SetActive(true);
+                homeShop.SetActive(true);
+                weaponShop.SetActive(true);
                 Cursor.lockState = CursorLockMode.None;
                 Time.timeScale = 0;
             }

@@ -5,7 +5,6 @@ using TMPro;
 
 public class TowerPurchase : MonoBehaviour
 {
-    public ScoreKeeper sk;
     public GameObject towerPrefab;
 
     public GameObject[] towers;
