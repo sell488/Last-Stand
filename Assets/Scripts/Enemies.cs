@@ -70,7 +70,7 @@ public class Enemies : MonoBehaviour
 
     void shootBullet()
     {
-        var projectile = Instantiate(bulletPrefab, transform.position, transform.rotation);
+        var projectile = Instantiate(bulletPrefab, new Vector3(transform.position.x, transform.position.y + 0.7f, transform.position.z), transform.rotation);
         projectile.velocity = transform.forward * shootSpeed;
     }
 
@@ -120,6 +120,7 @@ public class Enemies : MonoBehaviour
                 print("player in range!");
                 if (Time.time - lastAttackTime >= 1f/fireRate)
                 {
+                    anim.Play("Attack");
                     shootBullet();
                     lastAttackTime = Time.time;
                 }
