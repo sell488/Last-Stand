@@ -150,6 +150,9 @@ public class Firearm : MonoBehaviour
     public Transform WeaponDefaultPosition;
     public Transform WeaponADSPosition;
     public Vector3 weaponPosition;
+
+    [SerializeField]
+    private Transform runningPosition;
     [SerializeField]
     public float sightAdjustmentSpeed;
 
@@ -218,26 +221,56 @@ public class Firearm : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.Mouse0) && magRounds > 0 && !firemode)
             {
-                if (Time.time >= timeTillNextShot)
+
+                if (canFire)
                 {
-                    Shoot(bullet);
-                    timeTillNextShot = Time.time + fireRateSecs;
+                    if (Time.time >= timeTillNextShot)
+                    {
+                        Shoot(bullet);
+                        timeTillNextShot = Time.time + fireRateSecs;
+                    }
                 }
+
             }
-        } else if(primaryAmmo == false)
+        }
+        else if (primaryAmmo == false)
         {
-            if(canFire && Time.time >= timeTillNextShot)
+            if (canFire && Time.time >= timeTillNextShot)
             {
                 Shoot(secondaryProjectile);
                 timeTillNextShot = Time.time + fireRateSecs;
             }
         }
 
-        //ADS logic
-        
+        /*if(GetComponentInParent<PlayerMovement>().isRunning) 
+        {
+            canFire = false;
+            transform.rotation = runningPosition.rotation;
+            transform.position = runningPosition.position;
+        } else if(!GetComponentInParent<PlayerMovement>().isRunning) { }
+        {
+            canFire = true;
+            transform.localRotation = WeaponDefaultPosition.localRotation;
+            transform.position = WeaponDefaultPosition.position;
+        }*/
 
     }
 
+    public void startRunning()
+    {
+        canFire = false;
+        transform.rotation = runningPosition.rotation;
+        transform.position = runningPosition.position;
+    }
+
+    
+    public void stopRunning()
+    {
+
+        canFire = true;
+        transform.localRotation = WeaponDefaultPosition.localRotation;
+        transform.position = WeaponDefaultPosition.position;
+    }
 
 
     private void FixedUpdate()
@@ -252,24 +285,31 @@ public class Firearm : MonoBehaviour
     {
         if (primaryAmmo == true)
         {
-            remainingRounds = remainingRounds - (magCount - magRounds);
+            if(remainingRounds < magCount && remainingRounds > 0)
+            {
+                magRounds = remainingRounds;
+                remainingRounds = 0;
+            } else
+            {
+                remainingRounds = remainingRounds - (magCount - magRounds);
+            }
+            
 
             ///If there are still rounds left in the mag, one will be left in the chamber
             ///This gives the player +1 round in their mag if they reload before
             ///completly emptying their gun
-            if (magRounds > 0)
+            if (magRounds > 0 && remainingRounds != 0)
             {
                 magRounds = magCount + 1;
                 remainingRounds--;
             }
-            else
+            else if(remainingRounds != 0)
             {
                 magRounds = magCount;
             }
 
             canFire = true;
 
-            print(remainingRounds);
         } else if(primaryAmmo== false)
         {
             remainingRoundsSec = remainingRoundsSec - (magCountSec - magRoundsSec);

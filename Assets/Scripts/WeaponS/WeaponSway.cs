@@ -35,6 +35,7 @@ public class WeaponSway : MonoBehaviour
         isAiming = false;
         mouseLook = GetComponentInParent<MouseLook>();
         normalSensitivity = mouseLook.lookSensitivity;
+        GetComponentInChildren<Camera>().enabled = false;
     }
 
     private void Awake()
@@ -49,18 +50,20 @@ public class WeaponSway : MonoBehaviour
         Vector3 nextPos = new Vector3(movementX, movementY, 0);
         transform.localPosition = Vector3.Slerp(transform.localPosition, nextPos + initalPos, Time.deltaTime * smoothing);
 
-        if (Input.GetKey(KeyCode.Mouse1))
+        if (Input.GetKey(KeyCode.Mouse1) && !GetComponentInParent<PlayerMovement>().isRunning)
         {
             isAiming = true;
 
             mouseLook.lookSensitivity = aimingSensitivity;
             onAim();
+            GetComponentInChildren<Camera>().enabled = true;
             //ADS.Play("ADS");
         }
-        else if (Input.GetKeyUp(KeyCode.Mouse1))
+        else if (Input.GetKeyUp(KeyCode.Mouse1) && !GetComponentInParent<PlayerMovement>().isRunning)
         {
             mouseLook.lookSensitivity = normalSensitivity;
             isAiming = false;
+            GetComponentInChildren<Camera>().enabled = false;
             onUnaim();
         }
 

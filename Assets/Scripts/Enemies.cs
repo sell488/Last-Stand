@@ -171,7 +171,6 @@ public class Enemies : MonoBehaviour
         anim.Play("Take Damage");
         health -= damage;
         checkHealth();
-        print("damaged");
     }
 
     /// <summary>

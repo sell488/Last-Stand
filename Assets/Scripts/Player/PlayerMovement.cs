@@ -26,12 +26,42 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject shop;
 
+    [Header("Head bob parameters")]
+    //Head bobbing vars
+    [SerializeField]
+    private bool enableHeadBob = true;
+
+    [SerializeField, Range(0, 0.1f)]
+    private float walkBobAmount = 0.05f;
+    [SerializeField, Range(0, 30)]
+    private float walkBobSpeed = 14f;
+
+    [SerializeField, Range(0, 0.1f)]
+    private float sprintBobAmount = 0.11f;
+    [SerializeField, Range(0, 30)]
+    private float sprintBobSpeed = 18f;
+
+    [SerializeField]
+    public Transform camera = null;
+    [SerializeField]
+    private Transform cameraHolder = null;
+
+    private float defaultY = 0f;
+    private float timer;
+
+    public bool isRunning = false;
+    private bool hasPositionedRunning;
+    private bool hasPositionedWalking;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         init_y = transform.position.y;
+        defaultY = camera.transform.localPosition.y;
+        hasPositionedRunning = false;
+        hasPositionedWalking = true;
     }
 
     private void Update()
@@ -41,10 +71,27 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
         {
             currentSpeed = sprintSpeed;
+            isRunning = true;
+            print("running");
+            if(!hasPositionedRunning)
+            {
+                GetComponentInChildren<WeaponSwitcher>().currentGun.GetComponentInChildren<Firearm>().startRunning();
+                hasPositionedRunning = true;
+                hasPositionedWalking = false;
+            }
         }
+            
         else
         {
             currentSpeed = speed;
+            isRunning = false;
+            if(!hasPositionedWalking)
+            {
+                GetComponentInChildren<WeaponSwitcher>().currentGun.GetComponentInChildren<Firearm>().stopRunning();
+                hasPositionedWalking = true;
+                hasPositionedRunning = false;
+            }
+            
         }
         // This will detect forward and backward movement
         horizontalMovement = Input.GetAxisRaw("Horizontal");
@@ -87,6 +134,27 @@ public class PlayerMovement : MonoBehaviour
                 shop.SetActive(true);
                 Cursor.lockState = CursorLockMode.None;
                 Time.timeScale = 0;
+            }
+        }
+        if (enableHeadBob)
+        {
+            handleHeadBob();
+        }
+        
+    }
+
+    private void handleHeadBob()
+    { 
+        if(true)
+        {
+            if(Mathf.Abs(rb.velocity.x) > 1 || Mathf.Abs(rb.velocity.z) > 1)
+            {
+                timer += Time.deltaTime * (isRunning ? sprintBobSpeed : walkBobSpeed);
+                camera.transform.localPosition = new Vector3(
+                    camera.transform.localPosition.x,
+                    defaultY + Mathf.Sin(timer) * (isRunning ? sprintBobAmount : walkBobAmount),
+                    camera.transform.localPosition.z
+                    );
             }
         }
     }
