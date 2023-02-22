@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
@@ -59,6 +60,7 @@ public class PlayerHealth : MonoBehaviour
         } else if(remainingHealth < 0)
         {
             remainingHealth = 0;
+            //SceneManager.LoadScene(1);
         } else
         {
             damageE.a = 1f - (float)remainingHealth / (float)health;

@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Stefan's Scene 2.unity
+    guid: cbeaaeb3e0da3364da9d621eb64ed98a
+  - enabled: 1
+    path: Assets/Scenes/End Game.unity
+    guid: 77a7543ff4c255e46a05684b791cb11c
   m_configObjects: {}

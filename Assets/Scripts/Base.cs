@@ -1,16 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.VFX;
 
 public class Base : MonoBehaviour
 {
 
     public float health;
 
+    public VisualEffect moderateDamage;
+    public VisualEffect criticalDamage;
+
+    private bool moderateDamageEnabled = false;
+    private bool criticalDamageEnabled = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        moderateDamage.Stop();
+        criticalDamage.Stop();
     }
 
     // Update is called once per frame
@@ -22,9 +31,10 @@ public class Base : MonoBehaviour
 
     private IEnumerator checkHealth()
     {
-        for(; ; ) {
+        while(true) {
             if (health <= 0)
             {
+                SceneManager.LoadScene(1);
                 print("Base destroyed");
             }
             yield return new WaitForSeconds(.2f);
@@ -40,11 +50,29 @@ public class Base : MonoBehaviour
         if(0 <= health && health <= 100)
         {
             health += change;
+            if(!moderateDamageEnabled && health <= 50 && health > 25)
+            {
+                enabledModerateDamage();
+            } else if(!criticalDamageEnabled && health <= 25)
+            {
+                enabledCriticalDamage();
+            }
         } else if(health <= 0)
         {
             Destroy(gameObject);
         }
+    }
 
-        
+    public void enabledModerateDamage()
+    {
+        moderateDamageEnabled = true;
+        moderateDamage.Play();
+    }
+
+    public void enabledCriticalDamage()
+    {
+        criticalDamageEnabled = true;
+        moderateDamage.Stop();
+        criticalDamage.Play();
     }
 }
