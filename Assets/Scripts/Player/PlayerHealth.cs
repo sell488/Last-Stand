@@ -12,8 +12,16 @@ public class PlayerHealth : MonoBehaviour
     /// </summary>
     public int health;
 
-    [HideInInspector]
     public float remainingHealth;
+
+    [SerializeField]
+    private Image healthEffect = null;
+
+    [SerializeField]
+    private Image hurtEffect;
+
+    [SerializeField]
+    private float hurtEffectTime;
 
     public TMP_Text text;
 
@@ -42,17 +50,29 @@ public class PlayerHealth : MonoBehaviour
     public void takeDamage(float damage)
     {
         remainingHealth -= damage;
+        Color damageE = healthEffect.color;
 
-        if(remainingHealth > 100)
+        if (remainingHealth > 100)
         {
+            damageE.a = 0;
             remainingHealth = 100;
-        }
-        if(remainingHealth < 0)
+        } else if(remainingHealth < 0)
         {
             remainingHealth = 0;
+        } else
+        {
+            damageE.a = 1f - (float)remainingHealth / (float)health;
+            healthEffect.color = damageE;
+            HurtFlash();
         }
-
         healthSlider.setHealth(remainingHealth);
 
+    }
+
+    IEnumerator HurtFlash()
+    {
+        hurtEffect.enabled = true;
+        yield return new WaitForSeconds(hurtEffectTime);
+        hurtEffect.enabled = false;
     }
 }

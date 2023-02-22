@@ -62,6 +62,7 @@ public class Shotgun : Firearm
             magRounds++;
             int rounds = magRounds;
             remainingRounds--;
+            canFire = true;
             yield return new WaitForSeconds(0.5f);
             if(rounds != magRounds)
             {

@@ -6,39 +6,18 @@ using TMPro;
 
 public class WeaponPurchase : MonoBehaviour
 {
-    /// <summary>
-    /// Weapon state variables
-    /// </summary>
-    public bool weapon1;
-    public bool weapon2;
-    public bool weapon3;
 
-    /// <summary>
-    /// button state variables
-    /// </summary>
-
-    
-
-    public ScoreKeeper sk;
-
-    private void Start()
-    {
-        weapon1 = false;
-        weapon2 = false;
-        weapon3 = false;
-        sk = FindObjectOfType<ScoreKeeper>();
-    }
-
+    public Firearm[] firearms;
 
     public void transactionWeapon1()
     {
-        if (!weapon1)
+        if (!firearms[0].isBought)
         {
-            if(sk.killCount >= 20)
+            if(ScoreKeeper.getScore() >= 20)
             {
-                sk.killCount -= 20;
-                sk.setScoreDisplay("Kills: " + sk.killCount);
-                weapon1 = true;
+                ScoreKeeper.ScorePoints(-20);
+                firearms[0].isBought = true;
+                firearms[0].gameObject.SetActive(true);
 
                 //Changing UI Text
                 GetComponentInChildren<TMP_Text>().text = "Sold";
@@ -51,13 +30,13 @@ public class WeaponPurchase : MonoBehaviour
 
     public void transactionWeapon2()
     {
-        if (!weapon2)
+        if (!firearms[1].isBought)
         {
-            if (sk.killCount >= 25)
+            if (ScoreKeeper.getScore() >= 25)
             {
-                sk.killCount -= 25;
-                sk.setScoreDisplay("Kills: " + sk.killCount);
-                weapon2 = true;
+                ScoreKeeper.ScorePoints(-25);
+                firearms[1].isBought = true;
+                firearms[1].gameObject.SetActive(true);
 
                 //Changing UI Text
                 GetComponentInChildren<TMP_Text>().text = "Sold";
@@ -69,13 +48,13 @@ public class WeaponPurchase : MonoBehaviour
     }
 
     public void transactionWeapon3(){
-        if (!weapon3)
+        if (!firearms[2].isBought)
         {
-            if (sk.killCount >= 100)
+            if (ScoreKeeper.getScore() >= 100)
             {
-                sk.killCount -= 100;
-                sk.setScoreDisplay("Kills: " + sk.killCount);
-                weapon3 = true;
+                ScoreKeeper.ScorePoints(-100);
+                firearms[0].isBought = true;
+                firearms[0].gameObject.SetActive(true);
 
                 //Changing UI Text
                 GetComponentInChildren<TMP_Text>().text = "Sold";
@@ -85,6 +64,23 @@ public class WeaponPurchase : MonoBehaviour
             }
         }
 
+    }
+
+    public bool buyWeapon(int weaponIndex, int price)
+    {
+        if (!firearms[weaponIndex].isBought)
+        {
+            if(ScoreKeeper.getScore() >= price)
+            {
+                ScoreKeeper.ScorePoints(-price);
+                firearms[weaponIndex].isBought = true;
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+        return false;
     }
 
 }

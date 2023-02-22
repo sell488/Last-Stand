@@ -41,14 +41,13 @@ public class WeaponSwitcher : MonoBehaviour
 
     void switchWeapon(int index)
     {
-        //if (!currentGun == guns[index])
-        //{
-        //currentGun.GetComponent<Firearm>().isActive = false;
+        if (guns[index].GetComponentInChildren<Firearm>().isBought)
+        {
         currentGun.gameObject.SetActive(false); 
         currentGun = guns[index];
         currentGun.gameObject.SetActive(true);
         GetComponentInParent<PlayerMovement>().camera = currentGun.GetComponentInChildren<Camera>().transform;
         ammoCounter.firearm = currentGun.GetComponentInChildren<Firearm>();
-       // }
+        }
     }
 }

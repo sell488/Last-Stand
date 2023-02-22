@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
     private float defaultY = 0f;
     private float timer;
 
-    public bool isRunning = false;
+    public bool isRunning;
     private bool hasPositionedRunning;
     private bool hasPositionedWalking;
 
@@ -63,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
         defaultY = camera.transform.localPosition.y;
         hasPositionedRunning = false;
         hasPositionedWalking = true;
+        isRunning = false;
     }
 
     private void Update()
@@ -128,6 +129,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 homeShop.SetActive(false);
                 weaponShop.SetActive(false);
+                GetComponentInChildren<Firearm>().canFire = true;
                 Cursor.lockState = CursorLockMode.Locked;
                 Time.timeScale = 1;
             }
@@ -135,6 +137,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 homeShop.SetActive(true);
                 weaponShop.SetActive(true);
+                GetComponentInChildren<Firearm>().canFire = false;
                 Cursor.lockState = CursorLockMode.None;
                 Time.timeScale = 0;
             }

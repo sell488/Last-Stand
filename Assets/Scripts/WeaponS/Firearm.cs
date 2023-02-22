@@ -111,7 +111,7 @@ public class Firearm : MonoBehaviour
     /// <summary>
     /// Utility bool for preventing player from shooting while reloading
     /// </summary>
-    protected bool canFire;
+    public bool canFire;
 
     /// <summary>
     /// Internal bool tracker of which ammo type is being used. <strong>True</strong>: primary 
@@ -137,6 +137,11 @@ public class Firearm : MonoBehaviour
     /// Defaults to false
     /// </remarks>
     protected bool firemode;
+
+    [SerializeField]
+    private AmmoCount ammoUI;
+
+    public bool isBought;
 
     /// <summary>
     /// Recoil Event Manager
@@ -172,7 +177,9 @@ public class Firearm : MonoBehaviour
         primaryAmmo = true;
 
         firemode = false;
-
+        ammoUI = FindObjectOfType<AmmoCount>();
+        print("ammoUI: " + ammoUI);
+        ammoUI.setFireRate(firemode);
         weaponPosition = WeaponDefaultPosition.localPosition;
     }
 
@@ -198,9 +205,10 @@ public class Firearm : MonoBehaviour
         }
 
         //Firemode logic
-        if(Input.GetKeyDown(KeyCode.V))
+        if(Input.GetKeyDown(KeyCode.V) && isAutomatic)
         {
             firemode = !firemode;
+            ammoUI.setFireRate(firemode);
         }
 
         //Fire logic
@@ -241,24 +249,12 @@ public class Firearm : MonoBehaviour
                 timeTillNextShot = Time.time + fireRateSecs;
             }
         }
-
-        /*if(GetComponentInParent<PlayerMovement>().isRunning) 
-        {
-            canFire = false;
-            transform.rotation = runningPosition.rotation;
-            transform.position = runningPosition.position;
-        } else if(!GetComponentInParent<PlayerMovement>().isRunning) { }
-        {
-            canFire = true;
-            transform.localRotation = WeaponDefaultPosition.localRotation;
-            transform.position = WeaponDefaultPosition.position;
-        }*/
-
     }
 
     public void startRunning()
     {
         canFire = false;
+        anim.Play("Run");
         transform.rotation = runningPosition.rotation;
         transform.position = runningPosition.position;
     }
@@ -266,7 +262,7 @@ public class Firearm : MonoBehaviour
     
     public void stopRunning()
     {
-
+        anim.Play("Idle");
         canFire = true;
         transform.localRotation = WeaponDefaultPosition.localRotation;
         transform.position = WeaponDefaultPosition.position;
