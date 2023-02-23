@@ -143,8 +143,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawner: {fileID: 0}
+  minimap_layer: {fileID: 7416317868556146744, guid: 3117cfe46369c45cbaa0918201e470e5, type: 3}
   health: 100
   damage: 1
+  breakingDistance: 0
+  breakingSpeed: 0
+  isKilled: 0
+  anim: {fileID: 0}
+  hitEffect: {fileID: 0}
+  deathColor: {r: 0, g: 0, b: 0, a: 0}
+  damage_CD: 0
+  last_damaged: 0
 --- !u!195 &4122852062086311906
 NavMeshAgent:
   m_ObjectHideFlags: 0

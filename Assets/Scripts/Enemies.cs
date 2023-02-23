@@ -7,6 +7,8 @@ using Random = System.Random;
 public class Enemies : MonoBehaviour
 {
     public GameObject spawner;
+    public GameObject minimap_layer;
+    public GameObject sphere;
     private UnityEngine.AI.NavMeshAgent agent;
 
     /// <summary>
@@ -66,6 +68,8 @@ public class Enemies : MonoBehaviour
     {
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         target = GameObject.FindGameObjectWithTag("Player");
+        sphere = Instantiate(minimap_layer, transform.position, Quaternion.identity);
+        sphere.transform.parent = transform;
         //anim.GetComponent<Animator>();
         print(anim);
         accelerationSpeed = agent.acceleration;
@@ -77,7 +81,7 @@ public class Enemies : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(agent.remainingDistance < breakingDistance)
+        if (agent.remainingDistance < breakingDistance)
         {
             agent.acceleration = breakingSpeed;
         } else

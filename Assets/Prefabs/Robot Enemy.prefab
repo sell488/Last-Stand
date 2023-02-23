@@ -328,6 +328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawner: {fileID: 0}
+  minimap_layer: {fileID: 7416317868556146744, guid: 3117cfe46369c45cbaa0918201e470e5, type: 3}
   health: 100
   damage: 1
   breakingDistance: 10
@@ -336,6 +337,8 @@ MonoBehaviour:
   anim: {fileID: 6855990463560014420}
   hitEffect: {fileID: 3538810956564979882}
   deathColor: {r: 1, g: 0.07438048, b: 0, a: 0}
+  damage_CD: 0
+  last_damaged: 0
 --- !u!33 &8538481247527456932
 MeshFilter:
   m_ObjectHideFlags: 0
