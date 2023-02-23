@@ -74,7 +74,6 @@ public class PlayerMovement : MonoBehaviour
         {
             currentSpeed = sprintSpeed;
             isRunning = true;
-            print("running");
             if(!hasPositionedRunning)
             {
                 GetComponentInChildren<WeaponSwitcher>().currentGun.GetComponentInChildren<Firearm>().startRunning();

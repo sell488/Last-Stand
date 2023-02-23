@@ -25,9 +25,9 @@ public class UIPlayerHealth : MonoBehaviour
         
     }
 
-    public void setHealth(float health)
+    public void setHealth(float remainingHealth)
     {
-        slider.value = health;
-        sliderImage.color = Color.Lerp(damagedColor, healthyColor, health / 100f);
+        slider.value = remainingHealth;
+        sliderImage.color = Color.Lerp(damagedColor, healthyColor, remainingHealth / 100f);
     }
 }

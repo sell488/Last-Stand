@@ -25,8 +25,9 @@ public class PlayerHealth : MonoBehaviour
     private float hurtEffectTime;
 
     public TMP_Text text;
-
+    [SerializeField]
     private UIPlayerHealth healthSlider;
+
 
     // Start is called before the first frame update
     void Start()
@@ -36,16 +37,16 @@ public class PlayerHealth : MonoBehaviour
 
     void Awake()
     {
-        text.text = "Heatlh " + health.ToString();
+        //text.text = "Health " + health.ToString();
         remainingHealth = health;
-        healthSlider = FindObjectOfType<UIPlayerHealth>();
+        //healthSlider = FindObjectOfType<UIPlayerHealth>();
         healthSlider.setHealth(remainingHealth);
     }
 
     // Update is called once per frame
     void Update()
     {
-        text.text = "Health: " + remainingHealth.ToString();
+        //text.text = "Health: " + remainingHealth.ToString();
     }
 
     public void takeDamage(float damage)
@@ -65,8 +66,9 @@ public class PlayerHealth : MonoBehaviour
         {
             damageE.a = 1f - (float)remainingHealth / (float)health;
             healthEffect.color = damageE;
-            HurtFlash();
+            //HurtFlash();
         }
+        print(remainingHealth);
         healthSlider.setHealth(remainingHealth);
 
     }

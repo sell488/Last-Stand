@@ -70,6 +70,7 @@ public class spawner : MonoBehaviour
     {
         minEnemy = (int)(minEnemy * difficultyCurveMin);
         maxEnemy = (int)(maxEnemy * difficultyCurveMax);
+        //(minEnemy (1000) * waveNumber)/50 * .10f
     }
 
     public void takeDamage(float damage)
