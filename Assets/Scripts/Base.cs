@@ -15,11 +15,14 @@ public class Base : MonoBehaviour
     private bool moderateDamageEnabled = false;
     private bool criticalDamageEnabled = false;
 
+    public BaseDamageUI damageUI;
+
     // Start is called before the first frame update
     void Start()
     {
         moderateDamage.Stop();
         criticalDamage.Stop();
+        damageUI = FindObjectOfType<BaseDamageUI>();
     }
 
     // Update is called once per frame
@@ -49,6 +52,10 @@ public class Base : MonoBehaviour
     {
         if(0 <= health && health <= 100)
         {
+            if (!damageUI.isFlashing)
+            {
+                damageUI.StartCoroutine("OnBaseDamaged");
+            }
             health += change;
             if(!moderateDamageEnabled && health <= 50 && health > 25)
             {

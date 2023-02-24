@@ -42,6 +42,18 @@ public class Enemies : MonoBehaviour
     private float accelerationSpeed;
 
     /// <summary>
+    /// Speed the agent will be set to when recently damaged
+    /// </summary>
+    public float damagedSpeed;
+
+    private float defaultSpeed;
+
+    /// <summary>
+    /// How long in seconds it will take an enemy to return to their default speed after being damaged
+    /// </summary>
+    public float recoveryTime;
+
+    /// <summary>
     /// tracks if the enemy should be dead
     /// </summary>
     public bool isKilled;
@@ -72,6 +84,7 @@ public class Enemies : MonoBehaviour
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         target = GameObject.FindGameObjectWithTag("Player");
         accelerationSpeed = agent.acceleration;
+        defaultSpeed = agent.speed;
         isKilled = false;
         //damage_CD = .8f;
         last_damaged = 0;
@@ -117,7 +130,7 @@ public class Enemies : MonoBehaviour
                     c.GetComponent<PlayerHealth>().takeDamage(damage);
                     anim.Play("Attack");
                 }
-                else if (c.GetComponent<Base>() && (Time.time - last_damaged > damage_CD) && !isKilled && c.GetComponent<Base>().health != 0)
+                else if (c.GetComponent<Base>() && (Time.time - last_damaged > damage_CD) && !isKilled)
                 {
                     last_damaged = Time.time;
                     anim.Play("Attack");
@@ -126,21 +139,6 @@ public class Enemies : MonoBehaviour
             }
         }
     }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.GetComponent<PlayerHealth>() && !isKilled)
-        {
-            collision.gameObject.GetComponent<PlayerHealth>().takeDamage(damage);
-        }
-        else if (collision.gameObject.tag == "Tower")
-        {
-            print("enemy hit tower");
-            Destroy(gameObject);
-        }
-        //Invoke("checkHealth", 0.2f);
-    }
-
     private void checkHealth()
     {
         if(health <= 0) {
@@ -152,7 +150,6 @@ public class Enemies : MonoBehaviour
             gameObject.GetComponent<MeshCollider>().enabled = false;
             agent.speed = 0;
             Invoke("destroy", 5);
-            print("destroyed");
         }
 
         
@@ -170,7 +167,15 @@ public class Enemies : MonoBehaviour
         anim.StopPlayback();
         anim.Play("Take Damage");
         health -= damage;
+        StartCoroutine("slowOnDamage");
         checkHealth();
+    }
+
+    private IEnumerator slowOnDamage()
+    {
+        agent.speed = damagedSpeed;
+        yield return new WaitForSeconds(recoveryTime);
+        agent.speed = defaultSpeed;
     }
 
     /// <summary>

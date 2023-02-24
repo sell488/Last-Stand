@@ -332,6 +332,8 @@ MonoBehaviour:
   damage: 1
   breakingDistance: 10
   breakingSpeed: 35
+  damagedSpeed: 4
+  recoveryTime: 1
   isKilled: 0
   anim: {fileID: 6855990463560014420}
   hitEffect: {fileID: 3538810956564979882}
