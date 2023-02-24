@@ -2941,7 +2941,6 @@ Transform:
   - {fileID: 30198474}
   - {fileID: 731884675659524258}
   - {fileID: 1741316951}
-  - {fileID: 1374180730}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5019,6 +5018,7 @@ GameObject:
   - component: {fileID: 1374180730}
   - component: {fileID: 1374180729}
   - component: {fileID: 1374180728}
+  - component: {fileID: 1374180731}
   m_Layer: 0
   m_Name: Minimap Camera
   m_TagString: Untagged
@@ -5085,13 +5085,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1374180727}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.5700073, y: 20, z: -0.5}
+  m_LocalPosition: {x: 222, y: 23, z: 116}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 909465294}
-  m_RootOrder: 3
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &1374180731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374180727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26e7f213835c74913ac190f2ea2f196f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 909465287}
 --- !u!1001 &1381393143
 PrefabInstance:
   m_ObjectHideFlags: 0
