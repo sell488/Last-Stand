@@ -7,8 +7,15 @@ using Random = System.Random;
 public class Enemies : MonoBehaviour
 {
     public GameObject spawner;
+
+    /// <summary>
+    /// minimap stuff
+    /// </summary>
     public GameObject minimap_layer;
     public GameObject sphere;
+    private float radius;
+
+
     private UnityEngine.AI.NavMeshAgent agent;
 
     /// <summary>
@@ -68,8 +75,16 @@ public class Enemies : MonoBehaviour
     {
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         target = GameObject.FindGameObjectWithTag("Player");
-        sphere = Instantiate(minimap_layer, transform.position, Quaternion.identity);
-        sphere.transform.parent = transform;
+        //sphere = Instantiate(minimap_layer, transform.position, Quaternion.identity);
+
+
+        // Minimap Stuff
+        radius = 10.2f; 
+    
+        sphere = Instantiate(minimap_layer, transform.position , Quaternion.identity);
+        squareConstraint(sphere.transform, target.transform, radius);
+            
+
         //anim.GetComponent<Animator>();
         print(anim);
         accelerationSpeed = agent.acceleration;
@@ -81,6 +96,10 @@ public class Enemies : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //update minimap spheres layer
+        squareConstraint(sphere.transform, target.transform, radius);
+
+
         if (agent.remainingDistance < breakingDistance)
         {
             agent.acceleration = breakingSpeed;
@@ -147,6 +166,34 @@ public class Enemies : MonoBehaviour
         health -= damage;
         checkHealth();
         print("damaged");
+    }
+
+    private void squareConstraint(Transform spherePos, Transform targetPos, float radius)
+    {
+        Vector3 pos = new Vector3();
+
+        pos.y = transform.position.y;
+
+        if(Mathf.Abs(transform.position.x - targetPos.position.x) > radius)
+        {
+            pos.x = targetPos.position.x + Mathf.Sign(transform.position.x - targetPos.position.x) * radius;
+        }
+        else
+        {
+            pos.x = transform.position.x;
+        }
+        
+        if (Mathf.Abs(transform.position.z - targetPos.position.z) > radius)
+        {
+            pos.z = targetPos.position.z + Mathf.Sign(transform.position.z - targetPos.position.z)*radius;
+        }
+        else
+        {
+            pos.z = transform.position.z;
+        }
+
+        spherePos.position = pos;
+
     }
 
 }
