@@ -77,7 +77,6 @@ public class Enemies : MonoBehaviour
     public float last_damaged;
     public float attackRadius;
 
-
     // Start is called before the first frame update
     void Start()
     {
