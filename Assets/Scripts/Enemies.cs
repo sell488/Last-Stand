@@ -60,20 +60,6 @@ public class Enemies : MonoBehaviour
     public float damage_CD;
     public float last_damaged;
 
-    // For enemies that shoot
-    public Rigidbody bulletPrefab;
-    public float shootSpeed = 300;
-
-    private bool playerInRange = false;
-    private float lastAttackTime = 0f;
-    private float fireRate = 0.5f;
-
-    void shootBullet()
-    {
-        var projectile = Instantiate(bulletPrefab, new Vector3(transform.position.x, transform.position.y + 0.7f, transform.position.z), transform.rotation);
-        projectile.velocity = transform.forward * shootSpeed;
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -109,21 +95,6 @@ public class Enemies : MonoBehaviour
             {
                 last_damaged = Time.time;
                 target.GetComponent<PlayerHealth>().takeDamage(damage);
-            }
-        }
-
-        Collider[] colliders2 = Physics.OverlapSphere(transform.position, 4);
-        foreach(Collider c in colliders2)
-        {
-            if (c.gameObject.tag == "Player")
-            {
-                print("player in range!");
-                if (Time.time - lastAttackTime >= 1f/fireRate)
-                {
-                    anim.Play("Attack");
-                    shootBullet();
-                    lastAttackTime = Time.time;
-                }
             }
         }
     }
