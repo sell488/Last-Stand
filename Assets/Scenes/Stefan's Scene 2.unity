@@ -1881,7 +1881,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6000
   m_UseColorTemperature: 1
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 1.02e-43, y: 0, z: 0, w: -8.264096e-28}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 5.71
@@ -5982,7 +5982,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4d1f23c0c4b48d04ca2cce352a5d903f, type: 2}
+  - {fileID: 2100000, guid: 23789b066c3566f44a76d3dea6c92a50, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6984,6 +6984,10 @@ PrefabInstance:
     - target: {fileID: 2635373299093271823, guid: 327416f994b039a4282787e9c0b6d63e, type: 3}
       propertyPath: m_Name
       value: Player Capsule
+      objectReference: {fileID: 0}
+    - target: {fileID: 2635373299093271823, guid: 327416f994b039a4282787e9c0b6d63e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4536276192303884163, guid: 327416f994b039a4282787e9c0b6d63e, type: 3}
       propertyPath: runningPosition
