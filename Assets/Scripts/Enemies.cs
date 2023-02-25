@@ -79,10 +79,10 @@ public class Enemies : MonoBehaviour
 
 
         // Minimap Stuff
-        radius = 10.2f; 
+        radius = 11.25f; 
     
         sphere = Instantiate(minimap_layer, transform.position , Quaternion.identity);
-        squareConstraint(sphere.transform, target.transform, radius);
+        sphereConstraint(sphere.transform, target.transform, radius);
             
 
         //anim.GetComponent<Animator>();
@@ -97,7 +97,7 @@ public class Enemies : MonoBehaviour
     void Update()
     {
         //update minimap spheres layer
-        squareConstraint(sphere.transform, target.transform, radius);
+        sphereConstraint(sphere.transform, target.transform, radius);
 
 
         if (agent.remainingDistance < breakingDistance)
@@ -168,31 +168,18 @@ public class Enemies : MonoBehaviour
         print("damaged");
     }
 
-    private void squareConstraint(Transform spherePos, Transform targetPos, float radius)
+    private void sphereConstraint(Transform spherePos, Transform targetPos, float radius)
     {
-        Vector3 pos = new Vector3();
 
-        pos.y = transform.position.y;
-
-        if(Mathf.Abs(transform.position.x - targetPos.position.x) > radius)
+        Vector3 enemy2player = targetPos.position - transform.position;
+        if(enemy2player.magnitude > radius)
         {
-            pos.x = targetPos.position.x + Mathf.Sign(transform.position.x - targetPos.position.x) * radius;
+            spherePos.transform.position = targetPos.position - enemy2player.normalized * radius;
         }
         else
         {
-            pos.x = transform.position.x;
+            spherePos.position = transform.position;
         }
-        
-        if (Mathf.Abs(transform.position.z - targetPos.position.z) > radius)
-        {
-            pos.z = targetPos.position.z + Mathf.Sign(transform.position.z - targetPos.position.z)*radius;
-        }
-        else
-        {
-            pos.z = transform.position.z;
-        }
-
-        spherePos.position = pos;
 
     }
 
