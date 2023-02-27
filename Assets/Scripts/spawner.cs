@@ -22,6 +22,8 @@ public class spawner : MonoBehaviour
     /// </summary>
     public float spawnFrequency = 3f;
 
+    public Animator baseDestroyedAnim;
+
     [SerializeField]
     private Transform spawnPoint;
 
@@ -81,7 +83,7 @@ public class spawner : MonoBehaviour
         } else if(damage >= health)
         {
             ScoreKeeper.ScorePoints(5);
-            Destroy(gameObject, 2f);
+            Destroy(gameObject, 10f);
         }
 
         if(health/initHealth < 0.5f)

@@ -40,7 +40,7 @@ public class PlayerHealth : MonoBehaviour
         //text.text = "Health " + health.ToString();
         remainingHealth = health;
         //healthSlider = FindObjectOfType<UIPlayerHealth>();
-        healthSlider.setHealth(remainingHealth);
+        healthSlider.setHealth(100);
     }
 
     // Update is called once per frame
@@ -53,6 +53,7 @@ public class PlayerHealth : MonoBehaviour
     {
         remainingHealth -= damage;
         Color damageE = healthEffect.color;
+        StartCoroutine("HurtFlash");
 
         if (remainingHealth > 100)
         {
@@ -61,7 +62,7 @@ public class PlayerHealth : MonoBehaviour
         } else if(remainingHealth < 0)
         {
             remainingHealth = 0;
-            //SceneManager.LoadScene(1);
+            SceneManager.LoadScene(1);
         } else
         {
             damageE.a = 1f - (float)remainingHealth / (float)health;

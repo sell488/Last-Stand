@@ -17,6 +17,7 @@ public class Enemies : MonoBehaviour
     public GameObject minimap_layer;
     private GameObject sphere;
     private float radius;
+    public float cameraSize = 9;
 
     /// <summary>
     /// What enemies should move towards
@@ -89,7 +90,7 @@ public class Enemies : MonoBehaviour
     void Start()
     {
         // Minimap Stuff
-        radius = 5.0f;
+        radius = cameraSize;
 
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         target = GameObject.FindGameObjectWithTag("Player");

@@ -17,12 +17,8 @@ public class UIPlayerHealth : MonoBehaviour
     {
         healthyColor = Color.green; 
         damagedColor = Color.red;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        slider.value = 100;
+        sliderImage.color = healthyColor;
     }
 
     public void setHealth(float remainingHealth)
