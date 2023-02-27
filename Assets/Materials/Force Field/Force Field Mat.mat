@@ -80,6 +80,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Fill_Texture:
+        m_Texture: {fileID: 2800000, guid: bc18ba4b9856b004bab7f343f4f08c67, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -94,6 +98,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Scan_Line_Texture:
+        m_Texture: {fileID: 2800000, guid: 65bd268ef906e0a49ba497324e929ac3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -134,6 +142,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _Glow_Speed: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -145,6 +154,8 @@ Material:
     - _RefractionModel: 0
     - _RenderQueueType: 4
     - _RequireSplitLighting: 0
+    - _Scan_Size: 2
+    - _Scan_Speed: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -178,5 +189,8 @@ Material:
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Rim_Color: {r: 0, g: 0.5333334, b: 2, a: 0}
+    - _Fill_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Fill_Tiling: {r: 30, g: 30, b: 0, a: 0}
+    - _Rim_Color: {r: 0, g: 1.0680627, b: 3.9999995, a: 0}
+    - _Rim_Power: {r: 1, g: 5, b: 0, a: 0}
   m_BuildTextureStacks: []
