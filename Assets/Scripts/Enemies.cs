@@ -10,6 +10,14 @@ public class Enemies : MonoBehaviour
     public GameObject spawner;
     private UnityEngine.AI.NavMeshAgent agent;
 
+
+    /// <summary>
+    /// minimap stuff
+    /// </summary>
+    public GameObject minimap_layer;
+    private GameObject sphere;
+    private float radius;
+
     /// <summary>
     /// What enemies should move towards
     /// </summary>
@@ -80,8 +88,16 @@ public class Enemies : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Minimap Stuff
+        radius = 5.0f;
+
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         target = GameObject.FindGameObjectWithTag("Player");
+
+
+        sphere = Instantiate(minimap_layer, transform.position, Quaternion.identity);
+        sphereConstraint(sphere.transform, target.transform, radius);
+
         accelerationSpeed = agent.acceleration;
         defaultSpeed = agent.speed;
         isKilled = false;
@@ -94,7 +110,11 @@ public class Enemies : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(agent.remainingDistance < breakingDistance)
+
+        //update minimap spheres layer
+        sphereConstraint(sphere.transform, target.transform, radius);
+
+        if (agent.remainingDistance < breakingDistance)
         {
             agent.acceleration = breakingSpeed;
         } else
@@ -214,6 +234,21 @@ public class Enemies : MonoBehaviour
         }
 
         return pathLength;
+    }
+
+    private void sphereConstraint(Transform spherePos, Transform targetPos, float radius)
+    {
+
+        Vector3 enemy2player = targetPos.position - transform.position;
+        if (enemy2player.magnitude > radius)
+        {
+            spherePos.transform.position = targetPos.position - enemy2player.normalized * radius;
+        }
+        else
+        {
+            spherePos.position = transform.position;
+        }
+
     }
 
 }
