@@ -13,6 +13,8 @@ public class BossWave : MonoBehaviour
 
     public Transform spawnPoint;
 
+    public GameObject shield;
+
     private void OnTriggerEnter(Collider other)
     {
         
@@ -25,6 +27,7 @@ public class BossWave : MonoBehaviour
             }
 
             GetComponentInParent<spawner>().shieldDown = true;
+            shield.SetActive(false);
         }
     }
 

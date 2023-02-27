@@ -138,10 +138,10 @@ public class Enemies : MonoBehaviour
         }
 
         Collider[] colliders = new Collider[3];
-        Physics.OverlapSphereNonAlloc(transform.position, attackRadius, colliders, ~LayerMask.GetMask("Enemy"));
+        Physics.OverlapSphereNonAlloc(transform.position, attackRadius, colliders, (LayerMask.GetMask("Player") | LayerMask.GetMask("Base")));
         foreach (Collider c in colliders)
         {
-            if(c)
+            if (c)
             {
                 if ((c.gameObject.tag == "Player") && (Time.time - last_damaged > damage_CD) && !isKilled)
                 {
