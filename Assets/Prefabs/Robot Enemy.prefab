@@ -328,6 +328,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawner: {fileID: 0}
+  minimap_layer: {fileID: 4011779756179552544, guid: 0057d96debdf7d842a8a7db511553592, type: 3}
+  sphere: {fileID: 0}
   health: 100
   damage: 1
   breakingDistance: 10
