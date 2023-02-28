@@ -53,6 +53,9 @@ public class PlayerMovement : MonoBehaviour
     public bool isRunning;
     private bool hasPositionedRunning;
     private bool hasPositionedWalking;
+    private bool hasChangedMovementState;
+
+    public Crosshair crosshair;
 
     // Start is called before the first frame update
     void Start()
@@ -64,6 +67,7 @@ public class PlayerMovement : MonoBehaviour
         hasPositionedRunning = false;
         hasPositionedWalking = true;
         isRunning = false;
+        crosshair.toRestingSize();
     }
 
     private void Update()
@@ -74,7 +78,8 @@ public class PlayerMovement : MonoBehaviour
         {
             currentSpeed = sprintSpeed;
             isRunning = true;
-            if(!hasPositionedRunning)
+            crosshair.toRunningSize();
+            if (!hasPositionedRunning)
             {
                 GetComponentInChildren<WeaponSwitcher>().currentGun.GetComponentInChildren<Firearm>().startRunning();
                 hasPositionedRunning = true;
@@ -94,6 +99,15 @@ public class PlayerMovement : MonoBehaviour
             }
             
         }
+
+        if(!isRunning && rb.velocity.magnitude < sprintSpeed && rb.velocity.magnitude >= speed)
+        {
+            crosshair.toWalkingSize();
+        } else if(!isRunning)
+        {
+            crosshair.toRestingSize();
+        }
+
         // This will detect forward and backward movement
         horizontalMovement = Input.GetAxisRaw("Horizontal");
 
@@ -169,7 +183,6 @@ public class PlayerMovement : MonoBehaviour
         if (other.gameObject.tag == "Level")
         {
             IsGrounded = true;
-            Debug.Log("Grounded");
         }
     }
 
@@ -178,7 +191,6 @@ public class PlayerMovement : MonoBehaviour
         if (other.gameObject.tag == "Level")
         {
             IsGrounded = false;
-            Debug.Log("Not Grounded");
         }
     }
 
