@@ -69,7 +69,6 @@ public class PlayerHealth : MonoBehaviour
             healthEffect.color = damageE;
             //HurtFlash();
         }
-        print(remainingHealth);
         healthSlider.setHealth(remainingHealth);
 
     }
