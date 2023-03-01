@@ -62,12 +62,11 @@ public class PlayerHealth : MonoBehaviour
         } else if(remainingHealth < 0)
         {
             remainingHealth = 0;
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(2);
         } else
         {
             damageE.a = 1f - (float)remainingHealth / (float)health;
             healthEffect.color = damageE;
-            //HurtFlash();
         }
         healthSlider.setHealth(remainingHealth);
 

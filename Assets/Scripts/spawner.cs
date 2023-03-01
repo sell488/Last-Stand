@@ -93,6 +93,7 @@ public class spawner : MonoBehaviour
             baseDestroyedAnim.SetTrigger("Spawner Destroyed");
             damageEffect.gameObject.SetActive(false);
             ScoreKeeper.ScorePoints(5);
+            ScoreKeeper.KilledSpawner();
             Destroy(gameObject, 10f);
             return;
         }

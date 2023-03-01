@@ -51,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
     private float timer;
 
     public bool isRunning;
+    public bool canRun;
     private bool hasPositionedRunning;
     private bool hasPositionedWalking;
     private bool hasChangedMovementState;
@@ -60,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        canRun = true;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         init_y = transform.position.y;
@@ -74,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
     {
         
         float currentSpeed;
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && canRun)
         {
             currentSpeed = sprintSpeed;
             isRunning = true;

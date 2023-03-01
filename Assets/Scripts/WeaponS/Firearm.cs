@@ -163,6 +163,9 @@ public class Firearm : MonoBehaviour
 
     public bool isActive;
 
+    private bool canReload;
+    private bool isReloading;
+
 
 
     // Start is called before the first frame update
@@ -181,15 +184,18 @@ public class Firearm : MonoBehaviour
         print("ammoUI: " + ammoUI);
         ammoUI.setFireRate(firemode);
         weaponPosition = WeaponDefaultPosition.localPosition;
+        canReload = true;
+        isReloading = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         //Reload logic
-        if(Input.GetKeyDown(KeyCode.R) && remainingRounds > 0)
+        if(Input.GetKeyDown(KeyCode.R) && remainingRounds > 0 && canReload)
         {
-            
+            GetComponentInParent<PlayerMovement>().canRun = false;
+            isReloading = true;
             canFire = false;
             if(magRounds > 0)
             {
@@ -253,10 +259,15 @@ public class Firearm : MonoBehaviour
 
     public void startRunning()
     {
-        canFire = false;
-        anim.Play("Run");
-        transform.rotation = runningPosition.rotation;
-        transform.position = runningPosition.position;
+        if(!isReloading)
+        {
+            canFire = false;
+            canReload = false;
+            anim.Play("Run");
+            transform.rotation = runningPosition.rotation;
+            transform.position = runningPosition.position;
+        }
+        
     }
 
     
@@ -264,6 +275,7 @@ public class Firearm : MonoBehaviour
     {
         anim.Play("Idle");
         canFire = true;
+        canReload = true;
         transform.localRotation = WeaponDefaultPosition.localRotation;
         transform.position = WeaponDefaultPosition.position;
     }
@@ -279,7 +291,7 @@ public class Firearm : MonoBehaviour
     /// </summary>
     public virtual void Reload()
     {
-        if (primaryAmmo == true)
+        if (primaryAmmo == true && canReload)
         {
             if(remainingRounds < magCount && remainingRounds > 0)
             {
@@ -313,6 +325,8 @@ public class Firearm : MonoBehaviour
             magRoundsSec = magCountSec;
             canFire = true;
         }
+        isReloading = false;
+        GetComponentInParent<PlayerMovement>().canRun = true;
     }
 
     public virtual void Shoot(GameObject proj)
