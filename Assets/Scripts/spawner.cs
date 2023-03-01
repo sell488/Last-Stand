@@ -44,6 +44,9 @@ public class spawner : MonoBehaviour
     [SerializeField]
     private VisualEffect damageEffect;
 
+    [SerializeField]
+    private VisualEffect destructionEffect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -82,8 +85,16 @@ public class spawner : MonoBehaviour
             health -= damage;
         } else if(damage >= health)
         {
+            gameObject.GetComponent<BoxCollider>().enabled = false;
+            destructionEffect.transform.parent = null;
+            destructionEffect.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 10, gameObject.transform.position.z);
+            destructionEffect.gameObject.SetActive(true);
+            Destroy(destructionEffect, 10f);
+            baseDestroyedAnim.SetTrigger("Spawner Destroyed");
+            damageEffect.gameObject.SetActive(false);
             ScoreKeeper.ScorePoints(5);
             Destroy(gameObject, 10f);
+            return;
         }
 
         if(health/initHealth < 0.5f)

@@ -329,12 +329,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawner: {fileID: 0}
   minimap_layer: {fileID: 4011779756179552544, guid: 0057d96debdf7d842a8a7db511553592, type: 3}
-  sphere: {fileID: 0}
+  cameraSize: 9
   health: 100
   damage: 1
   breakingDistance: 10
   breakingSpeed: 35
-  damagedSpeed: 4
+  damagedSpeed: 2
+  distanceSpeed: 4
+  aggroDistance: 20
   recoveryTime: 1
   isKilled: 0
   anim: {fileID: 6855990463560014420}

@@ -55,6 +55,10 @@ public class Enemies : MonoBehaviour
     /// </summary>
     public float damagedSpeed;
 
+    public float distanceSpeed;
+
+    public float aggroDistance;
+
     private float defaultSpeed;
 
     /// <summary>
@@ -85,6 +89,8 @@ public class Enemies : MonoBehaviour
     public float damage_CD;
     public float last_damaged;
     public float attackRadius;
+
+    private bool isBeingDamaged = false;
 
     // Start is called before the first frame update
     void Start()
@@ -145,6 +151,14 @@ public class Enemies : MonoBehaviour
             }
         }
 
+        if(agent.remainingDistance > aggroDistance && !isBeingDamaged && !isKilled)
+        {
+            agent.speed = distanceSpeed;
+        } else if (!isBeingDamaged && !isKilled)
+        {
+            agent.speed = defaultSpeed;
+        }
+
         Collider[] colliders = new Collider[3];
         Physics.OverlapSphereNonAlloc(transform.position, attackRadius, colliders, (LayerMask.GetMask("Player") | LayerMask.GetMask("Base")));
         foreach (Collider c in colliders)
@@ -199,9 +213,10 @@ public class Enemies : MonoBehaviour
     }
 
     private IEnumerator slowOnDamage()
-    {
+    {   
         if(!isKilled)
         {
+            isBeingDamaged = true;
             agent.speed = damagedSpeed;
         }
 
@@ -209,9 +224,9 @@ public class Enemies : MonoBehaviour
 
         if(!isKilled)
         {
+            isBeingDamaged = false;
             agent.speed = defaultSpeed;
         }
-
     }
 
     /// <summary>

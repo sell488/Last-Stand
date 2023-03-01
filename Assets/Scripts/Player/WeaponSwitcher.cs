@@ -37,6 +37,10 @@ public class WeaponSwitcher : MonoBehaviour
         {
             switchWeapon(1);
         }
+        if(Input.GetKey(KeyCode.Alpha3))
+        {
+            switchWeapon(2);
+        }
     }
 
     void switchWeapon(int index)

@@ -39,4 +39,10 @@ public class Crosshair : MonoBehaviour
     {
         targetSize = runningSize;
     }
+
+    public void toShootingPosition()
+    {
+        targetSize = runningSize;
+        _crosshair.sizeDelta = new Vector2(runningSize, runningSize);
+    }
 }
