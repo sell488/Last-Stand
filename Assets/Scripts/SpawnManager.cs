@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -47,9 +48,9 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator spawnWave()
     {
-        if(!(ScoreKeeper.GetSpawnersKilled() < spawner.Length))
+        if(ScoreKeeper.GetSpawnersKilled() == spawner.Length)
         {
-
+            SceneManager.LoadScene("Game Won");
         }
         for (int i = 0; i < spawner.Length; i++)
         {
