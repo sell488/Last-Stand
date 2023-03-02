@@ -717,9 +717,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Tutorial
-
-'
+  m_text: Guide
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d1c213a3980aa3f4381dbda6c26c53c5, type: 2}
   m_sharedMaterial: {fileID: -7862743246491644870, guid: d1c213a3980aa3f4381dbda6c26c53c5, type: 2}
@@ -946,7 +944,7 @@ GameObject:
   - component: {fileID: 300419191}
   - component: {fileID: 300419190}
   m_Layer: 0
-  m_Name: Tutorial
+  m_Name: Guide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
