@@ -164,9 +164,9 @@ public class Firearm : MonoBehaviour
     public bool isActive;
 
     private bool canReload;
-    private bool isReloading;
+    protected bool isReloading;
 
-
+    
 
     // Start is called before the first frame update
     void Start()
@@ -186,6 +186,13 @@ public class Firearm : MonoBehaviour
         weaponPosition = WeaponDefaultPosition.localPosition;
         canReload = true;
         isReloading = false;
+    }
+
+    public void OnEnable()
+    {
+        canFire = true;
+        isReloading = false;
+        GetComponentInParent<PlayerMovement>().canRun = true;
     }
 
     // Update is called once per frame

@@ -50,7 +50,10 @@ public class Shotgun : Firearm
     public override void Reload()
     {
         StartCoroutine("reloadCoroutine");
-        
+        GetComponentInParent<PlayerMovement>().canRun = false;
+        isReloading = true;
+        canFire = false;
+
     }
 
     private IEnumerator reloadCoroutine()
@@ -66,11 +69,15 @@ public class Shotgun : Firearm
             yield return new WaitForSeconds(0.5f);
             if(rounds != magRounds)
             {
+                isReloading = false;
+                canFire = true;
                 StopCoroutine("reloadCoroutine");
                 magRounds--;
                 
             }
         }
+        isReloading = false;
+        canFire = true;
     }
 
 
