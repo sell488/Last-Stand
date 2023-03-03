@@ -94,9 +94,6 @@ public class Bullet : MonoBehaviour
 
     private bool checkCollisionStep(Vector3 startPoint, Vector3 endPoint, out RaycastHit hit)
     {
-        
-        bool test = Physics.Raycast(startPoint, endPoint - startPoint, out hit, (endPoint - startPoint).magnitude);
-        RaycastHit testhit = hit;
         return Physics.Raycast(startPoint, endPoint - startPoint, out hit, (endPoint - startPoint).magnitude, ~LayerMask.GetMask("Projectile"));
     }
 

@@ -45,6 +45,7 @@ public class WeaponSwitcher : MonoBehaviour
 
     void switchWeapon(int index)
     {
+        ReloadAlert.stopReloadAlert();
         if (guns[index].GetComponentInChildren<Firearm>().isBought)
         {
         currentGun.gameObject.SetActive(false); 

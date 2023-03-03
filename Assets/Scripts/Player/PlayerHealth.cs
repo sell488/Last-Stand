@@ -65,7 +65,12 @@ public class PlayerHealth : MonoBehaviour
             SceneManager.LoadScene(2);
         } else
         {
-            damageE.a = 1f - (float)remainingHealth / (float)health;
+            float alphaValue = .85f - ((float)remainingHealth / ((float)health));
+            if(alphaValue < 1 && alphaValue > 0)
+            {
+                damageE.a = alphaValue;
+            }
+            print(damageE.a);
             healthEffect.color = damageE;
         }
         healthSlider.setHealth(remainingHealth);
