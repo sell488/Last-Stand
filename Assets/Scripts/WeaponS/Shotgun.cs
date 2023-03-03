@@ -12,6 +12,11 @@ public class Shotgun : Firearm
 
     public override void Shoot(GameObject proj)
     {
+        if (!(magRounds > 0))
+        {
+            ReloadAlert.startReloadAlert();
+            return;
+        }
         float totalSpread = spread/gauge;
         for (int i = 0; i < gauge; i++)
         {
@@ -45,6 +50,12 @@ public class Shotgun : Firearm
         anim.Play("Fire");
         triggerOnShoot();
 
+        
+        if (((float)magRounds)/((float)magCount) < 0.1f)
+        {
+            print("Before: " + ((float)magRounds) / ((float)magCount));
+            ReloadAlert.startReloadAlert();
+        }
     }
 
     public override void Reload()
@@ -53,7 +64,10 @@ public class Shotgun : Firearm
         GetComponentInParent<PlayerMovement>().canRun = false;
         isReloading = true;
         canFire = false;
-
+        if (magRounds > 0)
+        {
+            ReloadAlert.stopReloadAlert();
+        }
     }
 
     private IEnumerator reloadCoroutine()
