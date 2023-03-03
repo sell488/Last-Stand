@@ -22,6 +22,7 @@ public class Recoil : MonoBehaviour
     [SerializeField]
     private float returnSpeed;
 
+    public Crosshair _crosshair;
 
     void Start()
     {
@@ -50,6 +51,7 @@ public class Recoil : MonoBehaviour
     public void RecoilFire()
     {
         targetRot += new Vector3(recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ));
+        _crosshair.toShootingPosition();
     }
 
 

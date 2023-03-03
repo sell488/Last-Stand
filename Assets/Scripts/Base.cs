@@ -66,6 +66,7 @@ public class Base : MonoBehaviour
             }
         } else if(health <= 0)
         {
+            SceneManager.LoadScene(2);
             Destroy(gameObject);
         }
     }

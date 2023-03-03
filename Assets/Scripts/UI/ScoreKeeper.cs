@@ -30,6 +30,8 @@ public class ScoreKeeper : MonoBehaviour
 
     private int wavesSurvived = 0;
 
+    private int spawnersKilled = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,10 +50,22 @@ public class ScoreKeeper : MonoBehaviour
         Singleton.ScorePointsInternal(points);
     }
 
+
+
     private void ScorePointsInternal(int delta)
     {
         killCount += delta;
         scoreDisplay.text = "Score: " + killCount.ToString();
+    }
+
+    public static void KilledSpawner()
+    {
+        Singleton.KilledSpawnerInternal();
+    }
+
+    private void KilledSpawnerInternal()
+    {
+        spawnersKilled++;
     }
 
     public void setScoreDisplay(string text)
@@ -73,6 +87,11 @@ public class ScoreKeeper : MonoBehaviour
     public static int getScore()
     {
         return Singleton.killCount;
+    }
+
+    public static int GetSpawnersKilled()
+    {
+        return Singleton.spawnersKilled;
     }
 
 }

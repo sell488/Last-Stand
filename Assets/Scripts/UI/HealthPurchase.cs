@@ -22,7 +22,7 @@ public class HealthPurchase : MonoBehaviour
         if (ScoreKeeper.getScore() >= 10 && PH.remainingHealth < 100)
         {
 
-            ScoreKeeper.ScorePoints(10);
+            ScoreKeeper.ScorePoints(-10);
 
             PH.takeDamage(-5);
         }

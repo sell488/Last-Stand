@@ -163,7 +163,12 @@ public class Firearm : MonoBehaviour
 
     public bool isActive;
 
+    private bool canReload;
+    protected bool isReloading;
 
+    private Camera playerCamera;
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -181,15 +186,29 @@ public class Firearm : MonoBehaviour
         print("ammoUI: " + ammoUI);
         ammoUI.setFireRate(firemode);
         weaponPosition = WeaponDefaultPosition.localPosition;
+        canReload = true;
+        isReloading = false;
+
+        playerCamera = GetComponentInParent<Camera>();
+
+        //shootPoint.LookAt(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width/2f, Screen.height/2f, 10)));
+    }
+
+    public void OnEnable()
+    {
+        canFire = true;
+        isReloading = false;
+        GetComponentInParent<PlayerMovement>().canRun = true;
     }
 
     // Update is called once per frame
     void Update()
     {
         //Reload logic
-        if(Input.GetKeyDown(KeyCode.R) && remainingRounds > 0)
+        if(Input.GetKeyDown(KeyCode.R) && remainingRounds > 0 && canReload)
         {
-            
+            GetComponentInParent<PlayerMovement>().canRun = false;
+            isReloading = true;
             canFire = false;
             if(magRounds > 0)
             {
@@ -204,6 +223,7 @@ public class Firearm : MonoBehaviour
 
         }
 
+
         //Firemode logic
         if(Input.GetKeyDown(KeyCode.V) && isAutomatic)
         {
@@ -214,7 +234,7 @@ public class Firearm : MonoBehaviour
         //Fire logic
         if (primaryAmmo == true)
         {
-            if (Input.GetKey(KeyCode.Mouse0) && magRounds > 0 && firemode)
+            if (Input.GetKey(KeyCode.Mouse0) && firemode)
             {
                 if (canFire)
                 {
@@ -227,7 +247,7 @@ public class Firearm : MonoBehaviour
                     }
                 }
             }
-            else if (Input.GetKeyDown(KeyCode.Mouse0) && magRounds > 0 && !firemode)
+            else if (Input.GetKeyDown(KeyCode.Mouse0) && !firemode)
             {
 
                 if (canFire)
@@ -249,14 +269,30 @@ public class Firearm : MonoBehaviour
                 timeTillNextShot = Time.time + fireRateSecs;
             }
         }
+
+        RotateGun();
+    }
+
+    private void RotateGun()
+    {
+        if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out RaycastHit hitInfo, ~LayerMask.GetMask("Projectile")))
+        {
+            Vector3 direction = hitInfo.point - transform.position;
+            transform.rotation = Quaternion.LookRotation(direction);
+        }
     }
 
     public void startRunning()
     {
-        canFire = false;
-        anim.Play("Run");
-        transform.rotation = runningPosition.rotation;
-        transform.position = runningPosition.position;
+        if(!isReloading)
+        {
+            canFire = false;
+            canReload = false;
+            anim.Play("Run");
+            transform.rotation = runningPosition.rotation;
+            transform.position = runningPosition.position;
+        }
+        
     }
 
     
@@ -264,6 +300,7 @@ public class Firearm : MonoBehaviour
     {
         anim.Play("Idle");
         canFire = true;
+        canReload = true;
         transform.localRotation = WeaponDefaultPosition.localRotation;
         transform.position = WeaponDefaultPosition.position;
     }
@@ -279,7 +316,7 @@ public class Firearm : MonoBehaviour
     /// </summary>
     public virtual void Reload()
     {
-        if (primaryAmmo == true)
+        if (primaryAmmo == true && canReload)
         {
             if(remainingRounds < magCount && remainingRounds > 0)
             {
@@ -304,6 +341,11 @@ public class Firearm : MonoBehaviour
                 magRounds = magCount;
             }
 
+            if(magRounds > 0)
+            {
+                ReloadAlert.stopReloadAlert();
+            }
+
             canFire = true;
 
         } else if(primaryAmmo== false)
@@ -313,10 +355,17 @@ public class Firearm : MonoBehaviour
             magRoundsSec = magCountSec;
             canFire = true;
         }
+        isReloading = false;
+        GetComponentInParent<PlayerMovement>().canRun = true;
     }
 
     public virtual void Shoot(GameObject proj)
     {
+        if(!(magRounds > 0))
+        {
+            ReloadAlert.startReloadAlert();
+            return;
+        }
         GameObject bull = Instantiate(proj, shootPoint.position, shootPoint.rotation);
         Bullet bullScript = bull.GetComponent<Bullet>();
 
@@ -339,6 +388,10 @@ public class Firearm : MonoBehaviour
             OnShoot();
         }
         fireEffect.Play(true);
+        if(((float)magRounds)/((float)magCount) < 0.1f)
+        {
+            ReloadAlert.startReloadAlert();
+        }
         Destroy(bull, 5f);
     }
 

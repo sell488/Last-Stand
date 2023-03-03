@@ -17,6 +17,7 @@ public class Enemies : MonoBehaviour
     public GameObject minimap_layer;
     private GameObject sphere;
     private float radius;
+    public float cameraSize = 9;
 
     /// <summary>
     /// What enemies should move towards
@@ -54,6 +55,10 @@ public class Enemies : MonoBehaviour
     /// </summary>
     public float damagedSpeed;
 
+    public float distanceSpeed;
+
+    public float aggroDistance;
+
     private float defaultSpeed;
 
     /// <summary>
@@ -85,11 +90,13 @@ public class Enemies : MonoBehaviour
     public float last_damaged;
     public float attackRadius;
 
+    private bool isBeingDamaged = false;
+
     // Start is called before the first frame update
     void Start()
     {
         // Minimap Stuff
-        radius = 5.0f;
+        radius = cameraSize;
 
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         target = GameObject.FindGameObjectWithTag("Player");
@@ -112,16 +119,23 @@ public class Enemies : MonoBehaviour
     {
 
         //update minimap spheres layer
+        if (!isKilled)
+        {
+            sphereConstraint(sphere.transform, target.transform, radius);
+
+
+
+            if (agent.remainingDistance < breakingDistance)
+            {
+                agent.acceleration = breakingSpeed;
+            }
+            else
+            {
+                agent.acceleration = accelerationSpeed;
+            }
+        }
         sphereConstraint(sphere.transform, target.transform, radius);
 
-        if (agent.remainingDistance < breakingDistance)
-        {
-            agent.acceleration = breakingSpeed;
-        } else
-        {
-            agent.acceleration = accelerationSpeed;
-        }
-        
         anim.SetFloat("Blend", agent.velocity.magnitude);
         //agent.destination = target.transform.position;
         NavMeshPath playerPath = new NavMeshPath();
@@ -135,6 +149,14 @@ public class Enemies : MonoBehaviour
             {
                 agent.SetDestination(playerBase.transform.position);
             }
+        }
+
+        if(agent.remainingDistance > aggroDistance && !isBeingDamaged && !isKilled)
+        {
+            agent.speed = distanceSpeed;
+        } else if (!isBeingDamaged && !isKilled)
+        {
+            agent.speed = defaultSpeed;
         }
 
         Collider[] colliders = new Collider[3];
@@ -191,10 +213,20 @@ public class Enemies : MonoBehaviour
     }
 
     private IEnumerator slowOnDamage()
-    {
-        agent.speed = damagedSpeed;
+    {   
+        if(!isKilled)
+        {
+            isBeingDamaged = true;
+            agent.speed = damagedSpeed;
+        }
+
         yield return new WaitForSeconds(recoveryTime);
-        agent.speed = defaultSpeed;
+
+        if(!isKilled)
+        {
+            isBeingDamaged = false;
+            agent.speed = defaultSpeed;
+        }
     }
 
     /// <summary>
@@ -240,11 +272,11 @@ public class Enemies : MonoBehaviour
     {
 
         Vector3 enemy2player = targetPos.position - transform.position;
-        if (enemy2player.magnitude > radius)
+        if (enemy2player.magnitude > radius && !isKilled)
         {
             spherePos.transform.position = targetPos.position - enemy2player.normalized * radius;
         }
-        else
+        else if(!isKilled)
         {
             spherePos.position = transform.position;
         }

@@ -66,6 +66,8 @@ public class Bullet : MonoBehaviour
 
     public GameObject particleDustHit;
 
+    private bool hitEnemy = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -92,9 +94,6 @@ public class Bullet : MonoBehaviour
 
     private bool checkCollisionStep(Vector3 startPoint, Vector3 endPoint, out RaycastHit hit)
     {
-        
-        bool test = Physics.Raycast(startPoint, endPoint - startPoint, out hit, (endPoint - startPoint).magnitude);
-        RaycastHit testhit = hit;
         return Physics.Raycast(startPoint, endPoint - startPoint, out hit, (endPoint - startPoint).magnitude, ~LayerMask.GetMask("Projectile"));
     }
 
@@ -166,11 +165,13 @@ public class Bullet : MonoBehaviour
             {
                 collision.GetComponent<Enemies>().takeDamage(calculateDamage(currentPoint.magnitude));
 
+                hitEnemy = true;
+
                 if (!collision.GetComponent<Enemies>().isKilled)
                 {
-                    Destroy(gameObject);
+                    Destroy(gameObject, 5f);
                 }
-            } else if(collision.GetComponent<TerrainCollider>())
+            } else if(collision.GetComponent<TerrainCollider>() && !hitEnemy)
             {
                 GameObject particles = Instantiate(particleDustHit, hit.point + (hit.normal * 0.05f), Quaternion.LookRotation(hit.normal), transform.root.parent);
                 ParticleSystem particleSystem = particles.GetComponent<ParticleSystem>();
@@ -178,12 +179,12 @@ public class Bullet : MonoBehaviour
             } else if(collision.GetComponent<spawner>() && collision.GetComponent<spawner>().shieldDown)
             {
                 collision.GetComponent<spawner>().takeDamage(calculateDamage(currentPoint.magnitude));
-                Destroy(gameObject);
+                Destroy(gameObject, 5f);
             }
             
             else
             {
-                Destroy(gameObject);
+                Destroy(gameObject, 5f);
             }
             
         }

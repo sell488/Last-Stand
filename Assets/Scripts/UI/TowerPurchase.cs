@@ -14,10 +14,10 @@ public class TowerPurchase : MonoBehaviour
     public void towerTransaction()
     {
 
-        if (ScoreKeeper.getScore() >= 1)
+        if (ScoreKeeper.getScore() >= 3 && towerIndex < towers.Length)
         {
             print("tower purchased");
-            ScoreKeeper.ScorePoints(-1);
+            ScoreKeeper.ScorePoints(-3);
             towers[towerIndex].SetActive(true);
             towerIndex++;
         }
