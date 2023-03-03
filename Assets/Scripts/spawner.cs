@@ -17,6 +17,8 @@ public class spawner : MonoBehaviour
     /// </summary>
     public int maxEnemy;
 
+    private float waveNumber;
+
     /// <summary>
     /// How often in seconds should a spawner spawn enemies when enabled;
     /// </summary>
@@ -53,6 +55,7 @@ public class spawner : MonoBehaviour
         prev_time = Time.time;
         spawningEnabled = false;
         initHealth = health;
+        waveNumber = 1;
     }
 
     // Update is called once per frame
@@ -63,7 +66,7 @@ public class spawner : MonoBehaviour
             prev_time = Time.time;
             if(spawningEnabled)
             {
-                for (int i = 0; i < (int)(Random.Range(minEnemy, maxEnemy)); i++)
+                for (int i = 0; i < (int)((1 + waveNumber/10) * Random.Range(minEnemy, maxEnemy)); i++)
                 {
                     Instantiate(enemy, spawnPoint.position + new Vector3((float)(Random.value - .5f) * 2.0f, transform.position.y, (float)(Random.value - .5f) * 2), Quaternion.identity);
                 }

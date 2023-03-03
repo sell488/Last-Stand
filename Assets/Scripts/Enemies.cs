@@ -17,7 +17,7 @@ public class Enemies : MonoBehaviour
     public GameObject minimap_layer;
     private GameObject sphere;
     private float radius;
-    public float cameraSize = 9;
+    public float cameraSize;
 
     /// <summary>
     /// What enemies should move towards
@@ -95,6 +95,7 @@ public class Enemies : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        cameraSize = 25;
         // Minimap Stuff
         radius = cameraSize;
 
@@ -199,6 +200,7 @@ public class Enemies : MonoBehaviour
     private void destroy()
     {
         gameObject.SetActive(false);
+        Destroy(sphere);
         Destroy(gameObject);
     }
 
@@ -274,7 +276,7 @@ public class Enemies : MonoBehaviour
         Vector3 enemy2player = targetPos.position - transform.position;
         if (enemy2player.magnitude > radius && !isKilled)
         {
-            spherePos.transform.position = targetPos.position - enemy2player.normalized * radius;
+            spherePos.position = targetPos.position - enemy2player.normalized * radius;
         }
         else if(!isKilled)
         {
