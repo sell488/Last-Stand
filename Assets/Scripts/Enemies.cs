@@ -8,24 +8,25 @@ using Random = System.Random;
 public class Enemies : MonoBehaviour
 {
     public GameObject spawner;
-    private UnityEngine.AI.NavMeshAgent agent;
+    protected UnityEngine.AI.NavMeshAgent agent;
 
 
     /// <summary>
     /// minimap stuff
     /// </summary>
     public GameObject minimap_layer;
-    private GameObject sphere;
-    private float radius;
+    protected GameObject sphere;
+    protected float radius;
     public float cameraSize;
 
     /// <summary>
     /// What enemies should move towards
     /// </summary>
-    private GameObject target;
+    [SerializeField]
+    protected GameObject target;
 
-    private GameObject player;
-    private GameObject playerBase;
+    protected GameObject player;
+    protected GameObject playerBase;
 
     /// <summary>
     /// Enemy health
@@ -48,7 +49,7 @@ public class Enemies : MonoBehaviour
     /// <summary>
     /// The original acceleration
     /// </summary>
-    private float accelerationSpeed;
+    protected float accelerationSpeed;
 
     /// <summary>
     /// Speed the agent will be set to when recently damaged
@@ -59,7 +60,7 @@ public class Enemies : MonoBehaviour
 
     public float aggroDistance;
 
-    private float defaultSpeed;
+    protected float defaultSpeed;
 
     /// <summary>
     /// How long in seconds it will take an enemy to return to their default speed after being damaged
@@ -81,7 +82,7 @@ public class Enemies : MonoBehaviour
     /// </summary>
     public ParticleSystem hitEffect;
 
-    private Color baseColor;
+    protected Color baseColor;
     public Color deathColor;
      
     /// How frequent should an enemy damage a player
@@ -90,7 +91,7 @@ public class Enemies : MonoBehaviour
     public float last_damaged;
     public float attackRadius;
 
-    private bool isBeingDamaged = false;
+    protected bool isBeingDamaged = false;
 
     // Start is called before the first frame update
     void Start()
@@ -270,7 +271,7 @@ public class Enemies : MonoBehaviour
         return pathLength;
     }
 
-    private void sphereConstraint(Transform spherePos, Transform targetPos, float radius)
+    protected void sphereConstraint(Transform spherePos, Transform targetPos, float radius)
     {
 
         Vector3 enemy2player = targetPos.position - transform.position;

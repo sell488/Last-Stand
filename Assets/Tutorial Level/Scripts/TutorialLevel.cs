@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -8,25 +9,22 @@ public class TutorialLevel : MonoBehaviour
     public GameObject[] tutorialObjects;
     public int currentTutorialIndex = 0;
 
+    [SerializeField]
     private PlayerHealth player;
     private Firearm firearm;
 
     [Header("Movement parameters")]
-    private bool[] movementBools = new bool[6];
-    private bool WKey = false;
-    private bool AKey = false;
-    private bool SKey = false;
-    private bool DKey = false;
-    private bool jumpKey = false;
-    private bool sprintKey = false;
+    private bool[] movementBools;
+    private bool WKey;
+    private bool AKey;
+    private bool SKey;
+    private bool DKey;
+    private bool jumpKey;
+    private bool sprintKey;
 
     [Header("Weapon handling parameters")]
-    private bool[] weaponHandlingBools = new bool[5];
-    private bool hasShot = false;
-    private bool hasAimed = false;
-    private bool hasReloaded = false;
-    private bool hasSwitchedWeapon = false;
-    private bool hasSwitchedFireMode = false;
+    private bool[] weaponHandlingBools;
+    [SerializeField]
     WeaponSwitcher weaponSwitcher;
 
     private void Start()
@@ -34,9 +32,11 @@ public class TutorialLevel : MonoBehaviour
         buildMovementArray();
         buildWeaponTutorial();
 
-        player = FindObjectOfType<PlayerHealth>();
-        firearm = player.GetComponentInChildren<Firearm>();
-        weaponSwitcher = player.GetComponent<WeaponSwitcher>();
+        tutorialObjects[0].gameObject.SetActive(true);
+
+        player = GetComponent<PlayerHealth>();
+        weaponSwitcher = gameObject.GetComponent<WeaponSwitcher>();
+        firearm = weaponSwitcher.currentGun.GetComponentInChildren<Firearm>();
     }
 
     private void Update()
@@ -46,69 +46,57 @@ public class TutorialLevel : MonoBehaviour
             if (hasDoneAllMovementOptions())
             {
                 nextTutorial();
-                currentTutorialIndex++;
             }
         } else if(currentTutorialIndex == 1)
         {
             if(hasDoneAllBasicWeaponOptions())
             {
                 nextTutorial();
-                currentTutorialIndex++;
             }
         } else if(currentTutorialIndex == 2)
         {
             if(hasDoneLongReload())
             {
-                nextTutorial();
-                currentTutorialIndex++;
+                Invoke("nextTutorial", 3f);
             }
         } else if(currentTutorialIndex == 3)
         {
             if(hasSwitchedToNewWeapon())
             {
                 nextTutorial();
-                currentTutorialIndex++;
             }
         } else if(currentTutorialIndex == 4)
         {
             if(hasChangedFireMode())
             {
-                Invoke("waitBeforeMovingOn", 5f);
+                Invoke("nextTutorial", 5f);
             }
         } else if(currentTutorialIndex == 5)
         {
             if(hasChangedToShotgun())
             {
                 nextTutorial();
-                currentTutorialIndex++;
             }
         } else if(currentTutorialIndex == 6)
         {
             if(hasShotFourTimes())
             {
                 nextTutorial();
-                currentTutorialIndex++;
             }
         } else if(currentTutorialIndex == 7)
         {
             if(hasReloadedShotgun())
             {
-                nextTutorial();
-                currentTutorialIndex++;                
+                nextTutorial();               
             }
         } else if(currentTutorialIndex == 8)
         {
-            Invoke("waitBeforeMovingOn", 5f);
+            //Shotgun reload mechanics
+            Invoke("nextTutorial", 5f);
         } else if(currentTutorialIndex == 9)
         {
-
+            nextTutorial();
         }
-    }
-
-    private void waitBeforeMovingOn()
-    {
-        currentTutorialIndex++;
-        nextTutorial();
     }
 
     #region Movement
@@ -118,48 +106,48 @@ public class TutorialLevel : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.W))
         {
-            WKey = true;
+            //W Key
+            movementBools[0] = true;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            AKey = true;
+            //A Key
+            movementBools[1] = true;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            SKey = true;
+            //s Key
+            movementBools[2] = true;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            DKey = true;
+            //D Key
+            movementBools[3] = true;
         }
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            jumpKey = true;
+            //Jump Key
+            movementBools[4] = true;
         }
         if(Input.GetKeyDown(KeyCode.LeftShift))
         {
-            sprintKey = true;
+            //Sprint Key
+            movementBools[5] = true;
         }
 
-        for (int index = 0; index < tutorialObjects.Length; index++)
+        for (int index = 0; index < movementBools.Length; index++)
         {
             if (!movementBools[index])
             {
                 isDone = false;
             }
         }
-
         return isDone;
     }
 
     private void buildMovementArray()
     {
-        movementBools[0] = WKey;
-        movementBools[1] = AKey;
-        movementBools[2] = SKey;
-        movementBools[3] = DKey;
-        movementBools[4] = jumpKey;
-        movementBools[5] = sprintKey;
+        movementBools = new bool[6];
     }
     #endregion
 
@@ -171,14 +159,21 @@ public class TutorialLevel : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Mouse0))
         {
-            hasShot = true;
+            //Shooting
+            weaponHandlingBools[0] = true;
         }
         if(Input.GetKeyDown(KeyCode.Mouse1))
         {
-            hasAimed = true;
+            //Aiming
+            weaponHandlingBools[1] = true;
+        }
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            //Reloading
+            weaponHandlingBools[2] = true;
         }
 
-        for (int index = 0; index < 2; index++)
+        for (int index = 0; index < weaponHandlingBools.Length; index++)
         {
             if (!weaponHandlingBools[index])
             {
@@ -218,7 +213,7 @@ public class TutorialLevel : MonoBehaviour
         }
         return false;
     }
-
+    #region Shotgun
     private bool hasChangedToShotgun()
     {
         weaponSwitcher.guns[2].GetComponentInChildren<Firearm>().isBought = true;
@@ -247,19 +242,15 @@ public class TutorialLevel : MonoBehaviour
         }
         return false;
     }
-
+    #endregion
     private void buildWeaponTutorial()
     {
         weaponSwitcher.guns[0].gameObject.SetActive(true);
-
-        weaponHandlingBools[0] = hasShot;
-        weaponHandlingBools[1] = hasAimed;
-        weaponHandlingBools[2] = hasReloaded;
-        weaponHandlingBools[3] = hasSwitchedWeapon;
-        weaponHandlingBools[4] = hasSwitchedFireMode;
+        weaponHandlingBools = new bool[3];
     }
 
     #endregion
+
 
     private void nextTutorial()
     {

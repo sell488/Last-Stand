@@ -12,8 +12,8 @@ public class Base : MonoBehaviour
     public VisualEffect moderateDamage;
     public VisualEffect criticalDamage;
 
-    private bool moderateDamageEnabled = false;
-    private bool criticalDamageEnabled = false;
+    protected bool moderateDamageEnabled = false;
+    protected bool criticalDamageEnabled = false;
 
     public BaseDamageUI damageUI;
 
@@ -48,7 +48,7 @@ public class Base : MonoBehaviour
     /// Positive floats add health, negative floats subtract
     /// </summary>
     /// <param name="change"></param>
-    public void changeHealth(float change)
+    public virtual void changeHealth(float change)
     {
         if(0 <= health && health <= 100)
         {
