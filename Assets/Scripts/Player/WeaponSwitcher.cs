@@ -43,7 +43,7 @@ public class WeaponSwitcher : MonoBehaviour
         }
     }
 
-    void switchWeapon(int index)
+    public void switchWeapon(int index)
     {
         ReloadAlert.stopReloadAlert();
         if (guns[index].GetComponentInChildren<Firearm>().isBought)
