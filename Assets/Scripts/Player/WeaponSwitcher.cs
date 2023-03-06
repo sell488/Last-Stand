@@ -11,19 +11,16 @@ public class WeaponSwitcher : MonoBehaviour
 
     private AmmoCount ammoCounter;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         currentGun = guns[0];
         currentGun.gameObject.SetActive(true);
-
         ammoCounter = FindObjectOfType<AmmoCount>();
 
         for (int i = 1; i < guns.Length; i++)
         {
             guns[i].gameObject.SetActive(false);
         }
-
     }
 
     // Update is called once per frame

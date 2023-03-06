@@ -94,7 +94,7 @@ public class Bullet : MonoBehaviour
 
     private bool checkCollisionStep(Vector3 startPoint, Vector3 endPoint, out RaycastHit hit)
     {
-        return Physics.Raycast(startPoint, endPoint - startPoint, out hit, (endPoint - startPoint).magnitude, ~LayerMask.GetMask("Projectile"));
+        return Physics.Raycast(startPoint, endPoint - startPoint, out hit, (endPoint - startPoint).magnitude, ~LayerMask.GetMask("Projectile", "Minimap"));
     }
 
     // Update is called once per frame

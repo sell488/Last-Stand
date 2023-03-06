@@ -8,7 +8,7 @@ using Random = System.Random;
 public class Enemies : MonoBehaviour
 {
     public GameObject spawner;
-    protected UnityEngine.AI.NavMeshAgent agent;
+    public UnityEngine.AI.NavMeshAgent agent;
 
 
     /// <summary>
@@ -104,7 +104,7 @@ public class Enemies : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player");
 
 
-        sphere = Instantiate(minimap_layer, transform.position, Quaternion.identity);
+        sphere = Instantiate(minimap_layer, new Vector3(transform.position.x, transform.position.y + 10, transform.position.z), Quaternion.identity);
         sphereConstraint(sphere.transform, target.transform, radius);
 
         accelerationSpeed = agent.acceleration;
@@ -113,7 +113,7 @@ public class Enemies : MonoBehaviour
         //damage_CD = .8f;
         last_damaged = 0;
         player = FindObjectOfType<PlayerHealth>().gameObject;
-        playerBase = FindObjectOfType<Base>().gameObject;
+        playerBase = FindObjectOfType<Base>().gameObject; 
     }
 
     // Update is called once per frame
@@ -136,7 +136,7 @@ public class Enemies : MonoBehaviour
                 agent.acceleration = accelerationSpeed;
             }
         }
-        sphereConstraint(sphere.transform, target.transform, radius);
+        sphereConstraint(sphere.transform, player.transform, radius);
 
         anim.SetFloat("Blend", agent.velocity.magnitude);
         //agent.destination = target.transform.position;
@@ -182,7 +182,7 @@ public class Enemies : MonoBehaviour
             }
         }
     }
-    private void checkHealth()
+    protected void checkHealth()
     {
         if(health <= 0) {
             isKilled = true;
@@ -198,7 +198,7 @@ public class Enemies : MonoBehaviour
         
     }
 
-    private void destroy()
+    protected void destroy()
     {
         gameObject.SetActive(false);
         Destroy(sphere);
@@ -215,7 +215,7 @@ public class Enemies : MonoBehaviour
         checkHealth();
     }
 
-    private IEnumerator slowOnDamage()
+    protected IEnumerator slowOnDamage()
     {   
         if(!isKilled)
         {

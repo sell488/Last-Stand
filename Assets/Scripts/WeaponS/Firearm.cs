@@ -183,7 +183,6 @@ public class Firearm : MonoBehaviour
 
         firemode = false;
         ammoUI = FindObjectOfType<AmmoCount>();
-        print("ammoUI: " + ammoUI);
         ammoUI.setFireRate(firemode);
         weaponPosition = WeaponDefaultPosition.localPosition;
         canReload = true;

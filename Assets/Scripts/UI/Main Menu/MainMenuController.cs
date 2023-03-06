@@ -17,6 +17,11 @@ public class MainMenuController : MonoBehaviour
         SceneManager.LoadScene("Stefan's Scene 2");
     }
 
+    public void MechanicsTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }
+
     public void Exit()
     {
         Application.Quit();

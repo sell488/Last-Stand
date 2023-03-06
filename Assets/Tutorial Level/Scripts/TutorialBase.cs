@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class TutorialBase : Base
 {
-
+    [SerializeField]
+    private TMP_Text baseDamage;
     private void Start()
     {
         moderateDamage.Stop();
@@ -17,6 +19,7 @@ public class TutorialBase : Base
         {
             if (!damageUI.isFlashing)
             {
+                StartCoroutine("baseDamageHint");
                 damageUI.StartCoroutine("OnBaseDamaged");
             }
             health += change;
@@ -33,5 +36,12 @@ public class TutorialBase : Base
         {
             gameObject.SetActive(false);
         }
+    }
+
+    private IEnumerator baseDamageHint()
+    {
+        baseDamage.gameObject.SetActive(true);
+        yield return new WaitForSeconds(5f);
+        baseDamage.gameObject.SetActive(false);
     }
 }

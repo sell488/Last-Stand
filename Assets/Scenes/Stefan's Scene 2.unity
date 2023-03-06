@@ -20859,7 +20859,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 1ec85d9b7570f0c46b11030aaa6e890e, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 28dae47f5a89ef04e8ee653c5ef89843, type: 2}
 --- !u!1001 &1476968164
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31263,7 +31263,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 14271
+    m_Bits: 30655
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -36774,7 +36774,7 @@ MonoBehaviour:
   canFire: 0
   isAutomatic: 1
   ammoUI: {fileID: 0}
-  isBought: 1
+  isBought: 0
   WeaponDefaultPosition: {fileID: 3125001396666427489}
   WeaponADSPosition: {fileID: 3125001397717256114}
   weaponPosition: {x: 0, y: 0, z: 0}
@@ -37161,7 +37161,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 12799
+    m_Bits: 29183
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -38501,7 +38501,7 @@ MonoBehaviour:
   canFire: 0
   isAutomatic: 0
   ammoUI: {fileID: 0}
-  isBought: 1
+  isBought: 0
   WeaponDefaultPosition: {fileID: 731884676542185194}
   WeaponADSPosition: {fileID: 731884675482947897}
   weaponPosition: {x: 0, y: 0, z: 0}
@@ -39388,7 +39388,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 12799
+    m_Bits: 29183
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

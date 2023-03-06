@@ -78,7 +78,7 @@ MonoBehaviour:
   spawner: {fileID: 0}
   minimap_layer: {fileID: 4011779756179552544, guid: 0057d96debdf7d842a8a7db511553592, type: 3}
   cameraSize: 9
-  target: {fileID: 0}
+  target: {fileID: 2635373299093271823, guid: 327416f994b039a4282787e9c0b6d63e, type: 3}
   health: 100
   damage: 3
   breakingDistance: 10
@@ -94,6 +94,7 @@ MonoBehaviour:
   damage_CD: 1
   last_damaged: 0
   attackRadius: 5
+  followPlayer: 1
 --- !u!95 &2485316003521738197 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 6855990463560014420, guid: cfce1ba4a4ca2b94ea0a146674551825, type: 3}

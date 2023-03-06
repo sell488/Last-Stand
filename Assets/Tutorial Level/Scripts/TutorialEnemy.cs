@@ -7,6 +7,8 @@ using UnityEngine.ProBuilder.Shapes;
 
 public class TutorialEnemy : Enemies
 {
+    [SerializeField]
+    private bool followPlayer;
     void Start()
     {
         cameraSize = 25;
@@ -20,12 +22,17 @@ public class TutorialEnemy : Enemies
         sphereConstraint(sphere.transform, target.transform, radius);
 
         accelerationSpeed = agent.acceleration;
-        defaultSpeed = agent.speed;
+        defaultSpeed = 8;
         isKilled = false;
         //damage_CD = .8f;
         last_damaged = 0;
         player = FindObjectOfType<PlayerHealth>().gameObject;
-        playerBase = FindObjectOfType<Base>().gameObject;
+        agent.SetDestination(target.transform.position);
+        if(FindObjectOfType<Base>())
+        {
+            playerBase = FindObjectOfType<Base>().gameObject;
+        }
+        
     }
 
     // Update is called once per frame
@@ -51,15 +58,20 @@ public class TutorialEnemy : Enemies
         sphereConstraint(sphere.transform, target.transform, radius);
 
         anim.SetFloat("Blend", agent.velocity.magnitude);
-        agent.destination = target.transform.position;
+        
 
         if (agent.remainingDistance > aggroDistance && !isBeingDamaged && !isKilled)
         {
             agent.speed = distanceSpeed;
         }
-        else if (!isBeingDamaged && !isKilled)
+        else if (!isBeingDamaged && !isKilled && agent.remainingDistance < aggroDistance)
         {
             agent.speed = defaultSpeed;
+        }
+
+        if(followPlayer)
+        {
+            agent.SetDestination(player.transform.position);
         }
 
         Collider[] colliders = new Collider[3];
