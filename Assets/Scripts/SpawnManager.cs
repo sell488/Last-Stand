@@ -50,7 +50,7 @@ public class SpawnManager : MonoBehaviour
     {
         if(ScoreKeeper.GetSpawnersKilled() == spawner.Length)
         {
-            SceneManager.LoadScene("Game Won");
+            SceneManager.LoadScene(4);
         }
         for (int i = 0; i < spawner.Length; i++)
         {

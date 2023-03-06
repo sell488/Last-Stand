@@ -15,6 +15,10 @@ public class Base : MonoBehaviour
     protected bool moderateDamageEnabled = false;
     protected bool criticalDamageEnabled = false;
 
+    [SerializeField]
+    protected GameObject baseDestroyedUI;
+
+    [HideInInspector]
     public BaseDamageUI damageUI;
 
     // Start is called before the first frame update
@@ -37,8 +41,7 @@ public class Base : MonoBehaviour
         while(true) {
             if (health <= 0)
             {
-                SceneManager.LoadScene(1);
-                print("Base destroyed");
+                baseDestroyedUI.SetActive(true);
             }
             yield return new WaitForSeconds(.2f);
         }
@@ -66,8 +69,9 @@ public class Base : MonoBehaviour
             }
         } else if(health <= 0)
         {
-            SceneManager.LoadScene(2);
-            Destroy(gameObject);
+            baseDestroyedUI.SetActive(true);
+            Cursor.lockState = CursorLockMode.Confined;
+            GetComponent<MouseLook>().enabled = false;
         }
     }
 

@@ -15,4 +15,16 @@ public class Restart : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(1);
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    public void Home()
+    {
+        SceneManager.LoadScene(0);
+        Cursor.lockState = CursorLockMode.Confined;
+    }
 }

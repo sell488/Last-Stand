@@ -360,6 +360,7 @@ public class Firearm : MonoBehaviour
 
     public virtual void Shoot(GameObject proj)
     {
+        
         if(!(magRounds > 0))
         {
             ReloadAlert.startReloadAlert();

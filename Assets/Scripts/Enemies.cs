@@ -96,7 +96,7 @@ public class Enemies : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cameraSize = 25;
+        cameraSize = 45;
         // Minimap Stuff
         radius = cameraSize;
 

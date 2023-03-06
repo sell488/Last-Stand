@@ -28,6 +28,9 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField]
     private UIPlayerHealth healthSlider;
 
+    [SerializeField]
+    protected GameObject playerDeathUI;
+
 
     // Start is called before the first frame update
     void Start()
@@ -62,7 +65,9 @@ public class PlayerHealth : MonoBehaviour
         } else if(remainingHealth < 0)
         {
             remainingHealth = 0;
-            SceneManager.LoadScene(2);
+            playerDeathUI.SetActive(true);
+            Cursor.lockState = CursorLockMode.Confined;
+            GetComponent<MouseLook>().enabled = false;
         } else
         {
             float alphaValue = .85f - ((float)remainingHealth / ((float)health));
