@@ -80,7 +80,7 @@ public class Bullet : MonoBehaviour
         this.velocity = velocity;
         this.gravity = gravity;
         isInit = true;
-        initialRotation = transform.rotation;
+        initialRotation = startPos.rotation;
         
     }
 

@@ -11,6 +11,9 @@ public class WeaponSwitcher : MonoBehaviour
 
     private AmmoCount ammoCounter;
 
+    [SerializeField]
+    private Canvas crosshair;
+
     private void Awake()
     {
         currentGun = guns[0];
@@ -21,6 +24,7 @@ public class WeaponSwitcher : MonoBehaviour
         {
             guns[i].gameObject.SetActive(false);
         }
+
     }
 
     // Update is called once per frame
@@ -45,11 +49,11 @@ public class WeaponSwitcher : MonoBehaviour
         ReloadAlert.stopReloadAlert();
         if (guns[index].GetComponentInChildren<Firearm>().isBought)
         {
-        currentGun.gameObject.SetActive(false); 
-        currentGun = guns[index];
-        currentGun.gameObject.SetActive(true);
-        GetComponentInParent<PlayerMovement>().camera = currentGun.GetComponentInChildren<Camera>().transform;
-        ammoCounter.firearm = currentGun.GetComponentInChildren<Firearm>();
+            currentGun.gameObject.SetActive(false); 
+            currentGun = guns[index];
+            currentGun.gameObject.SetActive(true);
+            GetComponentInParent<PlayerMovement>().camera = currentGun.GetComponentInChildren<Camera>().transform;
+            ammoCounter.firearm = currentGun.GetComponentInChildren<Firearm>();
         }
     }
 }

@@ -14,6 +14,8 @@ public class Crosshair : MonoBehaviour
     private float currentSize;
     private float targetSize;
 
+    private RaycastHit hit;
+
     private void Start()
     {
         _crosshair = GetComponent<RectTransform>();
@@ -23,6 +25,17 @@ public class Crosshair : MonoBehaviour
     {
         currentSize = Mathf.Lerp(currentSize, targetSize, Time.deltaTime * speed);
         _crosshair.sizeDelta = new Vector2(currentSize, currentSize);
+
+        
+        if(getLookObject())
+        {
+            
+        }
+    }
+
+    private bool getLookObject()
+    {
+        return Physics.Raycast(transform.position, transform.forward, out RaycastHit hit);
     }
 
     public void toRestingSize()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 
 [RequireComponent(typeof(TMP_Text))]
@@ -65,6 +66,15 @@ public class ScoreKeeper : MonoBehaviour
     private void KilledSpawnerInternal()
     {
         spawnersKilled++;
+        if(spawnersKilled == FindObjectOfType<SpawnManager>().spawner.Length)
+        {
+            Invoke("gameWon", 7f);
+        }
+    }
+
+    private void gameWon()
+    {
+        SceneManager.LoadScene(4);
     }
 
     public void setScoreDisplay(string text)

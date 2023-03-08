@@ -67,6 +67,8 @@ public class TutorialLevel : MonoBehaviour
         firearm = weaponSwitcher.currentGun.gameObject.GetComponentInChildren<Firearm>();
 
         hasTriggeredBase = false;
+        player.GetComponent<MouseLook>().startedGame = true;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
