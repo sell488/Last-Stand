@@ -21,7 +21,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1469821383695879314, guid: 0133bce70ccec384082765ec342844b2, type: 3}
       propertyPath: m_Name
-      value: Bullet Variant 1 No RB
+      value: Bullet Variant 1 No RB .50 BMG
       objectReference: {fileID: 0}
     - target: {fileID: 1469821383695879314, guid: 0133bce70ccec384082765ec342844b2, type: 3}
       propertyPath: m_Layer
@@ -77,11 +77,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7278948362482723925, guid: 0133bce70ccec384082765ec342844b2, type: 3}
       propertyPath: mass
-      value: 0.0035
+      value: 0.0042
       objectReference: {fileID: 0}
     - target: {fileID: 7278948362482723925, guid: 0133bce70ccec384082765ec342844b2, type: 3}
       propertyPath: fudgeFactor
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1699517894, guid: 0133bce70ccec384082765ec342844b2, type: 3}

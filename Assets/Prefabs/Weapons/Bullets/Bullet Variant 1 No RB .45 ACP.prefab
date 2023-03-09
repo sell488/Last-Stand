@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1699517944, guid: 0133bce70ccec384082765ec342844b2, type: 3}
       propertyPath: m_Parameters.widthMultiplier
-      value: 50
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1699517944, guid: 0133bce70ccec384082765ec342844b2, type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].value
@@ -21,7 +21,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1469821383695879314, guid: 0133bce70ccec384082765ec342844b2, type: 3}
       propertyPath: m_Name
-      value: Bullet Variant 1 No RB
+      value: Bullet Variant 1 No RB .45 ACP
       objectReference: {fileID: 0}
     - target: {fileID: 1469821383695879314, guid: 0133bce70ccec384082765ec342844b2, type: 3}
       propertyPath: m_Layer
@@ -30,6 +30,18 @@ PrefabInstance:
     - target: {fileID: 7271050693964704575, guid: 0133bce70ccec384082765ec342844b2, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7271050693964704575, guid: 0133bce70ccec384082765ec342844b2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 7271050693964704575, guid: 0133bce70ccec384082765ec342844b2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 7271050693964704575, guid: 0133bce70ccec384082765ec342844b2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 7271050693964704575, guid: 0133bce70ccec384082765ec342844b2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -77,11 +89,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7278948362482723925, guid: 0133bce70ccec384082765ec342844b2, type: 3}
       propertyPath: mass
-      value: 0.0035
+      value: 0.0015
       objectReference: {fileID: 0}
     - target: {fileID: 7278948362482723925, guid: 0133bce70ccec384082765ec342844b2, type: 3}
       propertyPath: fudgeFactor
-      value: 0.7
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7278948362482723925, guid: 0133bce70ccec384082765ec342844b2, type: 3}
+      propertyPath: particleDustHit
+      value: 
+      objectReference: {fileID: 7163246751705770275, guid: 40adede699c95514ab21cbe44a724d45, type: 3}
+    - target: {fileID: 7411521764805021038, guid: 0133bce70ccec384082765ec342844b2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1699517894, guid: 0133bce70ccec384082765ec342844b2, type: 3}

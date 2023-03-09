@@ -32,6 +32,8 @@ public class ScoreKeeper : MonoBehaviour
 
     private int spawnersKilled = 0;
 
+    private SpawnManager spawnManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +41,7 @@ public class ScoreKeeper : MonoBehaviour
         scoreDisplay = GetComponent<TMP_Text>();
         // Initialize the display
         ScorePointsInternal(0);
+        spawnManager = FindObjectOfType<SpawnManager>();
     }
 
     /// <summary>
@@ -66,10 +69,14 @@ public class ScoreKeeper : MonoBehaviour
     private void KilledSpawnerInternal()
     {
         spawnersKilled++;
-        if(spawnersKilled == FindObjectOfType<SpawnManager>().spawner.Length)
+        if(spawnManager)
         {
-            Invoke("gameWon", 7f);
+            if (spawnersKilled == FindObjectOfType<SpawnManager>().spawner.Length)
+            {
+                Invoke("gameWon", 7f);
+            }
         }
+        
     }
 
     private void gameWon()

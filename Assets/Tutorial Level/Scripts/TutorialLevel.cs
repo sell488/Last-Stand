@@ -48,12 +48,15 @@ public class TutorialLevel : MonoBehaviour
     [SerializeField]
     private spawner spawner;
 
-    [Header("Tower paramters")]
+    [Header("Tower parameters")]
     [SerializeField]
     private TutorialEnemy towerEnemy;
     [SerializeField]
     private Tower tower;
+    [SerializeField]
+    private GameObject towerTrigger;
     private bool hasSeenTower;
+    private bool hasShownTrigger;
     private bool hasSeenEndTutorial;
 
     private void Start()
@@ -69,6 +72,7 @@ public class TutorialLevel : MonoBehaviour
         hasTriggeredBase = false;
         player.GetComponent<MouseLook>().startedGame = true;
         Cursor.lockState = CursorLockMode.Locked;
+        Time.timeScale = 1;
     }
 
     private void Update()
@@ -146,7 +150,7 @@ public class TutorialLevel : MonoBehaviour
         } else if (currentTutorialIndex == 10)
         {
             baseDamage.gameObject.SetActive(false);
-            //Destroy spawner
+            //Destroyed spawner
             if (!spawner)
             {
                 hasTriggeredBase = false;
@@ -154,7 +158,10 @@ public class TutorialLevel : MonoBehaviour
             }
         } else if (currentTutorialIndex == 11)
         {
-
+            if(!hasShownTrigger)
+            {
+                towerTrigger.SetActive(true);
+            }
         } else if (currentTutorialIndex == 12)
         {
             enabledTowerAndEnemy();

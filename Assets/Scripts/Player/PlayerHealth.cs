@@ -75,7 +75,6 @@ public class PlayerHealth : MonoBehaviour
             {
                 damageE.a = alphaValue;
             }
-            print(damageE.a);
             healthEffect.color = damageE;
         }
         healthSlider.setHealth(remainingHealth);
