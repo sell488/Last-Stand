@@ -79,6 +79,10 @@ PrefabInstance:
       propertyPath: mass
       value: 0.0035
       objectReference: {fileID: 0}
+    - target: {fileID: 7278948362482723925, guid: 0133bce70ccec384082765ec342844b2, type: 3}
+      propertyPath: fudgeFactor
+      value: 0.7
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1699517894, guid: 0133bce70ccec384082765ec342844b2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0133bce70ccec384082765ec342844b2, type: 3}

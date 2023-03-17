@@ -17,17 +17,13 @@ public class UIPlayerHealth : MonoBehaviour
     {
         healthyColor = Color.green; 
         damagedColor = Color.red;
+        slider.value = 100;
+        sliderImage.color = healthyColor;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void setHealth(float remainingHealth)
     {
-        
-    }
-
-    public void setHealth(float health)
-    {
-        slider.value = health;
-        sliderImage.color = Color.Lerp(damagedColor, healthyColor, health / 100f);
+        slider.value = remainingHealth;
+        sliderImage.color = Color.Lerp(damagedColor, healthyColor, remainingHealth / 100f);
     }
 }

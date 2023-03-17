@@ -20,11 +20,11 @@ TagManager:
   - Projectile
   - Enemy
   - Scope
-  - 
-  - 
-  - 
-  - 
-  - 
+  - EnemyProjectile
+  - Minimap
+  - Floor
+  - Base
+  - Shields
   - 
   - 
   - 

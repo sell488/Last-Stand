@@ -111,7 +111,7 @@ public class Firearm : MonoBehaviour
     /// <summary>
     /// Utility bool for preventing player from shooting while reloading
     /// </summary>
-    protected bool canFire;
+    public bool canFire;
 
     /// <summary>
     /// Internal bool tracker of which ammo type is being used. <strong>True</strong>: primary 
@@ -138,6 +138,11 @@ public class Firearm : MonoBehaviour
     /// </remarks>
     protected bool firemode;
 
+    [SerializeField]
+    private AmmoCount ammoUI;
+
+    public bool isBought;
+
     /// <summary>
     /// Recoil Event Manager
     /// </summary>
@@ -150,10 +155,27 @@ public class Firearm : MonoBehaviour
     public Transform WeaponDefaultPosition;
     public Transform WeaponADSPosition;
     public Vector3 weaponPosition;
+
+    [SerializeField]
+    private Transform runningPosition;
     [SerializeField]
     public float sightAdjustmentSpeed;
 
+    public bool isActive;
 
+    private bool canReload;
+    protected bool isReloading;
+
+    private Camera playerCamera;
+
+    [SerializeField]
+    private GameObject crosshair;
+
+    RaycastHit[] results = new RaycastHit[1];
+    private Transform actualShootPoint;
+
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -167,17 +189,32 @@ public class Firearm : MonoBehaviour
         primaryAmmo = true;
 
         firemode = false;
-
+        ammoUI = FindObjectOfType<AmmoCount>(); 
+        ammoUI.setFireRate(firemode);
         weaponPosition = WeaponDefaultPosition.localPosition;
+        canReload = true;
+        isReloading = false;
+
+        playerCamera = GetComponentInParent<Camera>();
+
+        //shootPoint.LookAt(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width/2f, Screen.height/2f, 10)));
+    }
+
+    public void OnEnable()
+    {
+        canFire = true;
+        isReloading = false;
+        GetComponentInParent<PlayerMovement>().canRun = true;
     }
 
     // Update is called once per frame
     void Update()
     {
         //Reload logic
-        if(Input.GetKeyDown(KeyCode.R) && remainingRounds > 0)
+        if(Input.GetKeyDown(KeyCode.R) && remainingRounds > 0 && canReload)
         {
-            
+            GetComponentInParent<PlayerMovement>().canRun = false;
+            isReloading = true;
             canFire = false;
             if(magRounds > 0)
             {
@@ -192,16 +229,18 @@ public class Firearm : MonoBehaviour
 
         }
 
+
         //Firemode logic
-        if(Input.GetKeyDown(KeyCode.V))
+        if(Input.GetKeyDown(KeyCode.V) && isAutomatic)
         {
             firemode = !firemode;
+            ammoUI.setFireRate(firemode);
         }
 
         //Fire logic
         if (primaryAmmo == true)
         {
-            if (Input.GetKey(KeyCode.Mouse0) && magRounds > 0 && firemode)
+            if (Input.GetKey(KeyCode.Mouse0) && firemode)
             {
                 if (canFire)
                 {
@@ -214,33 +253,73 @@ public class Firearm : MonoBehaviour
                     }
                 }
             }
-            else if (Input.GetKeyDown(KeyCode.Mouse0) && magRounds > 0 && !firemode)
+            else if (Input.GetKeyDown(KeyCode.Mouse0) && !firemode)
             {
-                if (Time.time >= timeTillNextShot)
+
+                if (canFire)
                 {
-                    Shoot(bullet);
-                    timeTillNextShot = Time.time + fireRateSecs;
+                    if (Time.time >= timeTillNextShot)
+                    {
+                        Shoot(bullet);
+                        timeTillNextShot = Time.time + fireRateSecs;
+                    }
                 }
+
             }
-        } else if(primaryAmmo == false)
+        }
+        else if (primaryAmmo == false)
         {
-            if(canFire && Time.time >= timeTillNextShot)
+            if (canFire && Time.time >= timeTillNextShot)
             {
                 Shoot(secondaryProjectile);
                 timeTillNextShot = Time.time + fireRateSecs;
             }
         }
 
-        //ADS logic
-        
+        //RotateGun();
+    }
 
+    /*private void RotateGun()
+    {
+        if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out RaycastHit hitInfo, ~LayerMask.GetMask("Projectile")))
+        {
+            Vector3 direction = hitInfo.point - transform.position;
+            transform.rotation = Quaternion.LookRotation(direction);
+        }
+    }*/
+
+    public void startRunning()
+    {
+        if(!isReloading)
+        {
+            canFire = false;
+            canReload = false;
+            anim.Play("Run");
+            transform.rotation = runningPosition.rotation;
+            transform.position = runningPosition.position;
+        }
+        
+    }
+
+    
+    public void stopRunning()
+    {
+        anim.Play("Idle");
+        canFire = true;
+        canReload = true;
+        transform.localRotation = WeaponDefaultPosition.localRotation;
+        transform.position = WeaponDefaultPosition.position;
     }
 
 
-
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         
+    }
+
+    protected bool getLookObject()
+    {
+        return false;
     }
 
     /// <summary>
@@ -248,26 +327,38 @@ public class Firearm : MonoBehaviour
     /// </summary>
     public virtual void Reload()
     {
-        if (primaryAmmo == true)
+        if (primaryAmmo == true && canReload)
         {
-            remainingRounds = remainingRounds - (magCount - magRounds);
+            if(remainingRounds < magCount && remainingRounds > 0)
+            {
+                magRounds = remainingRounds;
+                remainingRounds = 0;
+            } else
+            {
+                remainingRounds = remainingRounds - (magCount - magRounds);
+            }
+            
 
             ///If there are still rounds left in the mag, one will be left in the chamber
             ///This gives the player +1 round in their mag if they reload before
             ///completly emptying their gun
-            if (magRounds > 0)
+            if (magRounds > 0 && remainingRounds != 0)
             {
                 magRounds = magCount + 1;
                 remainingRounds--;
             }
-            else
+            else if(remainingRounds != 0)
             {
                 magRounds = magCount;
             }
 
+            if(magRounds > 0)
+            {
+                ReloadAlert.stopReloadAlert();
+            }
+
             canFire = true;
 
-            print(remainingRounds);
         } else if(primaryAmmo== false)
         {
             remainingRoundsSec = remainingRoundsSec - (magCountSec - magRoundsSec);
@@ -275,12 +366,50 @@ public class Firearm : MonoBehaviour
             magRoundsSec = magCountSec;
             canFire = true;
         }
+        isReloading = false;
+        GetComponentInParent<PlayerMovement>().canRun = true;
     }
 
     public virtual void Shoot(GameObject proj)
     {
+        
+        if(!(magRounds > 0))
+        {
+            ReloadAlert.startReloadAlert();
+            return;
+        }
+
+        /*RaycastHit hit;
+        Vector3 rayPoint = (crosshair.transform.position + (crosshair.transform.TransformDirection(Vector3.forward) * 200));
+
+        if (Physics.Raycast(crosshair.transform.position, crosshair.transform.TransformDirection(Vector3.forward), out hit))
+        {
+            actualShootPoint = shootPoint;
+            actualShootPoint.LookAt(hit.point);
+        }
+        else
+        {
+            actualShootPoint = shootPoint;
+            actualShootPoint.LookAt(rayPoint);
+        }*/
+
+        //Ray ray = new Ray(crosshair.transform.position, crosshair.transform.forward);
+        //Physics.RaycastNonAlloc(ray, results);
+
+        
+        /*if (Physics.Raycast(crosshair.transform.position, crosshair.transform.forward, out hit))
+        {
+            print("raycast worked: " + hit.transform.gameObject.name);
+            actualShootPoint = shootPoint;
+            actualShootPoint.LookAt(hit.transform);
+        } else
+        {
+            actualShootPoint = shootPoint;
+        }*/
         GameObject bull = Instantiate(proj, shootPoint.position, shootPoint.rotation);
         Bullet bullScript = bull.GetComponent<Bullet>();
+
+        
 
         if(proj.GetComponent<Rigidbody>())
         {
@@ -301,6 +430,10 @@ public class Firearm : MonoBehaviour
             OnShoot();
         }
         fireEffect.Play(true);
+        if(((float)magRounds)/((float)magCount) < 0.1f)
+        {
+            ReloadAlert.startReloadAlert();
+        }
         Destroy(bull, 5f);
     }
 

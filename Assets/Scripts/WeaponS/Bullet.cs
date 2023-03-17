@@ -64,6 +64,10 @@ public class Bullet : MonoBehaviour
 
     private Quaternion initialRotation;
 
+    public GameObject particleDustHit;
+
+    private bool hitEnemy = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -76,7 +80,7 @@ public class Bullet : MonoBehaviour
         this.velocity = velocity;
         this.gravity = gravity;
         isInit = true;
-        initialRotation = transform.rotation;
+        initialRotation = startPos.rotation;
         
     }
 
@@ -90,10 +94,7 @@ public class Bullet : MonoBehaviour
 
     private bool checkCollisionStep(Vector3 startPoint, Vector3 endPoint, out RaycastHit hit)
     {
-        
-        bool test = Physics.Raycast(startPoint, endPoint - startPoint, out hit, (endPoint - startPoint).magnitude);
-        RaycastHit testhit = hit;
-        return Physics.Raycast(startPoint, endPoint - startPoint, out hit, (endPoint - startPoint).magnitude, ~LayerMask.GetMask("Projectile"));
+        return Physics.Raycast(startPoint, endPoint - startPoint, out hit, (endPoint - startPoint).magnitude, ~LayerMask.GetMask("Projectile", "Minimap"));
     }
 
     // Update is called once per frame
@@ -164,13 +165,26 @@ public class Bullet : MonoBehaviour
             {
                 collision.GetComponent<Enemies>().takeDamage(calculateDamage(currentPoint.magnitude));
 
+                hitEnemy = true;
+
                 if (!collision.GetComponent<Enemies>().isKilled)
                 {
-                    Destroy(gameObject);
+                    Destroy(gameObject, 5f);
                 }
-            } else
+            } else if(collision.GetComponent<TerrainCollider>() && !hitEnemy)
             {
-                Destroy(gameObject);
+                GameObject particles = Instantiate(particleDustHit, hit.point + (hit.normal * 0.05f), Quaternion.LookRotation(hit.normal), transform.root.parent);
+                ParticleSystem particleSystem = particles.GetComponent<ParticleSystem>();
+                Destroy(particles, 2f);
+            } else if(collision.GetComponent<spawner>() && collision.GetComponent<spawner>().shieldDown)
+            {
+                collision.GetComponent<spawner>().takeDamage(calculateDamage(currentPoint.magnitude));
+                Destroy(gameObject, 5f);
+            }
+            
+            else
+            {
+                Destroy(gameObject, 5f);
             }
             
         }
@@ -180,7 +194,6 @@ public class Bullet : MonoBehaviour
 
     private float calculateDamage(float vel)
     {
-        print(100 * fudgeFactor * vel * mass);
         return 100 * fudgeFactor * vel * mass;
     }
 
