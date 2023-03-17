@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 
 [RequireComponent(typeof(TMP_Text))]
@@ -32,6 +32,8 @@ public class ScoreKeeper : MonoBehaviour
 
     private int spawnersKilled = 0;
 
+    private SpawnManager spawnManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +41,7 @@ public class ScoreKeeper : MonoBehaviour
         scoreDisplay = GetComponent<TMP_Text>();
         // Initialize the display
         ScorePointsInternal(0);
+        spawnManager = FindObjectOfType<SpawnManager>();
     }
 
     /// <summary>
@@ -66,6 +69,19 @@ public class ScoreKeeper : MonoBehaviour
     private void KilledSpawnerInternal()
     {
         spawnersKilled++;
+        if(spawnManager)
+        {
+            if (spawnersKilled == FindObjectOfType<SpawnManager>().spawner.Length)
+            {
+                Invoke("gameWon", 7f);
+            }
+        }
+        
+    }
+
+    private void gameWon()
+    {
+        SceneManager.LoadScene(4);
     }
 
     public void setScoreDisplay(string text)

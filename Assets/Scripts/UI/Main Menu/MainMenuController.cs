@@ -12,9 +12,18 @@ public class MainMenuController : MonoBehaviour
     [SerializeField]
     private Canvas tutorialCanvas2;
 
+    public void Start()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+    }
     public void Play()
     {
         SceneManager.LoadScene("Stefan's Scene 2");
+    }
+
+    public void MechanicsTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
     }
 
     public void Exit()

@@ -11,12 +11,13 @@ public class WeaponSwitcher : MonoBehaviour
 
     private AmmoCount ammoCounter;
 
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private Canvas crosshair;
+
+    private void Awake()
     {
         currentGun = guns[0];
         currentGun.gameObject.SetActive(true);
-
         ammoCounter = FindObjectOfType<AmmoCount>();
 
         for (int i = 1; i < guns.Length; i++)
@@ -43,16 +44,16 @@ public class WeaponSwitcher : MonoBehaviour
         }
     }
 
-    void switchWeapon(int index)
+    public void switchWeapon(int index)
     {
         ReloadAlert.stopReloadAlert();
         if (guns[index].GetComponentInChildren<Firearm>().isBought)
         {
-        currentGun.gameObject.SetActive(false); 
-        currentGun = guns[index];
-        currentGun.gameObject.SetActive(true);
-        GetComponentInParent<PlayerMovement>().camera = currentGun.GetComponentInChildren<Camera>().transform;
-        ammoCounter.firearm = currentGun.GetComponentInChildren<Firearm>();
+            currentGun.gameObject.SetActive(false); 
+            currentGun = guns[index];
+            currentGun.gameObject.SetActive(true);
+            GetComponentInParent<PlayerMovement>().camera = currentGun.GetComponentInChildren<Camera>().transform;
+            ammoCounter.firearm = currentGun.GetComponentInChildren<Firearm>();
         }
     }
 }

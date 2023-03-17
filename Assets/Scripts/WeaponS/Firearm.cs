@@ -168,6 +168,13 @@ public class Firearm : MonoBehaviour
 
     private Camera playerCamera;
 
+    [SerializeField]
+    private GameObject crosshair;
+
+    RaycastHit[] results = new RaycastHit[1];
+    private Transform actualShootPoint;
+
+
     
 
     // Start is called before the first frame update
@@ -182,8 +189,7 @@ public class Firearm : MonoBehaviour
         primaryAmmo = true;
 
         firemode = false;
-        ammoUI = FindObjectOfType<AmmoCount>();
-        print("ammoUI: " + ammoUI);
+        ammoUI = FindObjectOfType<AmmoCount>(); 
         ammoUI.setFireRate(firemode);
         weaponPosition = WeaponDefaultPosition.localPosition;
         canReload = true;
@@ -270,17 +276,17 @@ public class Firearm : MonoBehaviour
             }
         }
 
-        RotateGun();
+        //RotateGun();
     }
 
-    private void RotateGun()
+    /*private void RotateGun()
     {
         if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out RaycastHit hitInfo, ~LayerMask.GetMask("Projectile")))
         {
             Vector3 direction = hitInfo.point - transform.position;
             transform.rotation = Quaternion.LookRotation(direction);
         }
-    }
+    }*/
 
     public void startRunning()
     {
@@ -306,9 +312,14 @@ public class Firearm : MonoBehaviour
     }
 
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         
+    }
+
+    protected bool getLookObject()
+    {
+        return false;
     }
 
     /// <summary>
@@ -361,13 +372,44 @@ public class Firearm : MonoBehaviour
 
     public virtual void Shoot(GameObject proj)
     {
+        
         if(!(magRounds > 0))
         {
             ReloadAlert.startReloadAlert();
             return;
         }
+
+        /*RaycastHit hit;
+        Vector3 rayPoint = (crosshair.transform.position + (crosshair.transform.TransformDirection(Vector3.forward) * 200));
+
+        if (Physics.Raycast(crosshair.transform.position, crosshair.transform.TransformDirection(Vector3.forward), out hit))
+        {
+            actualShootPoint = shootPoint;
+            actualShootPoint.LookAt(hit.point);
+        }
+        else
+        {
+            actualShootPoint = shootPoint;
+            actualShootPoint.LookAt(rayPoint);
+        }*/
+
+        //Ray ray = new Ray(crosshair.transform.position, crosshair.transform.forward);
+        //Physics.RaycastNonAlloc(ray, results);
+
+        
+        /*if (Physics.Raycast(crosshair.transform.position, crosshair.transform.forward, out hit))
+        {
+            print("raycast worked: " + hit.transform.gameObject.name);
+            actualShootPoint = shootPoint;
+            actualShootPoint.LookAt(hit.transform);
+        } else
+        {
+            actualShootPoint = shootPoint;
+        }*/
         GameObject bull = Instantiate(proj, shootPoint.position, shootPoint.rotation);
         Bullet bullScript = bull.GetComponent<Bullet>();
+
+        
 
         if(proj.GetComponent<Rigidbody>())
         {

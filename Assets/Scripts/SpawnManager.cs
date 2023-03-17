@@ -48,10 +48,6 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator spawnWave()
     {
-        if(ScoreKeeper.GetSpawnersKilled() == spawner.Length)
-        {
-            SceneManager.LoadScene("Game Won");
-        }
         for (int i = 0; i < spawner.Length; i++)
         {
             spawner[i].spawningEnabled = true;

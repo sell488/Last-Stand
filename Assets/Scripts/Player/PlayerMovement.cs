@@ -70,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
         hasPositionedWalking = true;
         isRunning = false;
         crosshair.toRestingSize();
+        Time.timeScale = 1;
     }
 
     private void Update()

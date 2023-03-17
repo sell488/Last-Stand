@@ -13,15 +13,28 @@ public class MouseLook : MonoBehaviour
     [HideInInspector]
     public float yRotationV, xRotationV;
 
+    [HideInInspector]
+    public bool startedGame;
+
     // Start is called before the first frame update
     void Start()
     {
+        //Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void setCursorLockState()
+    {
         Cursor.lockState = CursorLockMode.Locked;
+        startedGame = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(!startedGame)
+        {
+            return;
+        }
         yRot += Input.GetAxis("Mouse X") * lookSensitivity;
         xRot += Input.GetAxis("Mouse Y") * lookSensitivity;
 

@@ -85,11 +85,13 @@ public class Shotgun : Firearm
             {
                 isReloading = false;
                 canFire = true;
+                GetComponentInParent<PlayerMovement>().canRun = true;
                 StopCoroutine("reloadCoroutine");
                 magRounds--;
                 
             }
         }
+        GetComponentInParent<PlayerMovement>().canRun = true;
         isReloading = false;
         canFire = true;
     }

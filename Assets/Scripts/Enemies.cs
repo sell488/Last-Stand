@@ -8,24 +8,25 @@ using Random = System.Random;
 public class Enemies : MonoBehaviour
 {
     public GameObject spawner;
-    private UnityEngine.AI.NavMeshAgent agent;
+    public UnityEngine.AI.NavMeshAgent agent;
 
 
     /// <summary>
     /// minimap stuff
     /// </summary>
     public GameObject minimap_layer;
-    private GameObject sphere;
-    private float radius;
-    public float cameraSize = 9;
+    protected GameObject sphere;
+    protected float radius;
+    public float cameraSize;
 
     /// <summary>
     /// What enemies should move towards
     /// </summary>
-    private GameObject target;
+    [SerializeField]
+    protected GameObject target;
 
-    private GameObject player;
-    private GameObject playerBase;
+    protected GameObject player;
+    protected GameObject playerBase;
 
     /// <summary>
     /// Enemy health
@@ -48,7 +49,7 @@ public class Enemies : MonoBehaviour
     /// <summary>
     /// The original acceleration
     /// </summary>
-    private float accelerationSpeed;
+    protected float accelerationSpeed;
 
     /// <summary>
     /// Speed the agent will be set to when recently damaged
@@ -59,7 +60,7 @@ public class Enemies : MonoBehaviour
 
     public float aggroDistance;
 
-    private float defaultSpeed;
+    protected float defaultSpeed;
 
     /// <summary>
     /// How long in seconds it will take an enemy to return to their default speed after being damaged
@@ -81,7 +82,7 @@ public class Enemies : MonoBehaviour
     /// </summary>
     public ParticleSystem hitEffect;
 
-    private Color baseColor;
+    protected Color baseColor;
     public Color deathColor;
      
     /// How frequent should an enemy damage a player
@@ -90,11 +91,12 @@ public class Enemies : MonoBehaviour
     public float last_damaged;
     public float attackRadius;
 
-    private bool isBeingDamaged = false;
+    protected bool isBeingDamaged = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        cameraSize = 41;
         // Minimap Stuff
         radius = cameraSize;
 
@@ -102,7 +104,7 @@ public class Enemies : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player");
 
 
-        sphere = Instantiate(minimap_layer, transform.position, Quaternion.identity);
+        sphere = Instantiate(minimap_layer, new Vector3(transform.position.x, transform.position.y + 10, transform.position.z), Quaternion.identity);
         sphereConstraint(sphere.transform, target.transform, radius);
 
         accelerationSpeed = agent.acceleration;
@@ -111,7 +113,7 @@ public class Enemies : MonoBehaviour
         //damage_CD = .8f;
         last_damaged = 0;
         player = FindObjectOfType<PlayerHealth>().gameObject;
-        playerBase = FindObjectOfType<Base>().gameObject;
+        playerBase = FindObjectOfType<Base>().gameObject; 
     }
 
     // Update is called once per frame
@@ -134,7 +136,7 @@ public class Enemies : MonoBehaviour
                 agent.acceleration = accelerationSpeed;
             }
         }
-        sphereConstraint(sphere.transform, target.transform, radius);
+        sphereConstraint(sphere.transform, player.transform, radius);
 
         anim.SetFloat("Blend", agent.velocity.magnitude);
         //agent.destination = target.transform.position;
@@ -180,7 +182,7 @@ public class Enemies : MonoBehaviour
             }
         }
     }
-    private void checkHealth()
+    protected void checkHealth()
     {
         if(health <= 0) {
             isKilled = true;
@@ -196,9 +198,10 @@ public class Enemies : MonoBehaviour
         
     }
 
-    private void destroy()
+    protected void destroy()
     {
         gameObject.SetActive(false);
+        Destroy(sphere);
         Destroy(gameObject);
     }
 
@@ -212,7 +215,7 @@ public class Enemies : MonoBehaviour
         checkHealth();
     }
 
-    private IEnumerator slowOnDamage()
+    protected IEnumerator slowOnDamage()
     {   
         if(!isKilled)
         {
@@ -268,13 +271,13 @@ public class Enemies : MonoBehaviour
         return pathLength;
     }
 
-    private void sphereConstraint(Transform spherePos, Transform targetPos, float radius)
+    protected void sphereConstraint(Transform spherePos, Transform targetPos, float radius)
     {
 
         Vector3 enemy2player = targetPos.position - transform.position;
         if (enemy2player.magnitude > radius && !isKilled)
         {
-            spherePos.transform.position = targetPos.position - enemy2player.normalized * radius;
+            spherePos.position = targetPos.position - enemy2player.normalized * radius;
         }
         else if(!isKilled)
         {

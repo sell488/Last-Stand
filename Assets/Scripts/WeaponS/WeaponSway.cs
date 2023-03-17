@@ -54,6 +54,10 @@ public class WeaponSway : MonoBehaviour
     }
     void Update()
     {
+        if(!mouseLook.startedGame)
+        {
+            return;
+        }
         float movementX = -Input.GetAxis("Mouse X") * amount;
         float movementY = -Input.GetAxis("Mouse Y") * amount;
 
