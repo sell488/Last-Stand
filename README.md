@@ -102,6 +102,6 @@ In-house creations:
 - Spawner destruction animation
 
 ## Download instructions
-In order to play the game, a windows computer is required, preferably running Windows 10 or above. Only the included zip file is necessary. 
+In order to play the game, a windows computer is required, preferably running Windows 10 or above. Only the [included zip file](sell488/Last-Stand/blob/main/Last%20Stand%20Final.zip) is necessary. 
 Once downloaded, unzip the folder, open it, and run the Last Stand executable.  **Play the tutorial first!**
 
