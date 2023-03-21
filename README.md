@@ -12,7 +12,7 @@ As a first person shooter game, Last Stand features various weapons and weapon c
   In addition, comments and organization following the first few weeks are sorely lacking. Many mechanics are dependent on each other when they should not be (i.e, the shop
   not working unless a certain variable that it never uses is assigned in the editor). Many of these issues are addressed in discussions addressing future work, but there are others
   that are not. This disclaimer acts as a clarification that the primary goal of this project was to experiment with implementations of various features and stringing them
-  together into a playable experience in a very short amount of time and not necessarily as a representation of what is considered best practice.
+  together into a playable experience, as well as an exploration of the various facets of game design from visual art to scripting mechanics in a very short amount of time and not necessarily as a representation of what is considered best practice.
 
 ### Mechanics
 A list of mechanics that a substantial amount of development time was allocated towards.
