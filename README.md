@@ -2,7 +2,9 @@
 A wave defense fps
 ## Overview
 Last Stand is a game designed and developed in a short, six week sprint in order to develop an understanding of basic real time physics simulation, AI pathfinding, and
-game design and development ideas. As a wave defense, the core loop of Last Stand is surviving infinite waves of enemy robots attempting to destroy you 
+game design and development ideas. More generally, Last Stand acts as an exploration of the multi-facted nature of game design, aiming to gain skills in as many aspects of game design as possible. This includes areas outside of typical coding such as visual effect creation, animation production, and shader design.
+
+As a wave defense, the core loop of Last Stand is surviving infinite waves of enemy robots attempting to destroy you 
 and your base while you attempt to disable all robot spawners. If either the base or the player reaches zero health, the player loses.
 As a first person shooter game, Last Stand features various weapons and weapon categories. 
 
